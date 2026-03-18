@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { useHeroReveal } from "./scroll-animations";
 
 function FloatingShapes() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {[...Array(6)].map((_, i) => (
-        <motion.div
+        <div
           key={i}
-          className="absolute rounded-full opacity-10"
+          className="absolute rounded-full opacity-10 animate-float"
           style={{
             width: `${40 + i * 30}px`,
             height: `${40 + i * 30}px`,
@@ -18,16 +18,8 @@ function FloatingShapes() {
               : "linear-gradient(135deg, #6366f1, #8b5cf6)",
             left: `${10 + i * 15}%`,
             top: `${15 + (i % 3) * 25}%`,
-          }}
-          animate={{
-            y: [0, -20 - i * 5, 10, 0],
-            x: [0, 10, -10, 0],
-            rotate: [0, 5, -5, 0],
-          }}
-          transition={{
-            duration: 8 + i * 2,
-            repeat: Infinity,
-            ease: "easeInOut",
+            animationDuration: `${8 + i * 2}s`,
+            animationDelay: `${i * 0.5}s`,
           }}
         />
       ))}
@@ -74,6 +66,8 @@ function useCountUp(target: number, duration: number = 2000) {
 }
 
 export function Hero() {
+  const heroRef = useHeroReveal();
+
   const stats = [
     { value: 48, suffix: "hr", label: "Delivery" },
     { value: 50, suffix: "+", label: "Sites Built" },
@@ -99,57 +93,32 @@ export function Hero() {
       <FloatingShapes />
 
       {/* Content */}
-      <div className="relative z-10 px-6 md:px-10 pt-32 pb-20">
+      <div ref={heroRef} className="relative z-10 px-6 md:px-10 pt-32 pb-20">
         <div className="mx-auto max-w-[1400px] w-full">
           {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-8"
-          >
+          <div data-hero-anim className="mb-8">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#8b5cf6]/30 bg-[#8b5cf6]/10 text-sm text-[#c4b5fd] animate-pulse-glow">
               <span className="w-2 h-2 rounded-full bg-[#8b5cf6] animate-pulse" />
               Now accepting clients
             </span>
-          </motion.div>
+          </div>
 
           {/* Hero text */}
-          <motion.h1
-            className="text-hero gradient-text"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+          <h1 data-hero-anim className="text-hero gradient-text">
             Build
-          </motion.h1>
-          <motion.h1
-            className="text-hero gradient-text mt-2"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
+          </h1>
+          <h1 data-hero-anim className="text-hero gradient-text mt-2">
             What&apos;s Next
-          </motion.h1>
+          </h1>
 
           {/* Subtitle */}
-          <motion.p
-            className="text-body-lg mt-8 max-w-xl text-[#a0a0b8]"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
+          <p data-hero-anim className="text-body-lg mt-8 max-w-xl text-[#a0a0b8]">
             We craft stunning, high-converting websites in 48 hours using
             AI-powered development. Premium quality starting at $500.
-          </motion.p>
+          </p>
 
           {/* CTAs */}
-          <motion.div
-            className="mt-10 flex flex-wrap items-center gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
+          <div data-hero-anim className="mt-10 flex flex-wrap items-center gap-4">
             <a href="#pricing" className="btn-primary">
               Start a Project
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -165,42 +134,24 @@ export function Hero() {
             <a href="#portfolio" className="btn-outline">
               View Our Work
             </a>
-          </motion.div>
+          </div>
 
           {/* Stats row */}
-          <motion.div
-            className="mt-16 flex flex-wrap gap-8 md:gap-16"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
-          >
+          <div data-hero-anim className="mt-16 flex flex-wrap gap-8 md:gap-16">
             {stats.map((stat) => (
               <StatItem key={stat.label} {...stat} />
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-      >
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in-delayed">
         <span className="text-label text-xs text-[#666]">Scroll</span>
-        <motion.div
-          className="w-5 h-8 rounded-full border border-[#333] flex justify-center pt-1.5"
-          animate={{ opacity: [0.3, 1, 0.3] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <motion.div
-            className="w-1 h-2 rounded-full bg-[#8b5cf6]"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        </motion.div>
-      </motion.div>
+        <div className="w-5 h-8 rounded-full border border-[#333] flex justify-center pt-1.5 animate-pulse-slow">
+          <div className="w-1 h-2 rounded-full bg-[#8b5cf6] animate-scroll-dot" />
+        </div>
+      </div>
     </section>
   );
 }

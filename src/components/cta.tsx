@@ -1,68 +1,56 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useScrollReveal } from "./scroll-animations";
 
 export function CTA() {
+  const headingRef = useScrollReveal();
+  const textRef = useScrollReveal();
+  const buttonsRef = useScrollReveal();
+
   return (
-    <section className="relative py-32 md:py-44 px-6 md:px-10 overflow-hidden">
+    <section className="relative py-24 md:py-32 lg:py-40 px-6 md:px-10 overflow-hidden">
       {/* Gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#8b5cf6] via-[#ec4899] to-[#f43f5e]" />
 
-      {/* Floating shapes */}
+      {/* Floating shapes - CSS only */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(4)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
-            className="absolute rounded-full bg-white/10"
+            className="absolute rounded-full bg-white/10 animate-float"
             style={{
               width: `${100 + i * 80}px`,
               height: `${100 + i * 80}px`,
               left: `${i * 25}%`,
               top: `${20 + (i % 2) * 40}%`,
-            }}
-            animate={{
-              y: [0, -30, 15, 0],
-              x: [0, 15, -15, 0],
-            }}
-            transition={{
-              duration: 10 + i * 3,
-              repeat: Infinity,
-              ease: "easeInOut",
+              animationDuration: `${10 + i * 3}s`,
+              animationDelay: `${i * 1.5}s`,
             }}
           />
         ))}
       </div>
 
       <div className="relative z-10 mx-auto max-w-[1400px] text-center">
-        <motion.h2
+        <h2
+          ref={headingRef}
           className="text-display md:text-hero text-white leading-tight"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6 }}
         >
           Ready to Build Your
           <br />
           Dream Website?
-        </motion.h2>
+        </h2>
 
-        <motion.p
+        <p
+          ref={textRef}
           className="mt-8 text-lg md:text-xl text-white/80 max-w-lg mx-auto"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
         >
           Book a free 15-minute strategy call and get a custom proposal
           within 24 hours. Let&apos;s make it happen.
-        </motion.p>
+        </p>
 
-        <motion.div
+        <div
+          ref={buttonsRef}
           className="mt-10 flex flex-wrap items-center justify-center gap-4"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
         >
           <a
             href="tel:978-606-3386"
@@ -85,7 +73,7 @@ export function CTA() {
           >
             jigpatel01234@gmail.com
           </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
+import { useScrollReveal, useStaggerReveal } from "./scroll-animations";
 
 const faqs = [
   {
@@ -41,12 +41,10 @@ function AccordionItem({
   item,
   isOpen,
   onToggle,
-  index,
 }: {
   item: (typeof faqs)[0];
   isOpen: boolean;
   onToggle: () => void;
-  index: number;
 }) {
   const contentRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -59,13 +57,7 @@ function AccordionItem({
   }, [isOpen]);
 
   return (
-    <motion.div
-      className="border-b border-[#1f1f3a]"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.6, delay: index * 0.05 }}
-    >
+    <div className="border-b border-[#1f1f3a]">
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between py-7 md:py-8 text-left group"
@@ -99,37 +91,32 @@ function AccordionItem({
           </p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const headerRef = useScrollReveal();
+  const listRef = useStaggerReveal();
 
   return (
-    <section id="faq" className="py-32 md:py-40 px-6 md:px-10">
+    <section id="faq" className="py-24 md:py-32 lg:py-40 px-6 md:px-10">
       <div className="mx-auto max-w-[900px]">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6 }}
-        >
+        <div ref={headerRef} className="text-center mb-16">
           <p className="text-label mb-4">FAQ</p>
           <h2 className="text-display">
             Questions & <span className="gradient-text">Answers</span>
           </h2>
-        </motion.div>
+        </div>
 
-        <div>
+        <div ref={listRef}>
           {faqs.map((faq, i) => (
             <AccordionItem
               key={i}
               item={faq}
               isOpen={openIndex === i}
               onToggle={() => setOpenIndex(openIndex === i ? null : i)}
-              index={i}
             />
           ))}
         </div>

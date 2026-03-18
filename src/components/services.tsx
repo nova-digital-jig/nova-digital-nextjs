@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Code, Palette, BarChart3, Bot } from "lucide-react";
+import { useScrollReveal, useStaggerReveal } from "./scroll-animations";
 
 const services = [
   {
@@ -31,34 +31,27 @@ const services = [
 ];
 
 export function Services() {
+  const headerRef = useScrollReveal();
+  const gridRef = useStaggerReveal();
+
   return (
-    <section id="services" className="py-32 md:py-40 px-6 md:px-10">
+    <section id="services" className="py-24 md:py-32 lg:py-40 px-6 md:px-10">
       <div className="mx-auto max-w-[1400px]">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6 }}
-        >
+        <div ref={headerRef} className="text-center mb-16">
           <p className="text-label mb-4">What We Do</p>
           <h2 className="text-display">
             Services built for{" "}
             <span className="gradient-text">growth</span>
           </h2>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {services.map((service, i) => {
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {services.map((service) => {
             const Icon = service.icon;
             return (
-              <motion.div
+              <div
                 key={service.title}
                 className="group relative rounded-2xl bg-[#111118] border border-[#1f1f3a] p-8 md:p-10 min-h-[280px] transition-all duration-500 hover:border-transparent"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
               >
                 {/* Gradient border on hover */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#8b5cf6] to-[#f43f5e] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-[1px]" />
@@ -75,7 +68,7 @@ export function Services() {
                 <p className="text-[#888899] leading-relaxed">
                   {service.description}
                 </p>
-              </motion.div>
+              </div>
             );
           })}
         </div>

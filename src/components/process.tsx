@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useScrollReveal, useStaggerReveal } from "./scroll-animations";
 
 const steps = [
   {
@@ -30,36 +30,29 @@ const steps = [
 ];
 
 export function Process() {
+  const headerRef = useScrollReveal();
+  const stepsRef = useStaggerReveal();
+
   return (
-    <section id="process" className="py-32 md:py-40 px-6 md:px-10">
+    <section id="process" className="py-24 md:py-32 lg:py-40 px-6 md:px-10">
       <div className="mx-auto max-w-[1400px]">
-        <motion.div
-          className="mb-16 md:mb-24"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6 }}
-        >
+        <div ref={headerRef} className="mb-16 md:mb-24">
           <p className="text-label mb-4">How It Works</p>
           <h2 className="text-display">
             From idea to{" "}
             <span className="gradient-text">launch</span>
           </h2>
-        </motion.div>
+        </div>
 
-        <div className="space-y-0">
+        <div ref={stepsRef} className="space-y-0">
           {steps.map((step, i) => (
-            <motion.div
+            <div
               key={step.num}
               className={`py-16 md:py-20 ${
                 i < steps.length - 1
                   ? "border-b border-[#1f1f3a]"
                   : ""
               }`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
             >
               <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-16">
                 {/* Large step number */}
@@ -83,7 +76,7 @@ export function Process() {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
