@@ -33,12 +33,12 @@ export function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
           scrolled
-            ? "bg-[#FAF9F6]/90 backdrop-blur-md"
+            ? "bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5"
             : "bg-transparent"
         }`}
       >
         <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-6 md:px-10 py-5">
-          <a href="#" className="text-lg font-medium tracking-tight">
+          <a href="#" className="text-lg font-bold tracking-tight text-white">
             Nova Digital
           </a>
 
@@ -48,7 +48,7 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="nav-link text-sm text-[#8A8580] hover:text-[#1A1A1A] transition-colors duration-300"
+                className="nav-link text-sm text-[#888899] hover:text-white transition-colors duration-300"
               >
                 {link.label}
               </a>
@@ -58,7 +58,7 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-6">
             <a
               href="tel:978-606-3386"
-              className="text-sm text-[#8A8580] hover:text-[#1A1A1A] transition-colors"
+              className="text-sm text-[#888899] hover:text-white transition-colors"
             >
               (978) 606-3386
             </a>
@@ -70,7 +70,7 @@ export function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center"
+            className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center text-white"
             aria-label="Toggle menu"
           >
             {menuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -80,7 +80,7 @@ export function Navbar() {
 
       {/* Mobile fullscreen menu */}
       <div
-        className={`fixed inset-0 z-40 bg-[#FAF9F6] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
+        className={`fixed inset-0 z-40 bg-[#0a0a0f] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
           menuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -92,7 +92,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="text-display text-[#1A1A1A] transition-all duration-500"
+              className="text-display text-white transition-all duration-500"
               style={{
                 transitionDelay: menuOpen ? `${i * 80}ms` : "0ms",
                 opacity: menuOpen ? 1 : 0,
@@ -109,7 +109,7 @@ export function Navbar() {
               opacity: menuOpen ? 1 : 0,
             }}
           >
-            <a href="tel:978-606-3386" className="text-sm text-[#8A8580]">
+            <a href="tel:978-606-3386" className="text-sm text-[#888899]">
               (978) 606-3386
             </a>
             <a

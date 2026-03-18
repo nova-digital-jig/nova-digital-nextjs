@@ -1,17 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
 import { Check, ArrowUpRight } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const plans = [
   {
     name: "Starter",
     price: "$500",
-    description: "Perfect for small businesses that need a professional online presence.",
+    description: "Perfect for getting started with a professional online presence.",
     features: [
       "Custom single-page website",
       "Mobile responsive design",
@@ -24,9 +20,9 @@ const plans = [
     featured: false,
   },
   {
-    name: "Professional",
+    name: "Growth",
     price: "$1,000",
-    description: "For growing businesses that want a site built to convert visitors into customers.",
+    description: "Most popular — built to convert visitors into paying customers.",
     features: [
       "Up to 5-page website",
       "Advanced UI/UX design",
@@ -35,14 +31,15 @@ const plans = [
       "Analytics dashboard",
       "3 rounds of revisions",
       "30 days of support",
+      "Performance optimization",
     ],
-    href: "mailto:jigpatel01234@gmail.com?subject=Professional%20Plan%20Inquiry",
+    href: "mailto:jigpatel01234@gmail.com?subject=Growth%20Plan%20Inquiry",
     featured: true,
   },
   {
-    name: "Enterprise",
+    name: "Premium",
     price: "$2,500",
-    description: "Full-service web solution for businesses ready to dominate their market.",
+    description: "Full custom solution for businesses ready to dominate.",
     features: [
       "Unlimited pages",
       "Custom animations & interactions",
@@ -51,99 +48,73 @@ const plans = [
       "Advanced analytics & tracking",
       "Priority support for 90 days",
       "Performance optimization",
+      "AI chatbot integration",
       "Unlimited revisions",
+      "Dedicated project manager",
     ],
-    href: "mailto:jigpatel01234@gmail.com?subject=Enterprise%20Plan%20Inquiry",
+    href: "mailto:jigpatel01234@gmail.com?subject=Premium%20Plan%20Inquiry",
     featured: false,
   },
 ];
 
 export function Pricing() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".pricing-title", {
-        opacity: 0,
-        y: 60,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-        },
-      });
-
-      gsap.from(".pricing-card", {
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".pricing-grid",
-          start: "top 80%",
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section ref={sectionRef} id="pricing" className="py-32 md:py-44 px-6 md:px-10">
+    <section id="pricing" className="py-24 md:py-36 px-6 md:px-10">
       <div className="mx-auto max-w-[1400px]">
-        <div className="text-center mb-20">
-          <p className="text-label mb-6 pricing-title">Pricing</p>
-          <h2 className="text-display pricing-title">
-            Simple, transparent<br />
-            pricing
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+        >
+          <p className="text-label mb-4">Pricing</p>
+          <h2 className="text-display">
+            Simple <span className="gradient-text">Pricing</span>
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="pricing-grid grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-4 items-start">
-          {plans.map((plan) => (
-            <div
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+          {plans.map((plan, i) => (
+            <motion.div
               key={plan.name}
-              className={`pricing-card rounded-2xl p-8 md:p-10 transition-all duration-500 ${
+              className={`relative rounded-2xl p-8 md:p-10 transition-all duration-500 ${
                 plan.featured
-                  ? "bg-[#1A1A1A] text-[#FAF9F6] lg:scale-[1.03]"
-                  : "border border-[#E8E4DC] hover:border-[#1A1A1A]/20"
+                  ? "bg-[#111118] lg:scale-[1.03]"
+                  : "bg-[#111118] border border-[#1f1f3a]"
               }`}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
             >
+              {/* Gradient border for featured */}
+              {plan.featured && (
+                <>
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#8b5cf6] to-[#f43f5e] -z-10 blur-[1px]" />
+                  <div className="absolute inset-[1px] rounded-2xl bg-[#111118] -z-[5]" />
+                </>
+              )}
+
               <div className="flex items-center justify-between mb-8">
-                <span
-                  className={`text-label ${
-                    plan.featured ? "text-[#8A8580]" : ""
-                  }`}
-                >
+                <span className="text-label text-[#888899]">
                   {plan.name}
                 </span>
                 {plan.featured && (
-                  <span className="text-xs font-medium bg-[#C8FF00] text-[#1A1A1A] px-3 py-1 rounded-full">
+                  <span className="text-xs font-semibold bg-gradient-to-r from-[#8b5cf6] to-[#ec4899] text-white px-3 py-1 rounded-full">
                     Popular
                   </span>
                 )}
               </div>
 
               <div className="mb-6">
-                <span className="text-[clamp(3rem,5vw,4.5rem)] font-medium tracking-tight leading-none">
+                <span className="text-[clamp(3rem,5vw,4rem)] font-bold tracking-tight leading-none text-white">
                   {plan.price}
                 </span>
-                <span
-                  className={`text-sm ml-2 ${
-                    plan.featured ? "text-[#8A8580]" : "text-[#8A8580]"
-                  }`}
-                >
-                  / project
-                </span>
+                <span className="text-sm ml-2 text-[#888899]">/ project</span>
               </div>
 
-              <p
-                className={`text-sm leading-relaxed mb-8 ${
-                  plan.featured ? "text-[#8A8580]" : "text-[#8A8580]"
-                }`}
-              >
+              <p className="text-sm leading-relaxed mb-8 text-[#888899]">
                 {plan.description}
               </p>
 
@@ -151,10 +122,10 @@ export function Pricing() {
                 href={plan.href}
                 target={plan.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className={`w-full flex items-center justify-center gap-2 py-4 rounded-full text-sm font-medium transition-all duration-500 mb-8 ${
+                className={`w-full flex items-center justify-center gap-2 py-4 rounded-full text-sm font-semibold transition-all duration-500 mb-8 ${
                   plan.featured
-                    ? "bg-[#C8FF00] text-[#1A1A1A] hover:bg-[#b8ef00]"
-                    : "bg-[#1A1A1A] text-[#FAF9F6] hover:bg-[#333]"
+                    ? "bg-gradient-to-r from-[#8b5cf6] to-[#ec4899] text-white hover:shadow-lg hover:shadow-[#8b5cf6]/25"
+                    : "bg-white/5 text-white border border-[#1f1f3a] hover:bg-white/10 hover:border-[#8b5cf6]/50"
                 }`}
               >
                 Get Started
@@ -166,21 +137,13 @@ export function Pricing() {
                   <li key={feature} className="flex items-start gap-3 text-sm">
                     <Check
                       size={16}
-                      className={`mt-0.5 shrink-0 ${
-                        plan.featured ? "text-[#C8FF00]" : "text-[#1A1A1A]"
-                      }`}
+                      className="mt-0.5 shrink-0 text-[#8b5cf6]"
                     />
-                    <span
-                      className={
-                        plan.featured ? "text-[#C0BDB8]" : "text-[#8A8580]"
-                      }
-                    >
-                      {feature}
-                    </span>
+                    <span className="text-[#a0a0b8]">{feature}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

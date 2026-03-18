@@ -1,12 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
@@ -36,112 +32,69 @@ const projects = [
 ];
 
 export function Portfolio() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const horizontalRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Title reveal
-      gsap.from(".portfolio-title", {
-        opacity: 0,
-        y: 60,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-        },
-      });
-
-      // Horizontal scroll
-      const horizontal = horizontalRef.current;
-      const scrollContainer = scrollContainerRef.current;
-      if (!horizontal || !scrollContainer) return;
-
-      const getScrollWidth = () =>
-        horizontal.scrollWidth - scrollContainer.offsetWidth;
-
-      gsap.to(horizontal, {
-        x: () => -getScrollWidth(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: scrollContainer,
-          start: "top top",
-          end: () => `+=${getScrollWidth()}`,
-          scrub: 1,
-          pin: true,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section ref={sectionRef} id="portfolio">
-      {/* Title section */}
-      <div className="py-20 px-6 md:px-10">
-        <div className="mx-auto max-w-[1400px]">
-          <p className="text-label mb-6 portfolio-title">Selected Work</p>
-          <h2 className="text-display portfolio-title">
-            Projects that<br />
-            deliver results
-          </h2>
-        </div>
-      </div>
-
-      {/* Horizontal scroll gallery */}
-      <div ref={scrollContainerRef} className="h-screen overflow-hidden">
-        <div
-          ref={horizontalRef}
-          className="horizontal-scroll-wrapper h-full items-center gap-8 px-6 md:px-10"
+    <section id="portfolio" className="py-24 md:py-36 px-6 md:px-10">
+      <div className="mx-auto max-w-[1400px]">
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
         >
-          {projects.map((project) => (
-            <a
+          <p className="text-label mb-4">Selected Work</p>
+          <h2 className="text-display">
+            Our <span className="gradient-text">Work</span>
+          </h2>
+        </motion.div>
+
+        <div className="space-y-12">
+          {projects.map((project, i) => (
+            <motion.a
               key={project.title}
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative block w-[85vw] md:w-[60vw] lg:w-[45vw] h-[70vh] shrink-0"
+              className="group block relative rounded-2xl overflow-hidden"
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.7, delay: i * 0.15 }}
             >
-              <div className="relative w-full h-full overflow-hidden rounded-2xl">
+              {/* Image container */}
+              <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-2xl">
                 <Image
                   src={project.image}
                   alt={project.imageAlt}
                   fill
-                  className="object-cover transition-transform duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-                  sizes="(max-width: 768px) 85vw, (max-width: 1024px) 60vw, 45vw"
+                  className="object-cover transition-transform duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+                  sizes="(max-width: 1400px) 100vw, 1400px"
                 />
 
-                {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-700" />
+                {/* Overlay that slides up */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-700" />
 
-                {/* Arrow */}
-                <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-y-2 group-hover:translate-y-0">
-                  <ArrowUpRight size={20} className="text-[#1A1A1A]" />
-                </div>
-              </div>
-
-              {/* Project info */}
-              <div className="mt-5 flex items-start justify-between">
-                <div>
-                  <h3 className="text-xl md:text-2xl font-medium">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-[#8A8580] mt-1">
+                {/* Content overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  <p className="text-sm text-[#c4b5fd] font-medium uppercase tracking-wider mb-2">
                     {project.category}
                   </p>
+                  <h3 className="text-2xl md:text-4xl font-bold text-white mb-4">
+                    {project.title}
+                  </h3>
+                  <span className="inline-flex items-center gap-2 text-sm text-white/80 group-hover:text-white transition-colors">
+                    View Live
+                    <ArrowUpRight size={16} />
+                  </span>
                 </div>
-                <span className="text-label mt-1">View</span>
-              </div>
-            </a>
-          ))}
 
-          {/* Extra padding at end */}
-          <div className="w-20 shrink-0" />
+                {/* Arrow button */}
+                <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-y-2 group-hover:translate-y-0">
+                  <ArrowUpRight size={20} className="text-white" />
+                </div>
+              </div>
+            </motion.a>
+          ))}
         </div>
       </div>
     </section>

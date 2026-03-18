@@ -13,20 +13,28 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nova Digital | AI Web Agency",
+  title: "Nova Digital | Premium AI Web Agency",
   description:
-    "We build stunning, high-converting websites using AI-powered development. Starting at $500.",
+    "We build stunning, high-converting websites using AI-powered development. Premium quality, 48hr delivery. Starting at $500.",
   keywords: [
     "web agency",
     "AI web development",
     "website design",
+    "premium websites",
     "fast websites",
   ],
   openGraph: {
-    title: "Nova Digital | AI Web Agency",
+    title: "Nova Digital | Premium AI Web Agency",
     description:
-      "Stunning websites built with AI. Starting at $500.",
+      "Stunning websites built with AI. Premium quality in 48 hours. Starting at $500.",
     type: "website",
+    siteName: "Nova Digital",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nova Digital | Premium AI Web Agency",
+    description:
+      "Stunning websites built with AI. Premium quality in 48 hours.",
   },
 };
 
@@ -36,9 +44,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
+        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-[#0a0a0f] text-[#fafafa]`}
       >
         {children}
       </body>
