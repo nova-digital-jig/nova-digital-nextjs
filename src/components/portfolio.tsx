@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { ExternalLink, ArrowUpRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const projects = [
   {
@@ -13,6 +14,8 @@ const projects = [
     description:
       "A premium salon website with online booking integration, service showcase, and a design that reflects their upscale brand.",
     url: "https://lucas-hair-salon.vercel.app",
+    image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80",
+    imageAlt: "Modern hair salon interior with elegant styling stations and warm lighting",
     gradient: "from-violet-600 via-violet-500 to-fuchsia-500",
     tags: ["Next.js", "Booking System", "SEO"],
   },
@@ -22,6 +25,8 @@ const projects = [
     description:
       "A modern barbershop site with an appointment scheduler, team profiles, and gallery that increased walk-ins by 200%.",
     url: "https://edison-barbershop.vercel.app",
+    image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80",
+    imageAlt: "Classic barbershop with vintage chairs and professional grooming setup",
     gradient: "from-rose-600 via-rose-500 to-orange-500",
     tags: ["React", "Responsive", "Local SEO"],
   },
@@ -31,6 +36,8 @@ const projects = [
     description:
       "An automotive service website with service request forms, pricing transparency, and a professional image that built trust.",
     url: "https://rams-garage.vercel.app",
+    image: "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=800&q=80",
+    imageAlt: "Auto repair garage with professional mechanics working on vehicles",
     gradient: "from-violet-600 via-rose-500 to-rose-600",
     tags: ["Full Stack", "Forms", "Analytics"],
   },
@@ -71,28 +78,33 @@ export function Portfolio() {
               className="group relative"
             >
               <div className="overflow-hidden rounded-2xl glass transition-all duration-500 hover:shadow-2xl hover:shadow-violet-500/10">
-                {/* Gradient placeholder for screenshot */}
-                <div
-                  className={`relative h-56 w-full bg-gradient-to-br ${project.gradient} overflow-hidden`}
-                >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="glass rounded-xl p-6 text-center">
-                      <Globe className="mx-auto mb-2 h-8 w-8 text-white/80" />
-                      <p className="text-sm font-medium text-white/90">{project.title}</p>
+                {/* Image with zoom on hover */}
+                <div className="relative h-56 w-full overflow-hidden">
+                  <Image
+                    src={project.image}
+                    alt={project.imageAlt}
+                    fill
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                  />
+                  {/* Gradient overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-t ${project.gradient} opacity-30 mix-blend-multiply`} />
+
+                  {/* Slide-up overlay on hover */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-end bg-gradient-to-t from-black/80 via-black/40 to-transparent translate-y-full transition-transform duration-500 ease-out group-hover:translate-y-0">
+                    <div className="p-6 text-center">
+                      <p className="text-sm text-white/80 mb-3">{project.description}</p>
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button variant="outline" className="gap-2 border-white/20 bg-white/10 text-white hover:bg-white/20">
+                          Live Demo
+                          <ExternalLink className="h-4 w-4" />
+                        </Button>
+                      </a>
                     </div>
-                  </div>
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button variant="outline" className="gap-2 border-white/20 bg-white/10 text-white hover:bg-white/20">
-                        Live Demo
-                        <ExternalLink className="h-4 w-4" />
-                      </Button>
-                    </a>
                   </div>
                 </div>
 
@@ -105,20 +117,20 @@ export function Portfolio() {
                       href={project.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground transition-colors hover:text-foreground"
+                      className="text-muted-foreground transition-all hover:text-foreground hover:scale-110"
                     >
                       <ArrowUpRight className="h-4 w-4" />
                     </a>
                   </div>
                   <h3 className="mb-2 text-lg font-semibold">{project.title}</h3>
-                  <p className="mb-4 text-sm text-muted-foreground leading-relaxed">
+                  <p className="mb-4 text-sm text-muted-foreground leading-relaxed line-clamp-2 lg:hidden">
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-full bg-white/5 px-3 py-1 text-xs text-muted-foreground"
+                        className="rounded-full bg-white/5 px-3 py-1 text-xs text-muted-foreground border border-white/5"
                       >
                         {tag}
                       </span>
@@ -131,24 +143,5 @@ export function Portfolio() {
         </div>
       </div>
     </section>
-  );
-}
-
-function Globe({ className }: { className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-      <path d="M2 12h20" />
-    </svg>
   );
 }

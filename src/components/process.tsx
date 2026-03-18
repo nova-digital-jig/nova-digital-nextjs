@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { MessageSquare, Pencil, Code, Rocket } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -40,6 +40,32 @@ const steps = [
   },
 ];
 
+function AnimatedProgressLine() {
+  const lineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: lineRef,
+    offset: ["start center", "end center"],
+  });
+  const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  return (
+    <div ref={lineRef} className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 lg:block">
+      {/* Background line */}
+      <div className="absolute inset-0 bg-white/5" />
+      {/* Animated fill */}
+      <motion.div
+        style={{ scaleY, transformOrigin: "top" }}
+        className="absolute inset-0 bg-gradient-to-b from-violet-500 via-rose-500 to-violet-500"
+      />
+      {/* Glow */}
+      <motion.div
+        style={{ scaleY, transformOrigin: "top" }}
+        className="absolute inset-0 bg-gradient-to-b from-violet-500 via-rose-500 to-violet-500 blur-sm opacity-50"
+      />
+    </div>
+  );
+}
+
 export function Process() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
@@ -48,6 +74,7 @@ export function Process() {
     <section id="process" className="relative py-32 px-6 overflow-hidden">
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-violet-500/[0.03] to-transparent" />
+      <div className="absolute inset-0 dot-pattern opacity-30" />
 
       <div className="relative mx-auto max-w-7xl" ref={ref}>
         <motion.div
@@ -69,8 +96,8 @@ export function Process() {
         </motion.div>
 
         <div className="relative mt-20">
-          {/* Connector line */}
-          <div className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-violet-500/50 via-rose-500/50 to-violet-500/50 lg:block" />
+          {/* Animated progress line */}
+          <AnimatedProgressLine />
 
           <div className="grid gap-12 lg:gap-0">
             {steps.map((step, i) => (
@@ -85,7 +112,8 @@ export function Process() {
               >
                 {/* Content */}
                 <div className={`flex-1 ${i % 2 === 0 ? "lg:text-right" : "lg:text-left"}`}>
-                  <div
+                  <motion.div
+                    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
                     className={`glass rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/5 ${
                       i % 2 === 0 ? "lg:ml-auto lg:mr-12" : "lg:mr-auto lg:ml-12"
                     } lg:max-w-md`}
@@ -97,16 +125,20 @@ export function Process() {
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                       {step.description}
                     </p>
-                  </div>
+                  </motion.div>
                 </div>
 
-                {/* Icon node */}
+                {/* Icon node with pulse */}
                 <div className="relative z-10 flex-shrink-0">
-                  <div
-                    className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${step.color} shadow-lg`}
+                  <motion.div
+                    whileHover={{ scale: 1.15, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${step.color} shadow-lg relative`}
                   >
                     <step.icon className="h-6 w-6 text-white" />
-                  </div>
+                    {/* Pulse ring */}
+                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${step.color} animate-ping opacity-20`} />
+                  </motion.div>
                 </div>
 
                 {/* Spacer for alignment */}

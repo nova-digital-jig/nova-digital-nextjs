@@ -24,12 +24,15 @@ const footerLinks = {
 export function Footer() {
   return (
     <footer className="relative border-t border-white/5 bg-background/50">
+      {/* Subtle glow at top */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
+
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand column */}
           <div className="space-y-4">
-            <a href="#" className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-rose-500">
+            <a href="#" className="flex items-center gap-2 group">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-rose-500 transition-shadow duration-300 group-hover:shadow-lg group-hover:shadow-violet-500/25">
                 <Sparkles className="h-4 w-4 text-white" />
               </div>
               <span className="text-lg font-bold tracking-tight">
@@ -42,16 +45,16 @@ export function Footer() {
             <div className="space-y-2 text-sm text-muted-foreground">
               <a
                 href="mailto:jigpatel01234@gmail.com"
-                className="flex items-center gap-2 hover:text-foreground transition-colors"
+                className="flex items-center gap-2 hover:text-foreground transition-colors group"
               >
-                <Mail className="h-4 w-4" />
+                <Mail className="h-4 w-4 group-hover:text-violet-400 transition-colors" />
                 jigpatel01234@gmail.com
               </a>
               <a
                 href="tel:978-606-3386"
-                className="flex items-center gap-2 hover:text-foreground transition-colors"
+                className="flex items-center gap-2 hover:text-foreground transition-colors group"
               >
-                <Phone className="h-4 w-4" />
+                <Phone className="h-4 w-4 group-hover:text-violet-400 transition-colors" />
                 (978) 606-3386
               </a>
               <div className="flex items-center gap-2">
@@ -70,7 +73,7 @@ export function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      className="nav-link-underline text-sm text-muted-foreground transition-colors hover:text-foreground inline-block"
                     >
                       {link.label}
                     </a>

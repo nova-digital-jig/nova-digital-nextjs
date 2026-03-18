@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Menu, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,7 +43,7 @@ export function Navbar() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <a href="#" className="flex items-center gap-2 group">
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-rose-500">
+          <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-rose-500 transition-shadow duration-300 group-hover:shadow-lg group-hover:shadow-violet-500/25">
             <Sparkles className="h-4 w-4 text-white" />
           </div>
           <span className="text-lg font-bold tracking-tight">
@@ -51,13 +51,13 @@ export function Navbar() {
           </span>
         </a>
 
-        {/* Desktop nav */}
+        {/* Desktop nav with animated underline */}
         <div className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="nav-link-underline rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               {link.label}
             </a>
@@ -69,7 +69,7 @@ export function Navbar() {
             (978) 606-3386
           </a>
           <a href="#pricing">
-            <Button className="bg-gradient-to-r from-violet-500 to-rose-500 text-white border-0 hover:opacity-90 transition-opacity">
+            <Button className="bg-gradient-to-r from-violet-500 to-rose-500 text-white border-0 hover:opacity-90 transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/25">
               Get Started
             </Button>
           </a>

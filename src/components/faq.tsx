@@ -49,7 +49,9 @@ export function FAQ() {
 
   return (
     <section id="faq" className="relative py-32 px-6">
-      <div className="mx-auto max-w-3xl" ref={ref}>
+      <div className="absolute inset-0 dot-pattern opacity-20" />
+
+      <div className="relative mx-auto max-w-3xl" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -76,18 +78,24 @@ export function FAQ() {
         >
           <Accordion className="space-y-3">
             {faqs.map((faq, i) => (
-              <AccordionItem
+              <motion.div
                 key={i}
-                value={i}
-                className="glass rounded-xl px-6 border-0"
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: 0.3 + i * 0.08 }}
               >
-                <AccordionTrigger className="py-5 text-left text-base font-medium hover:no-underline">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
+                <AccordionItem
+                  value={i}
+                  className="glass rounded-xl px-6 border-0 transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/5 overflow-hidden"
+                >
+                  <AccordionTrigger className="py-5 text-left text-base font-medium hover:no-underline transition-colors hover:text-violet-400">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
             ))}
           </Accordion>
         </motion.div>

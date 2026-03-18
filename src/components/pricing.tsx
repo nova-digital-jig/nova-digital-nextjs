@@ -69,7 +69,9 @@ export function Pricing() {
 
   return (
     <section id="pricing" className="relative py-32 px-6">
-      <div className="mx-auto max-w-7xl" ref={ref}>
+      <div className="absolute inset-0 dot-pattern opacity-30" />
+
+      <div className="relative mx-auto max-w-7xl" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -97,8 +99,8 @@ export function Pricing() {
               transition={{ duration: 0.5, delay: i * 0.15 }}
               className={`relative rounded-2xl ${
                 plan.featured
-                  ? "glass-strong gradient-border lg:scale-105 lg:-my-4 shadow-2xl shadow-violet-500/10"
-                  : "glass"
+                  ? "glass-strong gradient-border lg:scale-105 lg:-my-4 shadow-2xl shadow-violet-500/10 animate-float animate-breathe"
+                  : "glass hover:shadow-lg hover:shadow-violet-500/5 transition-shadow duration-500"
               } overflow-hidden`}
             >
               {plan.featured && (
@@ -111,7 +113,7 @@ export function Pricing() {
               <div className="p-8">
                 <h3 className="text-lg font-semibold">{plan.name}</h3>
                 <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-4xl font-bold tracking-tight">
+                  <span className={`text-4xl font-bold tracking-tight ${plan.featured ? "text-gradient" : ""}`}>
                     {plan.price}
                   </span>
                   <span className="text-sm text-muted-foreground">/project</span>
@@ -123,14 +125,14 @@ export function Pricing() {
                 <a href={plan.href} target={plan.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
                   <Button
                     size="lg"
-                    className={`mt-8 w-full gap-2 ${
+                    className={`mt-8 w-full gap-2 group ${
                       plan.featured
-                        ? "bg-gradient-to-r from-violet-500 to-rose-500 text-white border-0 hover:opacity-90"
+                        ? "bg-gradient-to-r from-violet-500 to-rose-500 text-white border-0 hover:opacity-90 hover:shadow-lg hover:shadow-violet-500/25 transition-all"
                         : "bg-white/5 hover:bg-white/10 border-white/10"
                     }`}
                   >
                     {plan.cta}
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </a>
 
@@ -143,6 +145,11 @@ export function Pricing() {
                   ))}
                 </ul>
               </div>
+
+              {/* Glow behind featured card */}
+              {plan.featured && (
+                <div className="absolute -inset-1 -z-10 rounded-2xl bg-gradient-to-r from-violet-500/20 to-rose-500/20 blur-2xl" />
+              )}
             </motion.div>
           ))}
         </div>

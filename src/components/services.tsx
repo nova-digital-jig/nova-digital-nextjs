@@ -13,6 +13,7 @@ const services = [
       "Hand-crafted, responsive websites built with modern frameworks. Optimized for speed, SEO, and conversions from day one.",
     gradient: "from-violet-500 to-violet-600",
     glow: "group-hover:shadow-violet-500/20",
+    glowColor: "rgba(139, 92, 246, 0.15)",
   },
   {
     icon: Palette,
@@ -21,6 +22,7 @@ const services = [
       "Pixel-perfect designs that captivate your audience. Every interaction is deliberate, every visual choice drives results.",
     gradient: "from-rose-500 to-rose-600",
     glow: "group-hover:shadow-rose-500/20",
+    glowColor: "rgba(244, 63, 94, 0.15)",
   },
   {
     icon: Search,
@@ -29,6 +31,7 @@ const services = [
       "Dominate search results with technical SEO baked into every build. Schema markup, Core Web Vitals, and local SEO included.",
     gradient: "from-violet-500 to-rose-500",
     glow: "group-hover:shadow-violet-500/20",
+    glowColor: "rgba(139, 92, 246, 0.15)",
   },
   {
     icon: Rocket,
@@ -37,6 +40,7 @@ const services = [
       "Lightning-fast load times with 95+ Lighthouse scores. Edge-deployed, image-optimized, and built to handle any traffic.",
     gradient: "from-rose-500 to-violet-500",
     glow: "group-hover:shadow-rose-500/20",
+    glowColor: "rgba(244, 63, 94, 0.15)",
   },
 ];
 
@@ -46,7 +50,10 @@ export function Services() {
 
   return (
     <section id="services" className="relative py-32 px-6">
-      <div className="mx-auto max-w-7xl" ref={ref}>
+      {/* Dot pattern overlay */}
+      <div className="absolute inset-0 dot-pattern opacity-50" />
+
+      <div className="relative mx-auto max-w-7xl" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -72,21 +79,28 @@ export function Services() {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className={`group relative rounded-2xl glass p-6 transition-all duration-500 hover:shadow-2xl ${service.glow}`}
+              whileHover={{
+                scale: 1.04,
+                y: -6,
+                transition: { duration: 0.3 },
+              }}
+              className={`group relative rounded-2xl glass p-6 transition-all duration-500 hover:shadow-2xl ${service.glow} glow-pulse-hover cursor-default`}
             >
-              <div
-                className={`mb-4 inline-flex rounded-xl bg-gradient-to-br ${service.gradient} p-3`}
+              <motion.div
+                whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
+                transition={{ duration: 0.5 }}
+                className={`mb-4 inline-flex rounded-xl bg-gradient-to-br ${service.gradient} p-3 shadow-lg`}
               >
                 <service.icon className="h-5 w-5 text-white" />
-              </div>
+              </motion.div>
               <h3 className="mb-2 text-lg font-semibold">{service.title}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground">
                 {service.description}
               </p>
 
-              {/* Hover glow effect */}
+              {/* Glow pulse background */}
               <div
-                className={`absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br ${service.gradient} opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-10`}
+                className={`glow-bg absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br ${service.gradient} opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-10`}
               />
             </motion.div>
           ))}
