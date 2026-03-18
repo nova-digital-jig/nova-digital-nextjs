@@ -59,14 +59,14 @@ const plans = [
 
 export function Pricing() {
   return (
-    <section id="pricing" className="py-24 md:py-36 px-6 md:px-10">
+    <section id="pricing" className="py-32 md:py-40 px-6 md:px-10">
       <div className="mx-auto max-w-[1400px]">
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
         >
           <p className="text-label mb-4">Pricing</p>
           <h2 className="text-display">
@@ -78,14 +78,14 @@ export function Pricing() {
           {plans.map((plan, i) => (
             <motion.div
               key={plan.name}
-              className={`relative rounded-2xl p-8 md:p-10 transition-all duration-500 ${
+              className={`relative rounded-2xl p-8 md:p-10 min-h-[500px] transition-all duration-500 ${
                 plan.featured
                   ? "bg-[#111118] lg:scale-[1.03]"
                   : "bg-[#111118] border border-[#1f1f3a]"
               }`}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
             >
               {/* Gradient border for featured */}
@@ -132,7 +132,7 @@ export function Pricing() {
                 <ArrowUpRight size={16} />
               </a>
 
-              <ul className="space-y-4">
+              <ul className="space-y-5">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm">
                     <Check

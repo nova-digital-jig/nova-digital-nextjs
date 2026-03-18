@@ -31,14 +31,14 @@ const steps = [
 
 export function Process() {
   return (
-    <section id="process" className="py-24 md:py-36 px-6 md:px-10">
+    <section id="process" className="py-32 md:py-40 px-6 md:px-10">
       <div className="mx-auto max-w-[1400px]">
         <motion.div
           className="mb-16 md:mb-24"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
         >
           <p className="text-label mb-4">How It Works</p>
           <h2 className="text-display">
@@ -51,20 +51,20 @@ export function Process() {
           {steps.map((step, i) => (
             <motion.div
               key={step.num}
-              className={`py-12 md:py-16 ${
+              className={`py-16 md:py-20 ${
                 i < steps.length - 1
                   ? "border-b border-[#1f1f3a]"
                   : ""
               }`}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
             >
-              <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12">
+              <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-16">
                 {/* Large step number */}
                 <div className="shrink-0">
-                  <span className="text-[clamp(4rem,8vw,7rem)] font-bold leading-none tracking-tighter gradient-text-number">
+                  <span className="text-6xl md:text-[clamp(5rem,8vw,7rem)] font-bold leading-none tracking-tighter gradient-text-number">
                     {step.num}
                   </span>
                 </div>

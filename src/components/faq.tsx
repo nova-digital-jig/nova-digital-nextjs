@@ -61,10 +61,10 @@ function AccordionItem({
   return (
     <motion.div
       className="border-b border-[#1f1f3a]"
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-30px" }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.6, delay: index * 0.05 }}
     >
       <button
         onClick={onToggle}
@@ -107,14 +107,14 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="py-24 md:py-36 px-6 md:px-10">
+    <section id="faq" className="py-32 md:py-40 px-6 md:px-10">
       <div className="mx-auto max-w-[900px]">
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
         >
           <p className="text-label mb-4">FAQ</p>
           <h2 className="text-display">

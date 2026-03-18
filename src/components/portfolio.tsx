@@ -33,14 +33,14 @@ const projects = [
 
 export function Portfolio() {
   return (
-    <section id="portfolio" className="py-24 md:py-36 px-6 md:px-10">
+    <section id="portfolio" className="py-32 md:py-40 px-6 md:px-10">
       <div className="mx-auto max-w-[1400px]">
         <motion.div
           className="mb-16"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
         >
           <p className="text-label mb-4">Selected Work</p>
           <h2 className="text-display">
@@ -56,10 +56,10 @@ export function Portfolio() {
               target="_blank"
               rel="noopener noreferrer"
               className="group block relative rounded-2xl overflow-hidden"
-              initial={{ opacity: 0, y: 60 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.7, delay: i * 0.15 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.6, delay: i * 0.15 }}
             >
               {/* Image container */}
               <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-2xl">

@@ -32,14 +32,14 @@ const services = [
 
 export function Services() {
   return (
-    <section id="services" className="py-24 md:py-36 px-6 md:px-10">
+    <section id="services" className="py-32 md:py-40 px-6 md:px-10">
       <div className="mx-auto max-w-[1400px]">
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
         >
           <p className="text-label mb-4">What We Do</p>
           <h2 className="text-display">
@@ -54,10 +54,10 @@ export function Services() {
             return (
               <motion.div
                 key={service.title}
-                className="group relative rounded-2xl bg-[#111118] border border-[#1f1f3a] p-8 md:p-10 transition-all duration-500 hover:border-transparent"
-                initial={{ opacity: 0, y: 40 }}
+                className="group relative rounded-2xl bg-[#111118] border border-[#1f1f3a] p-8 md:p-10 min-h-[280px] transition-all duration-500 hover:border-transparent"
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
               >
                 {/* Gradient border on hover */}

@@ -36,10 +36,10 @@ export function CTA() {
       <div className="relative z-10 mx-auto max-w-[1400px] text-center">
         <motion.h2
           className="text-display md:text-hero text-white leading-tight"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6 }}
         >
           Ready to Build Your
           <br />
@@ -50,8 +50,8 @@ export function CTA() {
           className="mt-8 text-lg md:text-xl text-white/80 max-w-lg mx-auto"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
           Book a free 15-minute strategy call and get a custom proposal
           within 24 hours. Let&apos;s make it happen.
@@ -59,10 +59,10 @@ export function CTA() {
 
         <motion.div
           className="mt-10 flex flex-wrap items-center justify-center gap-4"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
         >
           <a
             href="tel:978-606-3386"
