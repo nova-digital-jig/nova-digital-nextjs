@@ -1,182 +1,74 @@
-"use client";
+'use client'
 
-import { useEffect, useState, useRef } from "react";
-import { useHeroReveal } from "./scroll-animations";
-
-function FloatingShapes() {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(6)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full opacity-10 animate-float"
-          style={{
-            width: `${40 + i * 30}px`,
-            height: `${40 + i * 30}px`,
-            background: i % 2 === 0
-              ? "linear-gradient(135deg, #8b5cf6, #ec4899)"
-              : "linear-gradient(135deg, #6366f1, #8b5cf6)",
-            left: `${10 + i * 15}%`,
-            top: `${15 + (i % 3) * 25}%`,
-            animationDuration: `${8 + i * 2}s`,
-            animationDelay: `${i * 0.5}s`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-function useCountUp(target: number, duration: number = 2000) {
-  const [count, setCount] = useState(0);
-  const [started, setStarted] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started) {
-          setStarted(true);
-        }
-      },
-      { threshold: 0.5 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [started]);
-
-  useEffect(() => {
-    if (!started) return;
-    const steps = 60;
-    const increment = target / steps;
-    let current = 0;
-    const interval = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        setCount(target);
-        clearInterval(interval);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, duration / steps);
-    return () => clearInterval(interval);
-  }, [started, target, duration]);
-
-  return { count, ref };
-}
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
 
 export function Hero() {
-  const heroRef = useHeroReveal();
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  const stats = [
-    { value: 48, suffix: "hr", label: "Delivery" },
-    { value: 50, suffix: "+", label: "Sites Built" },
-    { value: 4.9, suffix: "★", label: "Rating", isDecimal: true },
-  ];
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const lines = containerRef.current?.querySelectorAll('.hero-line')
+      if (!lines) return
+
+      gsap.set(lines, { y: 120, opacity: 0 })
+
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
+
+      lines.forEach((line, i) => {
+        tl.to(line, {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+        }, 0.15 * i)
+      })
+
+      tl.fromTo('.hero-sub',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8 },
+        0.8
+      )
+      tl.fromTo('.hero-buttons',
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8 },
+        1.0
+      )
+    }, containerRef)
+
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-      {/* Animated gradient background */}
-      <div
-        className="absolute inset-0 animate-gradient-shift"
-        style={{
-          background:
-            "linear-gradient(135deg, #0a0a2e 0%, #1a0533 25%, #0d0d2b 50%, #0a0a0f 75%, #12061f 100%)",
-          backgroundSize: "400% 400%",
-        }}
-      />
+    <section ref={containerRef} className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Subtle gradient orb */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.06)_0%,transparent_70%)] pointer-events-none" />
 
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 grid-pattern opacity-50" />
-
-      {/* Floating shapes */}
-      <FloatingShapes />
-
-      {/* Content */}
-      <div ref={heroRef} className="relative z-10 px-6 md:px-10 pt-32 pb-20">
-        <div className="mx-auto max-w-[1400px] w-full">
-          {/* Badge */}
-          <div data-hero-anim className="mb-8">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#8b5cf6]/30 bg-[#8b5cf6]/10 text-sm text-[#c4b5fd] animate-pulse-glow">
-              <span className="w-2 h-2 rounded-full bg-[#8b5cf6] animate-pulse" />
-              Now accepting clients
-            </span>
-          </div>
-
-          {/* Hero text */}
-          <h1 data-hero-anim className="text-hero gradient-text">
-            Build
-          </h1>
-          <h1 data-hero-anim className="text-hero gradient-text mt-2">
-            What&apos;s Next
-          </h1>
-
-          {/* Subtitle */}
-          <p data-hero-anim className="text-body-lg mt-8 max-w-xl text-[#a0a0b8]">
-            We craft stunning, high-converting websites in 48 hours using
-            AI-powered development. Premium quality starting at $500.
-          </p>
-
-          {/* CTAs */}
-          <div data-hero-anim className="mt-10 flex flex-wrap items-center gap-4">
-            <a href="#pricing" className="btn-primary">
-              Start a Project
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path
-                  d="M1 13L13 1M13 1H3M13 1V11"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </a>
-            <a href="#portfolio" className="btn-outline">
-              View Our Work
-            </a>
-          </div>
-
-          {/* Stats row */}
-          <div data-hero-anim className="mt-16 flex flex-wrap gap-8 md:gap-16">
-            {stats.map((stat) => (
-              <StatItem key={stat.label} {...stat} />
-            ))}
-          </div>
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 pt-32 pb-20">
+        <div className="overflow-hidden">
+          <h1 className="hero-line text-massive text-white/95 will-change-transform">WE BUILD</h1>
         </div>
-      </div>
+        <div className="overflow-hidden">
+          <h1 className="hero-line text-massive gradient-text will-change-transform">WEBSITES</h1>
+        </div>
+        <div className="overflow-hidden">
+          <h1 className="hero-line text-massive text-white/95 will-change-transform">THAT PRINT</h1>
+        </div>
+        <div className="overflow-hidden">
+          <h1 className="hero-line text-massive gradient-text will-change-transform">MONEY.</h1>
+        </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in-delayed">
-        <span className="text-label text-xs text-[#666]">Scroll</span>
-        <div className="w-5 h-8 rounded-full border border-[#333] flex justify-center pt-1.5 animate-pulse-slow">
-          <div className="w-1 h-2 rounded-full bg-[#8b5cf6] animate-scroll-dot" />
+        <div className="mt-12 md:mt-16 max-w-xl">
+          <p className="hero-sub text-lg md:text-xl text-[#777] font-light leading-relaxed">
+            Premium AI-powered websites delivered in 48 hours.
+            Stunning design. Blazing performance. Real results.
+          </p>
+        </div>
+
+        <div className="hero-buttons mt-10 flex flex-wrap gap-4">
+          <a href="#contact" className="btn-primary">Start a Project</a>
+          <a href="#work" className="btn-outline">View Work</a>
         </div>
       </div>
     </section>
-  );
-}
-
-function StatItem({
-  value,
-  suffix,
-  label,
-  isDecimal,
-}: {
-  value: number;
-  suffix: string;
-  label: string;
-  isDecimal?: boolean;
-}) {
-  const { count, ref } = useCountUp(isDecimal ? value * 10 : value);
-  const display = isDecimal ? (count / 10).toFixed(1) : count;
-
-  return (
-    <div ref={ref} className="flex flex-col">
-      <span className="text-3xl md:text-4xl font-bold text-white">
-        {display}
-        <span className="gradient-text">{suffix}</span>
-      </span>
-      <span className="text-sm text-[#888899] mt-1">{label}</span>
-    </div>
-  );
+  )
 }

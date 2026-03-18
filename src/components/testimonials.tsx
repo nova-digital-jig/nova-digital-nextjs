@@ -1,123 +1,108 @@
-"use client";
+'use client'
 
-import { useState, useCallback, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useScrollReveal } from "./scroll-animations";
+import { useState, useCallback, useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const testimonials = [
   {
-    name: "Maria Santos",
-    role: "Owner, Lucas Hair Salon",
+    name: 'Maria Santos',
+    role: 'Owner, Lucas Hair Salon',
     content:
-      "Nova Digital transformed our online presence completely. We went from zero online bookings to over 40 per week. The website paid for itself in the first month.",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
+      'Nova Digital transformed our online presence completely. We went from zero online bookings to over 40 per week. The website paid for itself in the first month.',
   },
   {
-    name: "Raj Patel",
-    role: "Owner, Edison Barbershop",
+    name: 'Raj Patel',
+    role: 'Owner, Edison Barbershop',
     content:
-      "I was skeptical about a 48-hour turnaround, but they delivered a website that looks like it cost ten thousand dollars. Walk-ins increased 200% since launch.",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
+      'I was skeptical about a 48-hour turnaround, but they delivered a website that looks like it cost ten thousand dollars. Walk-ins increased 200% since launch.',
   },
   {
-    name: "Mike Thompson",
+    name: 'Mike Thompson',
     role: "Owner, Ram's Garage",
     content:
-      "Professional, fast, and the results speak for themselves. Our service requests tripled and we had to hire two more mechanics to keep up with demand.",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80",
+      'Professional, fast, and the results speak for themselves. Our service requests tripled and we had to hire two more mechanics to keep up with demand.',
   },
-];
+]
 
 export function Testimonials() {
-  const [active, setActive] = useState(0);
-  const headerRef = useScrollReveal();
-
-  const next = useCallback(() => {
-    setActive((prev) => (prev + 1) % testimonials.length);
-  }, []);
-
-  const prev = useCallback(() => {
-    setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  }, []);
+  const [active, setActive] = useState(0)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const quoteRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const timer = setInterval(next, 6000);
-    return () => clearInterval(timer);
-  }, [next]);
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.testimonials-label',
+        { y: 30, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+          scrollTrigger: { trigger: '.testimonials-label', start: 'top 88%' }
+        }
+      )
+      gsap.fromTo('.testimonials-heading',
+        { y: 60, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 1, ease: 'power3.out',
+          scrollTrigger: { trigger: '.testimonials-heading', start: 'top 88%' }
+        }
+      )
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
 
-  const t = testimonials[active];
+  const next = useCallback(() => {
+    setActive((prev) => (prev + 1) % testimonials.length)
+  }, [])
+
+  const prev = useCallback(() => {
+    setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  }, [])
+
+  // Animate quote change
+  useEffect(() => {
+    if (!quoteRef.current) return
+    gsap.fromTo(quoteRef.current,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }
+    )
+  }, [active])
+
+  // Auto-rotate
+  useEffect(() => {
+    const timer = setInterval(next, 6000)
+    return () => clearInterval(timer)
+  }, [next])
+
+  const t = testimonials[active]
 
   return (
-    <section className="py-24 md:py-32 lg:py-40 px-6 md:px-10">
-      <div className="mx-auto max-w-[1400px]">
-        <div ref={headerRef} className="mb-16">
-          <p className="text-label mb-4">Testimonials</p>
-          <h2 className="text-display">
-            What our clients <span className="gradient-text">say</span>
+    <section ref={sectionRef} className="py-32 md:py-44">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+        <div className="mb-20 md:mb-28">
+          <p className="testimonials-label text-label mb-5 text-[#555]">Testimonials</p>
+          <h2 className="testimonials-heading text-display">
+            What clients say<span className="gradient-text">.</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          {/* Quote */}
-          <div className="lg:col-span-8">
-            <AnimatePresence mode="wait">
-              <motion.blockquote
-                key={active}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-              >
-                <p
-                  className="text-2xl md:text-3xl lg:text-4xl leading-snug font-light text-white/90"
-                  style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-                >
-                  &ldquo;{t.content}&rdquo;
-                </p>
-                <footer className="mt-10 flex items-center gap-5">
-                  <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-[#8b5cf6]/30">
-                    <Image
-                      src={t.image}
-                      alt={t.name}
-                      fill
-                      className="object-cover"
-                      sizes="80px"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-lg font-semibold text-white">{t.name}</p>
-                    <p className="text-sm text-[#888899]">{t.role}</p>
-                  </div>
-                </footer>
-              </motion.blockquote>
-            </AnimatePresence>
+        <div className="max-w-4xl">
+          <div ref={quoteRef} key={active}>
+            <blockquote
+              className="text-[clamp(1.5rem,3.5vw,3rem)] font-light leading-[1.3] text-white/85 italic"
+            >
+              &ldquo;{t.content}&rdquo;
+            </blockquote>
+
+            <div className="mt-10">
+              <p className="text-lg font-semibold text-white">{t.name}</p>
+              <p className="text-sm text-[#555] mt-1">{t.role}</p>
+            </div>
           </div>
 
-          {/* Controls */}
-          <div className="lg:col-span-4 flex flex-col items-start lg:items-end gap-8">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={prev}
-                className="w-12 h-12 rounded-full border border-[#1f1f3a] flex items-center justify-center hover:bg-[#8b5cf6] hover:border-[#8b5cf6] text-[#888899] hover:text-white transition-all duration-400"
-                aria-label="Previous testimonial"
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                onClick={next}
-                className="w-12 h-12 rounded-full border border-[#1f1f3a] flex items-center justify-center hover:bg-[#8b5cf6] hover:border-[#8b5cf6] text-[#888899] hover:text-white transition-all duration-400"
-                aria-label="Next testimonial"
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
-
-            {/* Progress dots */}
+          {/* Navigation */}
+          <div className="mt-14 flex items-center gap-6">
             <div className="flex gap-3">
               {testimonials.map((_, i) => (
                 <button
@@ -125,21 +110,37 @@ export function Testimonials() {
                   onClick={() => setActive(i)}
                   className={`h-2 rounded-full transition-all duration-500 ${
                     i === active
-                      ? "w-8 bg-gradient-to-r from-[#8b5cf6] to-[#ec4899]"
-                      : "w-2 bg-[#1f1f3a] hover:bg-[#3a3a5a]"
+                      ? 'w-10 bg-gradient-to-r from-[#8b5cf6] to-[#ec4899]'
+                      : 'w-2 bg-[#333] hover:bg-[#555]'
                   }`}
                   aria-label={`Go to testimonial ${i + 1}`}
                 />
               ))}
             </div>
 
-            <p className="text-label">
-              {String(active + 1).padStart(2, "0")} /{" "}
-              {String(testimonials.length).padStart(2, "0")}
-            </p>
+            <div className="flex gap-2 ml-auto">
+              <button
+                onClick={prev}
+                className="w-12 h-12 rounded-full border border-white/[0.08] flex items-center justify-center text-[#555] hover:text-white hover:border-[#8b5cf6] transition-all duration-400"
+                aria-label="Previous"
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <button
+                onClick={next}
+                className="w-12 h-12 rounded-full border border-white/[0.08] flex items-center justify-center text-[#555] hover:text-white hover:border-[#8b5cf6] transition-all duration-400"
+                aria-label="Next"
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }

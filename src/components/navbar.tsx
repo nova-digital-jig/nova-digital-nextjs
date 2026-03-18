@@ -1,127 +1,84 @@
-"use client";
+'use client'
 
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-
-const navLinks = [
-  { label: "Work", href: "#portfolio" },
-  { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
-  { label: "Pricing", href: "#pricing" },
-];
+import { useState, useEffect } from 'react'
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const handleScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-  }, [menuOpen]);
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+  }, [menuOpen])
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${
           scrolled
-            ? "bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5"
-            : "bg-transparent"
+            ? 'bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5'
+            : 'bg-transparent'
         }`}
       >
-        <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-6 md:px-10 py-5">
-          <a href="#" className="text-lg font-bold tracking-tight text-white">
-            Nova Digital
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between h-20">
+          <a href="#" className="text-xl font-bold tracking-tight text-white">
+            NOVA<span className="gradient-text">.</span>
           </a>
 
           {/* Desktop */}
-          <div className="hidden md:flex items-center gap-10">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="nav-link text-sm text-[#888899] hover:text-white transition-colors duration-300"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
-          <div className="hidden md:flex items-center gap-6">
-            <a
-              href="tel:978-606-3386"
-              className="text-sm text-[#888899] hover:text-white transition-colors"
-            >
-              (978) 606-3386
+          <div className="hidden md:flex items-center gap-12">
+            <a href="#work" className="nav-link text-[13px] font-medium tracking-[0.2em] uppercase text-[#777] hover:text-white transition-colors duration-300">
+              Work
             </a>
-            <a href="#pricing" className="btn-primary text-sm py-3 px-6">
-              Start a Project
+            <a href="#about" className="nav-link text-[13px] font-medium tracking-[0.2em] uppercase text-[#777] hover:text-white transition-colors duration-300">
+              About
+            </a>
+            <a href="#contact" className="nav-link text-[13px] font-medium tracking-[0.2em] uppercase text-[#777] hover:text-white transition-colors duration-300">
+              Contact
             </a>
           </div>
 
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center text-white"
+            className="md:hidden relative z-50 w-10 h-10 flex flex-col items-center justify-center gap-1.5"
             aria-label="Toggle menu"
           >
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+            <span className={`block w-6 h-[1.5px] bg-white transition-all duration-400 ${menuOpen ? 'rotate-45 translate-y-[4.5px]' : ''}`} />
+            <span className={`block w-6 h-[1.5px] bg-white transition-all duration-400 ${menuOpen ? '-rotate-45 -translate-y-[1.5px]' : ''}`} />
           </button>
-        </nav>
-      </header>
+        </div>
+      </nav>
 
       {/* Mobile fullscreen menu */}
       <div
-        className={`fixed inset-0 z-40 bg-[#0a0a0f] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
-          menuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
+        className={`fixed inset-0 z-40 bg-[#0a0a0a] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
+          menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        <div className="flex flex-col justify-center items-center h-full gap-8">
-          {navLinks.map((link, i) => (
+        <div className="flex flex-col justify-center items-center h-full gap-10">
+          {['Work', 'About', 'Contact'].map((label, i) => (
             <a
-              key={link.href}
-              href={link.href}
+              key={label}
+              href={`#${label.toLowerCase()}`}
               onClick={() => setMenuOpen(false)}
-              className="text-display text-white transition-all duration-500"
+              className="text-[clamp(2rem,8vw,4rem)] font-bold text-white tracking-tight transition-all duration-500"
               style={{
-                transitionDelay: menuOpen ? `${i * 80}ms` : "0ms",
+                transitionDelay: menuOpen ? `${i * 80}ms` : '0ms',
                 opacity: menuOpen ? 1 : 0,
-                transform: menuOpen ? "translateY(0)" : "translateY(30px)",
+                transform: menuOpen ? 'translateY(0)' : 'translateY(30px)',
               }}
             >
-              {link.label}
+              {label}
             </a>
           ))}
-          <div
-            className="mt-8 flex flex-col items-center gap-4 transition-all duration-500"
-            style={{
-              transitionDelay: menuOpen ? "400ms" : "0ms",
-              opacity: menuOpen ? 1 : 0,
-            }}
-          >
-            <a href="tel:978-606-3386" className="text-sm text-[#888899]">
-              (978) 606-3386
-            </a>
-            <a
-              href="#pricing"
-              onClick={() => setMenuOpen(false)}
-              className="btn-primary"
-            >
-              Start a Project
-            </a>
-          </div>
         </div>
       </div>
     </>
-  );
+  )
 }

@@ -1,80 +1,76 @@
-"use client";
+'use client'
 
-import { useScrollReveal } from "./scroll-animations";
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export function CTA() {
-  const headingRef = useScrollReveal();
-  const textRef = useScrollReveal();
-  const buttonsRef = useScrollReveal();
+  const sectionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const lines = sectionRef.current?.querySelectorAll('.cta-line')
+      if (!lines) return
+
+      gsap.fromTo(lines,
+        { y: 80, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 1, ease: 'power3.out', stagger: 0.12,
+          scrollTrigger: { trigger: '.cta-text', start: 'top 85%' }
+        }
+      )
+
+      gsap.fromTo('.cta-sub',
+        { y: 30, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+          scrollTrigger: { trigger: '.cta-sub', start: 'top 90%' }
+        }
+      )
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <section className="relative py-24 md:py-32 lg:py-40 px-6 md:px-10 overflow-hidden">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#8b5cf6] via-[#ec4899] to-[#f43f5e]" />
+    <section ref={sectionRef} id="contact" className="py-32 md:py-44 relative overflow-hidden">
+      {/* Subtle gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.06)_0%,transparent_70%)] pointer-events-none" />
 
-      {/* Floating shapes - CSS only */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(4)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full bg-white/10 animate-float"
-            style={{
-              width: `${100 + i * 80}px`,
-              height: `${100 + i * 80}px`,
-              left: `${i * 25}%`,
-              top: `${20 + (i % 2) * 40}%`,
-              animationDuration: `${10 + i * 3}s`,
-              animationDelay: `${i * 1.5}s`,
-            }}
-          />
-        ))}
-      </div>
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 text-center">
+        <div className="cta-text">
+          <div className="overflow-hidden">
+            <h2 className="cta-line text-massive text-white/95">LET&apos;S</h2>
+          </div>
+          <div className="overflow-hidden">
+            <h2 className="cta-line text-massive gradient-text">BUILD.</h2>
+          </div>
+        </div>
 
-      <div className="relative z-10 mx-auto max-w-[1400px] text-center">
-        <h2
-          ref={headingRef}
-          className="text-display md:text-hero text-white leading-tight"
-        >
-          Ready to Build Your
-          <br />
-          Dream Website?
-        </h2>
+        <div className="cta-sub mt-12 max-w-lg mx-auto">
+          <p className="text-lg text-[#666] font-light leading-relaxed mb-10">
+            Ready to start? Get in touch and we&apos;ll have a proposal
+            for you within 24 hours.
+          </p>
 
-        <p
-          ref={textRef}
-          className="mt-8 text-lg md:text-xl text-white/80 max-w-lg mx-auto"
-        >
-          Book a free 15-minute strategy call and get a custom proposal
-          within 24 hours. Let&apos;s make it happen.
-        </p>
-
-        <div
-          ref={buttonsRef}
-          className="mt-10 flex flex-wrap items-center justify-center gap-4"
-        >
-          <a
-            href="tel:978-606-3386"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-[#0a0a0f] rounded-full font-semibold text-sm hover:bg-white/90 hover:scale-105 transition-all duration-400"
-          >
-            (978) 606-3386
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path
-                d="M1 13L13 1M13 1H3M13 1V11"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
-          <a
-            href="mailto:jigpatel01234@gmail.com?subject=Website%20Inquiry"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-transparent text-white rounded-full font-medium text-sm border border-white/30 hover:bg-white/10 transition-all duration-400"
-          >
-            jigpatel01234@gmail.com
-          </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="mailto:jigpatel01234@gmail.com?subject=Website%20Inquiry"
+              className="btn-primary"
+            >
+              Get in Touch
+            </a>
+            <a
+              href="tel:978-606-3386"
+              className="btn-outline"
+            >
+              (978) 606-3386
+            </a>
+          </div>
         </div>
       </div>
     </section>
-  );
+  )
 }

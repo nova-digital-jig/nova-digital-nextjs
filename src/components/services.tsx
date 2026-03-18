@@ -1,78 +1,96 @@
-"use client";
+'use client'
 
-import { Code, Palette, BarChart3, Bot } from "lucide-react";
-import { useScrollReveal, useStaggerReveal } from "./scroll-animations";
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const services = [
   {
-    icon: Code,
-    title: "Web Design & Development",
-    description:
-      "Custom-built, responsive websites using Next.js and modern frameworks. Optimized for speed, SEO, and conversions that drive real business results.",
+    num: '01',
+    title: 'Web Design',
+    desc: 'Bespoke visual identities and interfaces that captivate users and drive conversions.',
   },
   {
-    icon: Palette,
-    title: "UI/UX Design",
-    description:
-      "Pixel-perfect interfaces designed to captivate your audience. Every interaction is deliberate, every design choice drives engagement and results.",
+    num: '02',
+    title: 'Development',
+    desc: 'Lightning-fast Next.js sites built with clean code, optimized for performance and SEO.',
   },
   {
-    icon: BarChart3,
-    title: "SEO & Performance",
-    description:
-      "Technical SEO baked into every build. Schema markup, Core Web Vitals optimization, and 95+ Lighthouse scores guaranteed for every project.",
+    num: '03',
+    title: 'UI/UX Strategy',
+    desc: 'Data-driven user experience design that turns visitors into paying customers.',
   },
   {
-    icon: Bot,
-    title: "AI Integration",
-    description:
-      "AI-powered chatbots, booking systems, and automation tools that work while you sleep. Future-proof your business with intelligent solutions.",
+    num: '04',
+    title: 'AI Integration',
+    desc: 'Smart automation and AI-powered features that give your business a competitive edge.',
   },
-];
+]
 
 export function Services() {
-  const headerRef = useScrollReveal();
-  const gridRef = useStaggerReveal();
+  const sectionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.services-label',
+        { y: 30, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+          scrollTrigger: { trigger: '.services-label', start: 'top 88%' }
+        }
+      )
+
+      gsap.fromTo('.services-title',
+        { y: 60, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 1, ease: 'power3.out',
+          scrollTrigger: { trigger: '.services-title', start: 'top 88%' }
+        }
+      )
+
+      gsap.fromTo('.service-row-item',
+        { y: 40, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.12,
+          scrollTrigger: { trigger: '.services-list', start: 'top 82%' }
+        }
+      )
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <section id="services" className="py-24 md:py-32 lg:py-40 px-6 md:px-10">
-      <div className="mx-auto max-w-[1400px]">
-        <div ref={headerRef} className="text-center mb-16">
-          <p className="text-label mb-4">What We Do</p>
-          <h2 className="text-display">
-            Services built for{" "}
-            <span className="gradient-text">growth</span>
+    <section ref={sectionRef} id="about" className="py-32 md:py-44">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+        <div className="mb-20 md:mb-28">
+          <p className="services-label text-label mb-5 text-[#555]">What We Do</p>
+          <h2 className="services-title text-display">
+            Services<span className="gradient-text">.</span>
           </h2>
         </div>
 
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {services.map((service) => {
-            const Icon = service.icon;
-            return (
-              <div
-                key={service.title}
-                className="group relative rounded-2xl bg-[#111118] border border-[#1f1f3a] p-8 md:p-10 min-h-[280px] transition-all duration-500 hover:border-transparent"
-              >
-                {/* Gradient border on hover */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#8b5cf6] to-[#f43f5e] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-[1px]" />
-                <div className="absolute inset-[1px] rounded-2xl bg-[#111118] -z-[5]" />
-
-                <div className="w-14 h-14 rounded-xl bg-[#8b5cf6]/10 border border-[#8b5cf6]/20 flex items-center justify-center mb-6">
-                  <Icon size={28} className="text-[#8b5cf6]" />
+        <div className="services-list">
+          {services.map((s) => (
+            <div key={s.num} className="service-row service-row-item group">
+              <div className="flex items-start md:items-center justify-between py-10 md:py-16 gap-6 flex-col md:flex-row">
+                <div className="flex items-baseline gap-6 md:gap-10">
+                  <span className="text-sm font-mono text-[#8b5cf6] opacity-60">{s.num}</span>
+                  <h3 className="text-[clamp(1.75rem,4vw,3.5rem)] font-bold tracking-tight leading-none group-hover:text-[#8b5cf6] transition-colors duration-500">
+                    {s.title}
+                  </h3>
                 </div>
-
-                <h3 className="text-xl md:text-2xl font-semibold text-white mb-4">
-                  {service.title}
-                </h3>
-
-                <p className="text-[#888899] leading-relaxed">
-                  {service.description}
+                <p className="text-[#555] text-base md:text-lg max-w-md md:text-right font-light leading-relaxed">
+                  {s.desc}
                 </p>
               </div>
-            );
-          })}
+            </div>
+          ))}
+          <div className="border-t border-white/[0.06]" />
         </div>
       </div>
     </section>
-  );
+  )
 }
