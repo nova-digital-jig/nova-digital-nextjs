@@ -1,16 +1,17 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Check, Star, ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Check, ArrowUpRight } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const plans = [
   {
     name: "Starter",
     price: "$500",
-    description: "Perfect for small businesses and startups that need a professional online presence fast.",
+    description: "Perfect for small businesses that need a professional online presence.",
     features: [
       "Custom single-page website",
       "Mobile responsive design",
@@ -19,15 +20,13 @@ const plans = [
       "48-hour delivery",
       "1 round of revisions",
     ],
-    cta: "Get Started",
     href: "https://buy.stripe.com/test_9B68wIaSyaoJ4gWenZ6c000",
     featured: false,
-    gradient: "from-violet-500/10 to-transparent",
   },
   {
     name: "Professional",
     price: "$1,000",
-    description: "For growing businesses that want a multi-page site built to convert visitors into customers.",
+    description: "For growing businesses that want a site built to convert visitors into customers.",
     features: [
       "Up to 5-page website",
       "Advanced UI/UX design",
@@ -37,15 +36,13 @@ const plans = [
       "3 rounds of revisions",
       "30 days of support",
     ],
-    cta: "Most Popular",
     href: "mailto:jigpatel01234@gmail.com?subject=Professional%20Plan%20Inquiry",
     featured: true,
-    gradient: "from-violet-500 to-rose-500",
   },
   {
     name: "Enterprise",
     price: "$2,500",
-    description: "Full-service web solution for established businesses ready to dominate their market online.",
+    description: "Full-service web solution for businesses ready to dominate their market.",
     features: [
       "Unlimited pages",
       "Custom animations & interactions",
@@ -56,101 +53,134 @@ const plans = [
       "Performance optimization",
       "Unlimited revisions",
     ],
-    cta: "Contact Us",
     href: "mailto:jigpatel01234@gmail.com?subject=Enterprise%20Plan%20Inquiry",
     featured: false,
-    gradient: "from-rose-500/10 to-transparent",
   },
 ];
 
 export function Pricing() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".pricing-title", {
+        opacity: 0,
+        y: 60,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        },
+      });
+
+      gsap.from(".pricing-card", {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".pricing-grid",
+          start: "top 80%",
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="pricing" className="relative py-32 px-6">
-      <div className="absolute inset-0 dot-pattern opacity-30" />
-
-      <div className="relative mx-auto max-w-7xl" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center"
-        >
-          <Badge variant="outline" className="mb-4 border-rose-500/30 bg-rose-500/10 text-rose-400">
-            Pricing
-          </Badge>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-            Invest in your{" "}
-            <span className="text-gradient">growth</span>
+    <section ref={sectionRef} id="pricing" className="py-32 md:py-44 px-6 md:px-10">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="text-center mb-20">
+          <p className="text-label mb-6 pricing-title">Pricing</p>
+          <h2 className="text-display pricing-title">
+            Simple, transparent<br />
+            pricing
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-            Transparent pricing. No hidden fees. No surprises. Just results that pay for themselves.
-          </p>
-        </motion.div>
+        </div>
 
-        <div className="mt-16 grid gap-8 lg:grid-cols-3 items-start">
-          {plans.map((plan, i) => (
-            <motion.div
+        <div className="pricing-grid grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-4 items-start">
+          {plans.map((plan) => (
+            <div
               key={plan.name}
-              initial={{ opacity: 0, y: 40 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              className={`relative rounded-2xl ${
+              className={`pricing-card rounded-2xl p-8 md:p-10 transition-all duration-500 ${
                 plan.featured
-                  ? "glass-strong gradient-border lg:scale-105 lg:-my-4 shadow-2xl shadow-violet-500/10 animate-float animate-breathe"
-                  : "glass hover:shadow-lg hover:shadow-violet-500/5 transition-shadow duration-500"
-              } overflow-hidden`}
+                  ? "bg-[#1A1A1A] text-[#FAF9F6] lg:scale-[1.03]"
+                  : "border border-[#E8E4DC] hover:border-[#1A1A1A]/20"
+              }`}
             >
-              {plan.featured && (
-                <div className="flex items-center justify-center gap-1 bg-gradient-to-r from-violet-500 to-rose-500 py-2 text-xs font-semibold text-white">
-                  <Star className="h-3 w-3" />
-                  MOST POPULAR
-                </div>
-              )}
-
-              <div className="p-8">
-                <h3 className="text-lg font-semibold">{plan.name}</h3>
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span className={`text-4xl font-bold tracking-tight ${plan.featured ? "text-gradient" : ""}`}>
-                    {plan.price}
+              <div className="flex items-center justify-between mb-8">
+                <span
+                  className={`text-label ${
+                    plan.featured ? "text-[#8A8580]" : ""
+                  }`}
+                >
+                  {plan.name}
+                </span>
+                {plan.featured && (
+                  <span className="text-xs font-medium bg-[#C8FF00] text-[#1A1A1A] px-3 py-1 rounded-full">
+                    Popular
                   </span>
-                  <span className="text-sm text-muted-foreground">/project</span>
-                </div>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                  {plan.description}
-                </p>
-
-                <a href={plan.href} target={plan.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
-                  <Button
-                    size="lg"
-                    className={`mt-8 w-full gap-2 group ${
-                      plan.featured
-                        ? "bg-gradient-to-r from-violet-500 to-rose-500 text-white border-0 hover:opacity-90 hover:shadow-lg hover:shadow-violet-500/25 transition-all"
-                        : "bg-white/5 hover:bg-white/10 border-white/10"
-                    }`}
-                  >
-                    {plan.cta}
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </a>
-
-                <ul className="mt-8 space-y-3">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3 text-sm">
-                      <Check className="h-4 w-4 mt-0.5 shrink-0 text-violet-400" />
-                      <span className="text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                )}
               </div>
 
-              {/* Glow behind featured card */}
-              {plan.featured && (
-                <div className="absolute -inset-1 -z-10 rounded-2xl bg-gradient-to-r from-violet-500/20 to-rose-500/20 blur-2xl" />
-              )}
-            </motion.div>
+              <div className="mb-6">
+                <span className="text-[clamp(3rem,5vw,4.5rem)] font-medium tracking-tight leading-none">
+                  {plan.price}
+                </span>
+                <span
+                  className={`text-sm ml-2 ${
+                    plan.featured ? "text-[#8A8580]" : "text-[#8A8580]"
+                  }`}
+                >
+                  / project
+                </span>
+              </div>
+
+              <p
+                className={`text-sm leading-relaxed mb-8 ${
+                  plan.featured ? "text-[#8A8580]" : "text-[#8A8580]"
+                }`}
+              >
+                {plan.description}
+              </p>
+
+              <a
+                href={plan.href}
+                target={plan.href.startsWith("http") ? "_blank" : undefined}
+                rel="noopener noreferrer"
+                className={`w-full flex items-center justify-center gap-2 py-4 rounded-full text-sm font-medium transition-all duration-500 mb-8 ${
+                  plan.featured
+                    ? "bg-[#C8FF00] text-[#1A1A1A] hover:bg-[#b8ef00]"
+                    : "bg-[#1A1A1A] text-[#FAF9F6] hover:bg-[#333]"
+                }`}
+              >
+                Get Started
+                <ArrowUpRight size={16} />
+              </a>
+
+              <ul className="space-y-4">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3 text-sm">
+                    <Check
+                      size={16}
+                      className={`mt-0.5 shrink-0 ${
+                        plan.featured ? "text-[#C8FF00]" : "text-[#1A1A1A]"
+                      }`}
+                    />
+                    <span
+                      className={
+                        plan.featured ? "text-[#C0BDB8]" : "text-[#8A8580]"
+                      }
+                    >
+                      {feature}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
         </div>
       </div>

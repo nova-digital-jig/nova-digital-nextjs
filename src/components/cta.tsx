@@ -1,100 +1,83 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { ArrowRight, Phone, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function CTA() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Text reveal
+      gsap.from(".cta-line", {
+        opacity: 0,
+        y: 80,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 70%",
+        },
+      });
+
+      gsap.from(".cta-sub", {
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 60%",
+        },
+      });
+
+      gsap.from(".cta-buttons", {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 55%",
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="relative py-32 px-6 overflow-hidden">
-      <div className="mx-auto max-w-7xl" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="relative overflow-hidden rounded-3xl"
-        >
-          {/* Background image */}
-          <div className="absolute inset-0">
-            <Image
-              src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80"
-              alt="Team collaboration in a modern office environment"
-              fill
-              className="object-cover"
-              sizes="100vw"
-            />
-          </div>
+    <section
+      ref={sectionRef}
+      className="py-32 md:py-52 px-6 md:px-10 border-t border-[#E8E4DC]"
+    >
+      <div className="mx-auto max-w-[1400px] text-center">
+        <h2 className="text-hero cta-line">Ready to</h2>
+        <h2 className="text-hero cta-line">Build?</h2>
 
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-600/90 via-violet-500/85 to-rose-500/90" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent_70%)]" />
+        <p className="cta-sub text-body-lg mt-10 max-w-lg mx-auto">
+          Let&apos;s talk about your project. Book a free 15-minute
+          strategy call and get a custom proposal within 24 hours.
+        </p>
 
-          {/* Grid pattern */}
-          <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-              backgroundSize: "40px 40px",
-            }}
-          />
-
-          <div className="relative px-8 py-20 text-center sm:px-16 md:py-28">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl"
-            >
-              Ready to stop losing
-              <br />
-              customers to bad websites?
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mx-auto mt-6 max-w-xl text-lg text-white/80"
-            >
-              Book a free 15-minute strategy call with Isabella, our AI receptionist, and
-              get a custom proposal within 24 hours.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.45 }}
-              className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-            >
-              <a href="tel:978-606-3386">
-                <Button
-                  size="lg"
-                  className="h-12 px-8 text-base gap-2 bg-white text-violet-600 border-0 hover:bg-white/90 font-semibold transition-all hover:shadow-xl hover:shadow-black/20 hover:scale-105"
-                >
-                  <Phone className="h-4 w-4" />
-                  (978) 606-3386
-                </Button>
-              </a>
-              <a href="mailto:jigpatel01234@gmail.com?subject=Website%20Inquiry">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="h-12 px-8 text-base gap-2 border-white/30 bg-white/10 text-white hover:bg-white/20 group"
-                >
-                  <Mail className="h-4 w-4" />
-                  Email Us
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </a>
-            </motion.div>
-          </div>
-        </motion.div>
+        <div className="cta-buttons mt-12 flex flex-wrap items-center justify-center gap-5">
+          <a href="tel:978-606-3386" className="btn-primary">
+            (978) 606-3386
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M1 13L13 1M13 1H3M13 1V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
+          <a
+            href="mailto:jigpatel01234@gmail.com?subject=Website%20Inquiry"
+            className="btn-outline"
+          >
+            jigpatel01234@gmail.com
+          </a>
+        </div>
       </div>
     </section>
   );

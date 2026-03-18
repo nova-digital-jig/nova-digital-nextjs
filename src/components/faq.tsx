@@ -1,104 +1,159 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion";
-import { Badge } from "@/components/ui/badge";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Plus } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const faqs = [
   {
     question: "How do you build a website in 48 hours?",
     answer:
-      "We use AI-powered development tools combined with battle-tested templates and frameworks. Our process is streamlined — we gather your requirements on Day 1, design and build on Day 1-2, and launch by end of Day 2. No fluff, no bloat, just speed and quality.",
+      "We use AI-powered development tools combined with modern frameworks. Our process is streamlined — requirements on Day 1, design and build on Day 1–2, launch by end of Day 2. No fluff, no bloat, just speed and quality.",
   },
   {
-    question: "What if I need changes after the website is launched?",
+    question: "What if I need changes after launch?",
     answer:
-      "Every plan includes revision rounds — 1 for Starter, 3 for Professional, and unlimited for Enterprise. After your revision rounds, we offer affordable maintenance packages. We're here for the long haul.",
+      "Every plan includes revision rounds — 1 for Starter, 3 for Professional, and unlimited for Enterprise. After your rounds, we offer affordable maintenance packages.",
   },
   {
     question: "Do I own the website code?",
     answer:
-      "Absolutely. You own 100% of the code, design, and content. We build on open-source frameworks like Next.js and deploy to platforms you control. No vendor lock-in, ever.",
+      "Absolutely. You own 100% of the code, design, and content. We build on open-source frameworks and deploy to platforms you control. No vendor lock-in.",
   },
   {
     question: "What technologies do you use?",
     answer:
-      "We build with Next.js, React, Tailwind CSS, and deploy on Vercel for maximum speed and reliability. We use modern AI tools to accelerate development without sacrificing quality. Every site scores 95+ on Google Lighthouse.",
+      "Next.js, React, Tailwind CSS, deployed on Vercel. Every site scores 95+ on Google Lighthouse for performance, accessibility, and SEO.",
   },
   {
     question: "Can you add e-commerce or booking systems?",
     answer:
-      "Yes! Our Professional and Enterprise plans include integrations like booking systems, payment processing, inventory management, and more. We can integrate with Stripe, Square, Calendly, and other popular platforms.",
+      "Yes. Our Professional and Enterprise plans include integrations like booking systems, payment processing, and inventory management with Stripe, Square, Calendly, and more.",
   },
   {
     question: "What if I'm not happy with the design?",
     answer:
-      "We show you the design before writing any code. You approve wireframes and mockups first. If you're not happy, we iterate until you are. Our goal is a website you're proud to show off.",
+      "We show you the design before writing any code. You approve wireframes and mockups first. If you're not satisfied, we iterate until you are.",
   },
 ];
 
-export function FAQ() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+function AccordionItem({
+  item,
+  isOpen,
+  onToggle,
+}: {
+  item: (typeof faqs)[0];
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!contentRef.current || !innerRef.current) return;
+
+    if (isOpen) {
+      contentRef.current.style.height = innerRef.current.offsetHeight + "px";
+    } else {
+      contentRef.current.style.height = "0px";
+    }
+  }, [isOpen]);
 
   return (
-    <section id="faq" className="relative py-32 px-6">
-      <div className="absolute inset-0 dot-pattern opacity-20" />
-
-      <div className="relative mx-auto max-w-3xl" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center"
+    <div className="border-b border-[#E8E4DC]">
+      <button
+        onClick={onToggle}
+        className="w-full flex items-center justify-between py-7 md:py-8 text-left group"
+      >
+        <span className="text-lg md:text-xl font-medium pr-8 group-hover:translate-x-1 transition-transform duration-400">
+          {item.question}
+        </span>
+        <div
+          className={`w-8 h-8 rounded-full border border-[#E8E4DC] flex items-center justify-center shrink-0 transition-all duration-500 ${
+            isOpen ? "rotate-45 bg-[#1A1A1A] border-[#1A1A1A]" : ""
+          }`}
         >
-          <Badge variant="outline" className="mb-4 border-violet-500/30 bg-violet-500/10 text-violet-400">
-            FAQ
-          </Badge>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-            Got{" "}
-            <span className="text-gradient">questions?</span>
+          <Plus
+            size={14}
+            className={`transition-colors duration-300 ${
+              isOpen ? "text-[#FAF9F6]" : "text-[#1A1A1A]"
+            }`}
+          />
+        </div>
+      </button>
+      <div
+        ref={contentRef}
+        className="accordion-content"
+        style={{ height: 0 }}
+      >
+        <div ref={innerRef} className="pb-8">
+          <p className="text-body-lg max-w-2xl text-base">{item.answer}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function FAQ() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".faq-title", {
+        opacity: 0,
+        y: 60,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        },
+      });
+
+      gsap.from(".faq-item", {
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        stagger: 0.08,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".faq-list",
+          start: "top 80%",
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} id="faq" className="py-32 md:py-44 px-6 md:px-10">
+      <div className="mx-auto max-w-[900px]">
+        <div className="text-center mb-16">
+          <p className="text-label mb-6 faq-title">FAQ</p>
+          <h2 className="text-display faq-title">
+            Questions &<br />
+            answers
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-            Everything you need to know about working with us.
-          </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-12"
-        >
-          <Accordion className="space-y-3">
-            {faqs.map((faq, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: 0.3 + i * 0.08 }}
-              >
-                <AccordionItem
-                  value={i}
-                  className="glass rounded-xl px-6 border-0 transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/5 overflow-hidden"
-                >
-                  <AccordionTrigger className="py-5 text-left text-base font-medium hover:no-underline transition-colors hover:text-violet-400">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              </motion.div>
-            ))}
-          </Accordion>
-        </motion.div>
+        <div className="faq-list">
+          {faqs.map((faq, i) => (
+            <div key={i} className="faq-item">
+              <AccordionItem
+                item={faq}
+                isOpen={openIndex === i}
+                onToggle={() =>
+                  setOpenIndex(openIndex === i ? null : i)
+                }
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

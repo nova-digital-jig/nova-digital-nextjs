@@ -1,145 +1,147 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { ExternalLink, ArrowUpRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
     title: "Lucas Hair Salon",
     category: "Beauty & Wellness",
-    description:
-      "A premium salon website with online booking integration, service showcase, and a design that reflects their upscale brand.",
     url: "https://lucas-hair-salon.vercel.app",
-    image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80",
-    imageAlt: "Modern hair salon interior with elegant styling stations and warm lighting",
-    gradient: "from-violet-600 via-violet-500 to-fuchsia-500",
-    tags: ["Next.js", "Booking System", "SEO"],
+    image:
+      "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&q=80",
+    imageAlt: "Modern hair salon interior",
   },
   {
     title: "Edison Barbershop",
     category: "Local Business",
-    description:
-      "A modern barbershop site with an appointment scheduler, team profiles, and gallery that increased walk-ins by 200%.",
     url: "https://edison-barbershop.vercel.app",
-    image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80",
-    imageAlt: "Classic barbershop with vintage chairs and professional grooming setup",
-    gradient: "from-rose-600 via-rose-500 to-orange-500",
-    tags: ["React", "Responsive", "Local SEO"],
+    image:
+      "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80",
+    imageAlt: "Classic barbershop setup",
   },
   {
     title: "Ram's Garage",
     category: "Automotive",
-    description:
-      "An automotive service website with service request forms, pricing transparency, and a professional image that built trust.",
     url: "https://rams-garage.vercel.app",
-    image: "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=800&q=80",
-    imageAlt: "Auto repair garage with professional mechanics working on vehicles",
-    gradient: "from-violet-600 via-rose-500 to-rose-600",
-    tags: ["Full Stack", "Forms", "Analytics"],
+    image:
+      "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=1200&q=80",
+    imageAlt: "Auto repair garage",
   },
 ];
 
 export function Portfolio() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const sectionRef = useRef<HTMLElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const horizontalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Title reveal
+      gsap.from(".portfolio-title", {
+        opacity: 0,
+        y: 60,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+      });
+
+      // Horizontal scroll
+      const horizontal = horizontalRef.current;
+      const scrollContainer = scrollContainerRef.current;
+      if (!horizontal || !scrollContainer) return;
+
+      const getScrollWidth = () =>
+        horizontal.scrollWidth - scrollContainer.offsetWidth;
+
+      gsap.to(horizontal, {
+        x: () => -getScrollWidth(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: scrollContainer,
+          start: "top top",
+          end: () => `+=${getScrollWidth()}`,
+          scrub: 1,
+          pin: true,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="portfolio" className="relative py-32 px-6">
-      <div className="mx-auto max-w-7xl" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center"
-        >
-          <Badge variant="outline" className="mb-4 border-rose-500/30 bg-rose-500/10 text-rose-400">
-            Portfolio
-          </Badge>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-            Real results for{" "}
-            <span className="text-gradient">real businesses</span>
+    <section ref={sectionRef} id="portfolio">
+      {/* Title section */}
+      <div className="py-20 px-6 md:px-10">
+        <div className="mx-auto max-w-[1400px]">
+          <p className="text-label mb-6 portfolio-title">Selected Work</p>
+          <h2 className="text-display portfolio-title">
+            Projects that<br />
+            deliver results
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-            Every project is built to drive revenue. Here&apos;s proof.
-          </p>
-        </motion.div>
+        </div>
+      </div>
 
-        <div className="mt-16 grid gap-8 lg:grid-cols-3">
-          {projects.map((project, i) => (
-            <motion.div
+      {/* Horizontal scroll gallery */}
+      <div ref={scrollContainerRef} className="h-screen overflow-hidden">
+        <div
+          ref={horizontalRef}
+          className="horizontal-scroll-wrapper h-full items-center gap-8 px-6 md:px-10"
+        >
+          {projects.map((project) => (
+            <a
               key={project.title}
-              initial={{ opacity: 0, y: 40 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="group relative"
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative block w-[85vw] md:w-[60vw] lg:w-[45vw] h-[70vh] shrink-0"
             >
-              <div className="overflow-hidden rounded-2xl glass transition-all duration-500 hover:shadow-2xl hover:shadow-violet-500/10">
-                {/* Image with zoom on hover */}
-                <div className="relative h-56 w-full overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.imageAlt}
-                    fill
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                    sizes="(max-width: 1024px) 100vw, 33vw"
-                  />
-                  {/* Gradient overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-t ${project.gradient} opacity-30 mix-blend-multiply`} />
+              <div className="relative w-full h-full overflow-hidden rounded-2xl">
+                <Image
+                  src={project.image}
+                  alt={project.imageAlt}
+                  fill
+                  className="object-cover transition-transform duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                  sizes="(max-width: 768px) 85vw, (max-width: 1024px) 60vw, 45vw"
+                />
 
-                  {/* Slide-up overlay on hover */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-end bg-gradient-to-t from-black/80 via-black/40 to-transparent translate-y-full transition-transform duration-500 ease-out group-hover:translate-y-0">
-                    <div className="p-6 text-center">
-                      <p className="text-sm text-white/80 mb-3">{project.description}</p>
-                      <a
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button variant="outline" className="gap-2 border-white/20 bg-white/10 text-white hover:bg-white/20">
-                          Live Demo
-                          <ExternalLink className="h-4 w-4" />
-                        </Button>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+                {/* Overlay on hover */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-700" />
 
-                <div className="p-6">
-                  <div className="mb-2 flex items-center justify-between">
-                    <span className="text-xs font-medium text-violet-400">
-                      {project.category}
-                    </span>
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground transition-all hover:text-foreground hover:scale-110"
-                    >
-                      <ArrowUpRight className="h-4 w-4" />
-                    </a>
-                  </div>
-                  <h3 className="mb-2 text-lg font-semibold">{project.title}</h3>
-                  <p className="mb-4 text-sm text-muted-foreground leading-relaxed line-clamp-2 lg:hidden">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-white/5 px-3 py-1 text-xs text-muted-foreground border border-white/5"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                {/* Arrow */}
+                <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-y-2 group-hover:translate-y-0">
+                  <ArrowUpRight size={20} className="text-[#1A1A1A]" />
                 </div>
               </div>
-            </motion.div>
+
+              {/* Project info */}
+              <div className="mt-5 flex items-start justify-between">
+                <div>
+                  <h3 className="text-xl md:text-2xl font-medium">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-[#8A8580] mt-1">
+                    {project.category}
+                  </p>
+                </div>
+                <span className="text-label mt-1">View</span>
+              </div>
+            </a>
           ))}
+
+          {/* Extra padding at end */}
+          <div className="w-20 shrink-0" />
         </div>
       </div>
     </section>

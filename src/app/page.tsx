@@ -1,3 +1,4 @@
+import { SmoothScroll } from "@/components/smooth-scroll";
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
 import { Services } from "@/components/services";
@@ -11,17 +12,19 @@ import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-hidden">
+    <SmoothScroll>
       <Navbar />
-      <Hero />
-      <Services />
-      <Portfolio />
-      <Process />
-      <Pricing />
-      <Testimonials />
-      <FAQ />
-      <CTA />
+      <main>
+        <Hero />
+        <Services />
+        <Portfolio />
+        <Process />
+        <Pricing />
+        <Testimonials />
+        <FAQ />
+        <CTA />
+      </main>
       <Footer />
-    </main>
+    </SmoothScroll>
   );
 }

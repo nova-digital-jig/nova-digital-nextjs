@@ -1,109 +1,109 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Globe, Palette, Search, Rocket } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
-    icon: Globe,
-    title: "Custom Websites",
+    num: "01",
+    title: "Web Design & Development",
     description:
-      "Hand-crafted, responsive websites built with modern frameworks. Optimized for speed, SEO, and conversions from day one.",
-    gradient: "from-violet-500 to-violet-600",
-    glow: "group-hover:shadow-violet-500/20",
-    glowColor: "rgba(139, 92, 246, 0.15)",
+      "Custom-built, responsive websites using Next.js and modern frameworks. Optimized for speed, SEO, and conversions.",
   },
   {
-    icon: Palette,
+    num: "02",
     title: "UI/UX Design",
     description:
-      "Pixel-perfect designs that captivate your audience. Every interaction is deliberate, every visual choice drives results.",
-    gradient: "from-rose-500 to-rose-600",
-    glow: "group-hover:shadow-rose-500/20",
-    glowColor: "rgba(244, 63, 94, 0.15)",
+      "Pixel-perfect interfaces designed to captivate your audience. Every interaction is deliberate, every choice drives results.",
   },
   {
-    icon: Search,
-    title: "SEO Optimization",
+    num: "03",
+    title: "SEO & Performance",
     description:
-      "Dominate search results with technical SEO baked into every build. Schema markup, Core Web Vitals, and local SEO included.",
-    gradient: "from-violet-500 to-rose-500",
-    glow: "group-hover:shadow-violet-500/20",
-    glowColor: "rgba(139, 92, 246, 0.15)",
+      "Technical SEO baked into every build. Schema markup, Core Web Vitals optimization, and 95+ Lighthouse scores guaranteed.",
   },
   {
-    icon: Rocket,
-    title: "Performance",
+    num: "04",
+    title: "AI Integration",
     description:
-      "Lightning-fast load times with 95+ Lighthouse scores. Edge-deployed, image-optimized, and built to handle any traffic.",
-    gradient: "from-rose-500 to-violet-500",
-    glow: "group-hover:shadow-rose-500/20",
-    glowColor: "rgba(244, 63, 94, 0.15)",
+      "AI-powered chatbots, booking systems, and automation tools that work while you sleep. Future-proof your business.",
   },
 ];
 
 export function Services() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Title reveal
+      gsap.from(".services-title", {
+        opacity: 0,
+        y: 60,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        },
+      });
+
+      // Stagger service items
+      gsap.from(".service-item", {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".service-list",
+          start: "top 80%",
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="services" className="relative py-32 px-6">
-      {/* Dot pattern overlay */}
-      <div className="absolute inset-0 dot-pattern opacity-50" />
+    <section ref={sectionRef} id="services" className="py-32 md:py-44 px-6 md:px-10">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+          {/* Left side - title */}
+          <div>
+            <p className="text-label mb-6 services-title">What We Do</p>
+            <h2 className="text-display services-title">
+              Services built for growth
+            </h2>
+          </div>
 
-      <div className="relative mx-auto max-w-7xl" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center"
-        >
-          <Badge variant="outline" className="mb-4 border-violet-500/30 bg-violet-500/10 text-violet-400">
-            Services
-          </Badge>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-            Everything you need to{" "}
-            <span className="text-gradient">dominate online</span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-            We don&apos;t just build websites — we build revenue machines that work 24/7.
-          </p>
-        </motion.div>
-
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((service, i) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{
-                scale: 1.04,
-                y: -6,
-                transition: { duration: 0.3 },
-              }}
-              className={`group relative rounded-2xl glass p-6 transition-all duration-500 hover:shadow-2xl ${service.glow} glow-pulse-hover cursor-default`}
-            >
-              <motion.div
-                whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
-                transition={{ duration: 0.5 }}
-                className={`mb-4 inline-flex rounded-xl bg-gradient-to-br ${service.gradient} p-3 shadow-lg`}
-              >
-                <service.icon className="h-5 w-5 text-white" />
-              </motion.div>
-              <h3 className="mb-2 text-lg font-semibold">{service.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {service.description}
-              </p>
-
-              {/* Glow pulse background */}
+          {/* Right side - service list */}
+          <div className="service-list">
+            {services.map((service, i) => (
               <div
-                className={`glow-bg absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br ${service.gradient} opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-10`}
-              />
-            </motion.div>
-          ))}
+                key={service.num}
+                className={`service-item group py-8 ${
+                  i < services.length - 1 ? "border-b border-[#E8E4DC]" : ""
+                }`}
+              >
+                <div className="flex items-start gap-6 md:gap-10">
+                  <span className="text-label mt-1 shrink-0">
+                    {service.num}
+                  </span>
+                  <div>
+                    <h3 className="text-heading text-xl md:text-2xl mb-3 group-hover:translate-x-2 transition-transform duration-500">
+                      {service.title}
+                    </h3>
+                    <p className="text-body-lg text-base max-w-lg">
+                      {service.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
