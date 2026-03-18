@@ -9,27 +9,23 @@ gsap.registerPlugin(ScrollTrigger)
 const services = [
   {
     num: '01',
-    title: 'Website Design & Development',
-    desc: 'Bespoke, high-converting websites built with Next.js. Stunning design that makes your business look like a million bucks.',
-    price: 'From $500',
+    title: 'Web Design',
+    desc: 'Bespoke visual identities and interfaces that captivate and convert.',
   },
   {
     num: '02',
-    title: 'SEO Optimization',
-    desc: 'Get found on Google. We optimize every page for search so local customers find you first.',
-    price: 'Included',
+    title: 'Development',
+    desc: 'Lightning-fast Next.js sites built with clean code, optimized for SEO.',
   },
   {
     num: '03',
-    title: 'E-Commerce Setup',
-    desc: 'Start selling online. Full e-commerce integration with Stripe, inventory management, and order tracking.',
-    price: 'Custom',
+    title: 'UI/UX Strategy',
+    desc: 'Data-driven user experience design that turns visitors into customers.',
   },
   {
     num: '04',
-    title: 'Monthly Maintenance',
-    desc: 'Updates, security patches, performance monitoring, and content changes. We keep your site running flawlessly.',
-    price: '$100/mo',
+    title: 'AI Integration',
+    desc: 'Smart automation and AI-powered features for competitive edge.',
   },
 ]
 
@@ -38,27 +34,27 @@ export function Services() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.services-label',
+      gsap.fromTo('.services-eyebrow',
         { y: 30, opacity: 0 },
         {
           y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: '.services-label', start: 'top 88%' }
+          scrollTrigger: { trigger: '.services-eyebrow', start: 'top 85%' }
         }
       )
 
-      gsap.fromTo('.services-title',
+      gsap.fromTo('.services-heading',
         { y: 60, opacity: 0 },
         {
           y: 0, opacity: 1, duration: 1, ease: 'power3.out',
-          scrollTrigger: { trigger: '.services-title', start: 'top 88%' }
+          scrollTrigger: { trigger: '.services-heading', start: 'top 85%' }
         }
       )
 
       gsap.fromTo('.service-row-item',
-        { y: 40, opacity: 0 },
+        { x: -40, opacity: 0 },
         {
-          y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.12,
-          scrollTrigger: { trigger: '.services-list', start: 'top 82%' }
+          x: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.12,
+          scrollTrigger: { trigger: '.services-list', start: 'top 85%' }
         }
       )
     }, sectionRef)
@@ -70,34 +66,61 @@ export function Services() {
     <section ref={sectionRef} id="services" className="py-32 md:py-44">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <div className="mb-20 md:mb-28">
-          <p className="services-label text-label mb-5 text-[#555]">What We Do</p>
-          <h2 className="services-title text-display">
-            Services<span className="gradient-text">.</span>
+          <p
+            className="services-eyebrow text-[0.75rem] tracking-[0.15em] uppercase font-medium text-[#FF4D00] mb-5"
+            style={{ fontFamily: 'var(--font-jetbrains), monospace' }}
+          >
+            What We Do
+          </p>
+          <h2
+            className="services-heading"
+            style={{
+              fontFamily: 'var(--font-syne), sans-serif',
+              fontSize: 'clamp(2rem, 4vw, 4rem)',
+              fontWeight: 700,
+              lineHeight: 1,
+              letterSpacing: '-0.03em',
+            }}
+          >
+            Services<span className="text-[#FF4D00]">.</span>
           </h2>
         </div>
 
         <div className="services-list">
           {services.map((s) => (
-            <div key={s.num} className="service-row service-row-item group">
-              <div className="flex items-start md:items-center justify-between py-10 md:py-16 gap-6 flex-col md:flex-row">
+            <div
+              key={s.num}
+              className="service-row-item group border-b border-white/[0.08] transition-colors duration-500 hover:bg-white/[0.03]"
+            >
+              <div className="flex items-start md:items-center justify-between py-10 md:py-14 gap-6 flex-col md:flex-row">
                 <div className="flex items-baseline gap-6 md:gap-10 flex-1">
-                  <span className="text-sm font-mono text-[#8b5cf6] opacity-60">{s.num}</span>
+                  <span
+                    className="text-sm font-medium text-[#FF4D00] opacity-70"
+                    style={{ fontFamily: 'var(--font-jetbrains), monospace' }}
+                  >
+                    {s.num}
+                  </span>
                   <div>
-                    <h3 className="text-[clamp(1.5rem,3.5vw,3rem)] font-bold tracking-tight leading-none group-hover:text-[#8b5cf6] transition-colors duration-500">
+                    <h3
+                      className="text-[clamp(1.5rem,3vw,2rem)] font-semibold tracking-tight leading-none group-hover:text-[#FF4D00] transition-colors duration-500"
+                      style={{ fontFamily: 'var(--font-syne), sans-serif' }}
+                    >
                       {s.title}
                     </h3>
-                    <p className="text-[#555] text-base md:text-lg max-w-lg font-light leading-relaxed mt-3 md:mt-4">
+                    <p
+                      className="text-[#888] text-sm md:text-base max-w-md leading-relaxed mt-3"
+                      style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
+                    >
                       {s.desc}
                     </p>
                   </div>
                 </div>
-                <span className="text-sm font-mono text-[#8b5cf6] tracking-wider shrink-0">
-                  {s.price}
+                <span className="text-[#888] text-xl group-hover:translate-x-2.5 transition-transform duration-500">
+                  &rarr;
                 </span>
               </div>
             </div>
           ))}
-          <div className="border-t border-white/[0.06]" />
         </div>
       </div>
     </section>

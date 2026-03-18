@@ -1,21 +1,48 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
 export function Marquee() {
-  const items = ['DESIGN', 'DEVELOP', 'DEPLOY']
-  const repeated = Array(8).fill(items).flat()
+  const sectionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(sectionRef.current,
+        { opacity: 0 },
+        {
+          opacity: 1, duration: 0.8, ease: 'power2.out',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 90%' }
+        }
+      )
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
+
+  const text = 'DESIGN \u00B7 DEVELOP \u00B7 DEPLOY \u00B7 '
+  const repeated = text.repeat(8)
 
   return (
-    <section className="py-8 border-y border-white/5 overflow-hidden">
-      <div className="animate-marquee flex whitespace-nowrap">
-        {repeated.map((item, i) => (
-          <span
-            key={i}
-            className="text-[clamp(1.5rem,3vw,3rem)] font-bold uppercase tracking-wider text-white/10 mx-6 md:mx-10 flex items-center gap-6 md:gap-10"
-          >
-            {item}
-            <span className="text-[#8b5cf6] text-lg">·</span>
-          </span>
-        ))}
+    <section
+      ref={sectionRef}
+      className="py-6 border-t border-b border-white/[0.08] overflow-hidden opacity-0"
+    >
+      <div className="marquee-track">
+        <span
+          className="text-[1.1rem] font-medium uppercase tracking-[0.1em] text-white/[0.2] whitespace-nowrap"
+          style={{ fontFamily: 'var(--font-syne), sans-serif' }}
+        >
+          {repeated}
+        </span>
+        <span
+          className="text-[1.1rem] font-medium uppercase tracking-[0.1em] text-white/[0.2] whitespace-nowrap"
+          style={{ fontFamily: 'var(--font-syne), sans-serif' }}
+        >
+          {repeated}
+        </span>
       </div>
     </section>
   )

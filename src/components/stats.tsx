@@ -6,8 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function useCountUp(target: number, isDecimal?: boolean) {
-  const [count, setCount] = useState(0)
+function useCountUp(target: number, suffix: string) {
+  const [display, setDisplay] = useState('0')
   const [started, setStarted] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -26,30 +26,51 @@ function useCountUp(target: number, isDecimal?: boolean) {
 
   useEffect(() => {
     if (!started) return
-    const actualTarget = isDecimal ? target * 10 : target
-    const steps = 60
-    const increment = actualTarget / steps
-    let current = 0
-    const interval = setInterval(() => {
-      current += increment
-      if (current >= actualTarget) {
-        setCount(actualTarget)
-        clearInterval(interval)
-      } else {
-        setCount(Math.floor(current))
-      }
-    }, 30)
-    return () => clearInterval(interval)
-  }, [started, target, isDecimal])
 
-  const display = isDecimal ? (count / 10).toFixed(1) : count
+    // Special case for "48hr" - just fade it in
+    if (suffix === 'hr') {
+      setDisplay('48')
+      return
+    }
+
+    // Special case for "5.0★"
+    if (suffix === '★') {
+      let frame = 0
+      const totalFrames = 40
+      const animate = () => {
+        frame++
+        const progress = frame / totalFrames
+        const eased = 1 - Math.pow(1 - progress, 3)
+        const current = eased * target
+        setDisplay(current.toFixed(1))
+        if (frame < totalFrames) requestAnimationFrame(animate)
+        else setDisplay(target.toFixed(1))
+      }
+      requestAnimationFrame(animate)
+      return
+    }
+
+    // Numeric count-up
+    let frame = 0
+    const totalFrames = 60
+    const animate = () => {
+      frame++
+      const progress = frame / totalFrames
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setDisplay(Math.floor(eased * target).toString())
+      if (frame < totalFrames) requestAnimationFrame(animate)
+      else setDisplay(target.toString())
+    }
+    requestAnimationFrame(animate)
+  }, [started, target, suffix])
+
   return { display, ref }
 }
 
 const stats = [
-  { value: 50, suffix: '+', label: 'Sites Built', isDecimal: false },
-  { value: 48, suffix: 'hr', label: 'Delivery', isDecimal: false },
-  { value: 4.9, suffix: '★', label: 'Rating', isDecimal: true },
+  { value: 50, suffix: '+', label: 'Sites Built', countTarget: 50 },
+  { value: 48, suffix: 'hr', label: 'Avg. Delivery', countTarget: 48 },
+  { value: 5.0, suffix: '★', label: 'Client Rating', countTarget: 5.0 },
 ]
 
 export function Stats() {
@@ -69,8 +90,9 @@ export function Stats() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-24 md:py-32 border-y border-white/[0.06]">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+    <section ref={sectionRef} className="relative py-24 md:py-32 bg-[#0D0D0D]">
+      <div className="grain" />
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12">
         <div className="stats-grid grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-0 md:divide-x md:divide-white/[0.06]">
           {stats.map((stat) => (
             <StatItem key={stat.label} {...stat} />
@@ -81,17 +103,25 @@ export function Stats() {
   )
 }
 
-function StatItem({ value, suffix, label, isDecimal }: {
-  value: number; suffix: string; label: string; isDecimal: boolean
+function StatItem({ value, suffix, label, countTarget }: {
+  value: number; suffix: string; label: string; countTarget: number
 }) {
-  const { display, ref } = useCountUp(value, isDecimal)
+  const { display, ref } = useCountUp(countTarget, suffix)
   return (
     <div ref={ref} className="stat-item text-center py-4 md:py-0">
-      <div className="text-[clamp(3rem,7vw,6rem)] font-bold tracking-tight leading-none">
-        {display}
-        <span className="gradient-text">{suffix}</span>
+      <div
+        className="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tight leading-none"
+        style={{ fontFamily: 'var(--font-syne), sans-serif' }}
+      >
+        <span className="text-[#FF4D00]">{display}</span>
+        <span className="text-[#FF4D00]">{suffix}</span>
       </div>
-      <p className="text-[#555] text-sm tracking-[0.2em] uppercase mt-4">{label}</p>
+      <p
+        className="text-[#888] text-sm tracking-[0.2em] uppercase mt-4"
+        style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
+      >
+        {label}
+      </p>
     </div>
   )
 }

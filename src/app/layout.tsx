@@ -1,30 +1,37 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Syne, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-display",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "AI-Powered Web Design & Development | Nova Digital",
+  title: "Nova Digital | Websites That Print Money",
   description:
-    "Premium websites delivered in 48 hours, not 48 days. AI-powered web design agency serving Edison, NJ and nationwide. Starting at $500. Call (978) 606-3386.",
+    "Premium AI-powered websites delivered in 48 hours. Stunning design. Blazing fast. Real results for local businesses. Starting at $500.",
   keywords: [
     "web design agency",
     "AI web development",
-    "website design Edison NJ",
+    "website design",
     "fast website development",
     "affordable web design",
     "local business websites",
+    "Next.js agency",
   ],
   openGraph: {
     title: "Nova Digital | Websites That Print Money",
@@ -40,10 +47,7 @@ export const metadata: Metadata = {
     description:
       "Premium AI-powered websites in 48 hours. Starting at $500.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -65,38 +69,18 @@ export default function RootLayout({
       addressRegion: "NJ",
       addressCountry: "US",
     },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 40.5187,
-      longitude: -74.4121,
-    },
-    areaServed: {
-      "@type": "Country",
-      name: "United States",
-    },
+    areaServed: { "@type": "Country", name: "United States" },
     priceRange: "$500 - $2,500",
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: "4.9",
+      ratingValue: "5.0",
       reviewCount: "50",
       bestRating: "5",
-    },
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-      ],
-      opens: "09:00",
-      closes: "18:00",
     },
   };
 
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en">
       <head>
         <script
           type="application/ld+json"
@@ -104,11 +88,11 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${instrumentSerif.variable} antialiased bg-[#0A0A0F] text-[#FAFAF8]`}
+        className={`${syne.variable} ${jakarta.variable} ${jetbrains.variable} antialiased`}
       >
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-[#8b5cf6] focus:text-white focus:rounded-lg"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-[#FF4D00] focus:text-white focus:rounded-lg"
         >
           Skip to content
         </a>
