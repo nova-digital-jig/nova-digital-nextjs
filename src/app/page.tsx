@@ -6,14 +6,14 @@ import { Portfolio } from "@/components/portfolio";
 import { Stats } from "@/components/stats";
 import { Pricing } from "@/components/pricing";
 import { Testimonials } from "@/components/testimonials";
-import { CTA } from "@/components/cta";
+import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <main>
+      <main id="main-content">
         <Hero />
         <Marquee />
         <Services />
@@ -21,7 +21,7 @@ export default function Home() {
         <Stats />
         <Pricing />
         <Testimonials />
-        <CTA />
+        <Contact />
       </main>
       <Footer />
     </>

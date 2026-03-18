@@ -10,18 +10,21 @@ gsap.registerPlugin(ScrollTrigger)
 const projects = [
   {
     name: 'Lucas Hair Salon',
+    type: 'Hair Salon',
     url: 'https://lucas-hair-salon.vercel.app',
-    image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&h=500&fit=crop',
+    image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&q=80',
   },
   {
     name: 'Edison Barbershop',
+    type: 'Barbershop',
     url: 'https://edison-barbershop.vercel.app',
-    image: 'https://images.unsplash.com/photo-1503951914875-452d3a5c05e5?w=800&h=500&fit=crop',
+    image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80',
   },
   {
     name: "Ram's Garage",
+    type: 'Auto Shop',
     url: 'https://rams-garage.vercel.app',
-    image: 'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=800&h=500&fit=crop',
+    image: 'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=1200&q=80',
   },
 ]
 
@@ -64,8 +67,8 @@ export function Portfolio() {
     if (!imageRef.current || !sectionRef.current) return
     const rect = sectionRef.current.getBoundingClientRect()
     gsap.to(imageRef.current, {
-      x: e.clientX - rect.left - 175,
-      y: e.clientY - rect.top - 110,
+      x: e.clientX - rect.left - 200,
+      y: e.clientY - rect.top - 130,
       duration: 0.4,
       ease: 'power2.out',
     })
@@ -98,15 +101,21 @@ export function Portfolio() {
               onMouseLeave={() => setActiveProject(null)}
             >
               <div className="flex items-center justify-between">
-                <h3 className="portfolio-title text-[clamp(2rem,6vw,5.5rem)] font-bold tracking-tight leading-none transition-all duration-500">
-                  {project.name}
-                </h3>
-                <span className="hidden md:flex items-center gap-2 text-sm text-[#444] group-hover:text-[#8b5cf6] transition-colors duration-400 font-mono">
-                  View Site
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
-                    <path d="M1 13L13 1M13 1H3M13 1V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </span>
+                <div>
+                  <h3 className="portfolio-title text-[clamp(2rem,6vw,5.5rem)] font-bold tracking-tight leading-none transition-all duration-500">
+                    {project.name}
+                  </h3>
+                  <span className="text-sm text-[#444] mt-2 block md:hidden">{project.type}</span>
+                </div>
+                <div className="hidden md:flex items-center gap-6">
+                  <span className="text-sm text-[#444] font-mono">{project.type}</span>
+                  <span className="flex items-center gap-2 text-sm text-[#444] group-hover:text-[#8b5cf6] transition-colors duration-400 font-mono">
+                    View Site
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                      <path d="M1 13L13 1M13 1H3M13 1V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </div>
               </div>
             </a>
           ))}
@@ -116,7 +125,7 @@ export function Portfolio() {
       {/* Floating image that follows cursor */}
       <div
         ref={imageRef}
-        className="pointer-events-none absolute z-20 w-[350px] h-[220px] rounded-lg overflow-hidden hidden md:block will-change-transform"
+        className="pointer-events-none absolute z-20 w-[400px] h-[250px] rounded-2xl overflow-hidden hidden md:block will-change-transform"
         style={{
           opacity: activeProject !== null ? 1 : 0,
           transition: 'opacity 0.3s ease',
@@ -130,10 +139,10 @@ export function Portfolio() {
           >
             <Image
               src={project.image}
-              alt={project.name}
+              alt={`${project.name} website screenshot`}
               fill
               className="object-cover"
-              sizes="350px"
+              sizes="400px"
             />
           </div>
         ))}

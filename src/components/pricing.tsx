@@ -10,7 +10,8 @@ const plans = [
   {
     name: 'Starter',
     price: '$500',
-    description: 'Perfect for getting started with a professional online presence.',
+    period: 'one-time',
+    description: 'Perfect for getting online with a professional, conversion-ready website.',
     features: [
       'Custom single-page website',
       'Mobile responsive design',
@@ -20,40 +21,45 @@ const plans = [
       '1 round of revisions',
     ],
     href: 'https://buy.stripe.com/test_9B68wIaSyaoJ4gWenZ6c000',
+    cta: 'Buy Now',
     featured: false,
   },
   {
     name: 'Growth',
     price: '$1,000',
-    description: 'Built to convert visitors into paying customers.',
+    period: 'one-time',
+    description: 'Built to convert visitors into paying customers with advanced features.',
     features: [
       'Up to 5-page website',
       'Advanced UI/UX design',
       'Full SEO package',
-      'Booking/scheduling system',
+      'Booking & scheduling system',
       'Analytics dashboard',
       '3 rounds of revisions',
       '30 days of support',
       'Performance optimization',
     ],
-    href: 'mailto:jigpatel01234@gmail.com?subject=Growth%20Plan%20Inquiry',
+    href: '#contact',
+    cta: 'Get Started',
     featured: true,
   },
   {
     name: 'Premium',
     price: '$2,500',
-    description: 'Full custom solution for businesses ready to dominate.',
+    period: 'one-time',
+    description: 'Full custom solution for businesses ready to dominate their market.',
     features: [
       'Unlimited pages',
       'Custom animations & interactions',
       'E-commerce integration',
-      'CMS integration',
+      'CMS for easy content updates',
       'AI chatbot integration',
       'Priority support for 90 days',
       'Unlimited revisions',
       'Dedicated project manager',
     ],
-    href: 'mailto:jigpatel01234@gmail.com?subject=Premium%20Plan%20Inquiry',
+    href: '#contact',
+    cta: 'Get Started',
     featured: false,
   },
 ]
@@ -97,15 +103,18 @@ export function Pricing() {
         <div className="text-center mb-20 md:mb-28">
           <p className="pricing-label text-label mb-5 text-[#555]">Pricing</p>
           <h2 className="pricing-title text-display">
-            Simple pricing<span className="gradient-text">.</span>
+            Simple, transparent<span className="gradient-text">.</span>
           </h2>
+          <p className="text-[#555] text-lg mt-6 max-w-lg mx-auto font-light">
+            No hidden fees. No monthly surprises. Just premium websites at honest prices.
+          </p>
         </div>
 
         <div className="pricing-grid grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`pricing-card relative rounded-2xl p-8 md:p-10 transition-all duration-500 ${
+              className={`pricing-card relative rounded-2xl p-8 md:p-10 transition-all duration-500 hover:-translate-y-1 ${
                 plan.featured
                   ? 'bg-[#111] lg:scale-[1.03]'
                   : 'bg-[#111] border border-white/[0.06]'
@@ -140,14 +149,14 @@ export function Pricing() {
               <a
                 href={plan.href}
                 target={plan.href.startsWith('http') ? '_blank' : undefined}
-                rel="noopener noreferrer"
+                rel={plan.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className={`w-full flex items-center justify-center py-4 rounded-full text-sm font-semibold tracking-wider uppercase transition-all duration-500 mb-10 ${
                   plan.featured
                     ? 'bg-gradient-to-r from-[#8b5cf6] to-[#ec4899] text-white hover:shadow-lg hover:shadow-[#8b5cf6]/25'
                     : 'bg-white/[0.03] text-white border border-white/[0.08] hover:bg-white/[0.06] hover:border-[#8b5cf6]/40'
                 }`}
               >
-                Get Started
+                {plan.cta}
               </a>
 
               <ul className="space-y-4">
@@ -163,6 +172,10 @@ export function Pricing() {
             </div>
           ))}
         </div>
+
+        <p className="text-center text-sm text-[#444] mt-10">
+          All plans include hosting setup assistance. Monthly maintenance available for $100/mo.
+        </p>
       </div>
     </section>
   )

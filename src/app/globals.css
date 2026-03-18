@@ -2,15 +2,17 @@
 @import "tw-animate-css";
 
 @theme inline {
-  --color-background: #0a0a0a;
-  --color-foreground: #f5f5f5;
-  --color-muted: #1a1a1a;
+  --color-background: #0A0A0F;
+  --color-foreground: #FAFAF8;
+  --color-muted: #141419;
   --color-muted-foreground: #777777;
   --color-accent: #8b5cf6;
-  --color-border: #222222;
+  --color-rose: #ec4899;
+  --color-border: #1e1e28;
 
-  --font-sans: var(--font-general-sans), system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), monospace;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-display), Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 * {
@@ -83,6 +85,13 @@ body {
   color: var(--color-muted-foreground);
 }
 
+/* ===== DISPLAY FONT ===== */
+
+.font-display {
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
 /* ===== GRADIENT UTILITIES ===== */
 
 .gradient-text {
@@ -103,6 +112,20 @@ body {
   background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #f43f5e 100%);
 }
 
+/* ===== GRAIN TEXTURE OVERLAY ===== */
+
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
 /* ===== BUTTONS ===== */
 
 .btn-primary {
@@ -121,11 +144,32 @@ body {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
 .btn-primary:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 0 40px rgba(139, 92, 246, 0.4), 0 0 80px rgba(236, 72, 153, 0.2);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary span,
+.btn-primary svg {
+  position: relative;
+  z-index: 1;
 }
 
 .btn-outline {
@@ -148,7 +192,8 @@ body {
 
 .btn-outline:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
 }
 
 /* ===== NAV ===== */
@@ -165,7 +210,7 @@ body {
   left: 0;
   width: 0;
   height: 1px;
-  background: var(--color-foreground);
+  background: var(--color-accent);
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -187,7 +232,7 @@ body {
 /* ===== SERVICE ROW ===== */
 
 .service-row {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   transition: background 0.5s ease;
 }
 
@@ -200,7 +245,7 @@ body {
 .portfolio-item {
   position: relative;
   cursor: pointer;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   transition: all 0.4s ease;
 }
 
@@ -215,6 +260,31 @@ body {
   background-clip: text;
 }
 
+/* ===== FORM FOCUS ===== */
+
+.form-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: #FAFAF8;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-input::placeholder {
+  color: #444;
+}
+
+.form-input:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+  background: rgba(139, 92, 246, 0.03);
+}
+
 /* ===== SCROLLBAR ===== */
 
 ::-webkit-scrollbar {
@@ -222,7 +292,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #0A0A0F;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -232,6 +302,23 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+/* ===== REDUCED MOTION ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-marquee {
+    animation: none;
+  }
 }
 
 /* ===== RESPONSIVE ===== */

@@ -9,23 +9,27 @@ gsap.registerPlugin(ScrollTrigger)
 const services = [
   {
     num: '01',
-    title: 'Web Design',
-    desc: 'Bespoke visual identities and interfaces that captivate users and drive conversions.',
+    title: 'Website Design & Development',
+    desc: 'Bespoke, high-converting websites built with Next.js. Stunning design that makes your business look like a million bucks.',
+    price: 'From $500',
   },
   {
     num: '02',
-    title: 'Development',
-    desc: 'Lightning-fast Next.js sites built with clean code, optimized for performance and SEO.',
+    title: 'SEO Optimization',
+    desc: 'Get found on Google. We optimize every page for search so local customers find you first.',
+    price: 'Included',
   },
   {
     num: '03',
-    title: 'UI/UX Strategy',
-    desc: 'Data-driven user experience design that turns visitors into paying customers.',
+    title: 'E-Commerce Setup',
+    desc: 'Start selling online. Full e-commerce integration with Stripe, inventory management, and order tracking.',
+    price: 'Custom',
   },
   {
     num: '04',
-    title: 'AI Integration',
-    desc: 'Smart automation and AI-powered features that give your business a competitive edge.',
+    title: 'Monthly Maintenance',
+    desc: 'Updates, security patches, performance monitoring, and content changes. We keep your site running flawlessly.',
+    price: '$100/mo',
   },
 ]
 
@@ -63,7 +67,7 @@ export function Services() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="about" className="py-32 md:py-44">
+    <section ref={sectionRef} id="services" className="py-32 md:py-44">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <div className="mb-20 md:mb-28">
           <p className="services-label text-label mb-5 text-[#555]">What We Do</p>
@@ -76,15 +80,20 @@ export function Services() {
           {services.map((s) => (
             <div key={s.num} className="service-row service-row-item group">
               <div className="flex items-start md:items-center justify-between py-10 md:py-16 gap-6 flex-col md:flex-row">
-                <div className="flex items-baseline gap-6 md:gap-10">
+                <div className="flex items-baseline gap-6 md:gap-10 flex-1">
                   <span className="text-sm font-mono text-[#8b5cf6] opacity-60">{s.num}</span>
-                  <h3 className="text-[clamp(1.75rem,4vw,3.5rem)] font-bold tracking-tight leading-none group-hover:text-[#8b5cf6] transition-colors duration-500">
-                    {s.title}
-                  </h3>
+                  <div>
+                    <h3 className="text-[clamp(1.5rem,3.5vw,3rem)] font-bold tracking-tight leading-none group-hover:text-[#8b5cf6] transition-colors duration-500">
+                      {s.title}
+                    </h3>
+                    <p className="text-[#555] text-base md:text-lg max-w-lg font-light leading-relaxed mt-3 md:mt-4">
+                      {s.desc}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-[#555] text-base md:text-lg max-w-md md:text-right font-light leading-relaxed">
-                  {s.desc}
-                </p>
+                <span className="text-sm font-mono text-[#8b5cf6] tracking-wider shrink-0">
+                  {s.price}
+                </span>
               </div>
             </div>
           ))}
