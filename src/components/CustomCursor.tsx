@@ -28,8 +28,8 @@ export function CustomCursor() {
 
     let rafId: number
     const animate = () => {
-      followerPos.current.x = lerp(followerPos.current.x, mouse.current.x, 0.12)
-      followerPos.current.y = lerp(followerPos.current.y, mouse.current.y, 0.12)
+      followerPos.current.x = lerp(followerPos.current.x, mouse.current.x, 0.15)
+      followerPos.current.y = lerp(followerPos.current.y, mouse.current.y, 0.15)
       follower.style.left = `${followerPos.current.x}px`
       follower.style.top = `${followerPos.current.y}px`
       rafId = requestAnimationFrame(animate)

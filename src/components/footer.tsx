@@ -29,19 +29,17 @@ export function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="border-t border-white/[0.04] bg-[#050505]"
+      className="border-t border-white/[0.06] bg-[#050505]"
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-20">
-        {/* Top row: logo + nav */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 mb-16">
-          {/* Logo */}
           <div className="footer-animate" style={{ opacity: 0 }}>
             <a
               href="#"
               className="text-2xl font-bold tracking-[-0.03em]"
               style={{ fontFamily: 'var(--font-syne), sans-serif' }}
             >
-              <span className="text-[#F5F5F0]">NOVA</span>
+              <span className="text-[#F0EDE6]">NOVA</span>
               <span className="text-[#FF4D00]">.</span>
             </a>
             <p
@@ -52,7 +50,6 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Contact info */}
           <div className="footer-animate flex flex-col gap-3" style={{ opacity: 0 }}>
             <span
               className="text-[10px] tracking-[0.2em] uppercase text-[#555] mb-1"
@@ -62,14 +59,14 @@ export function Footer() {
             </span>
             <a
               href="mailto:jigpatel01234@gmail.com"
-              className="text-sm text-[#888] hover:text-[#F5F5F0] transition-colors duration-300"
+              className="text-sm text-[#666] hover:text-[#F0EDE6] transition-colors duration-300"
               style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
             >
               jigpatel01234@gmail.com
             </a>
             <a
               href="tel:978-606-3386"
-              className="text-sm text-[#888] hover:text-[#F5F5F0] transition-colors duration-300"
+              className="text-sm text-[#666] hover:text-[#F0EDE6] transition-colors duration-300"
               style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
             >
               (978) 606-3386
@@ -77,7 +74,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
         <div className="footer-animate border-t border-white/[0.04] pt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4" style={{ opacity: 0 }}>
           <p
             className="text-[11px] text-[#444] tracking-wide"

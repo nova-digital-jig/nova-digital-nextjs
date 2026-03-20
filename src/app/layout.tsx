@@ -21,7 +21,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nova Digital | Websites That Print Money",
+  title: "AI-Powered Web Design Agency | Nova Digital",
   description:
     "Premium AI-powered websites delivered in 48 hours. Stunning design. Blazing fast. Real results for local businesses. Starting at $500.",
   keywords: [
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     "Next.js agency",
   ],
   openGraph: {
-    title: "Nova Digital | Websites That Print Money",
+    title: "AI-Powered Web Design Agency | Nova Digital",
     description:
       "Premium AI-powered websites delivered in 48 hours. Starting at $500. Stunning design. Blazing performance. Real results.",
     type: "website",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nova Digital | Websites That Print Money",
+    title: "AI-Powered Web Design Agency | Nova Digital",
     description:
       "Premium AI-powered websites in 48 hours. Starting at $500.",
   },
@@ -57,7 +57,7 @@ export default function RootLayout({
 }>) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
+    "@type": "LocalBusiness",
     name: "Nova Digital",
     description:
       "AI-powered web design agency delivering premium websites in 48 hours.",

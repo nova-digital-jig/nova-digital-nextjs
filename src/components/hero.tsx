@@ -12,7 +12,6 @@ export function Hero() {
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) {
-      // Show everything immediately
       const els = containerRef.current?.querySelectorAll('.hero-line-inner, .hero-eyebrow, .hero-sub, .hero-ctas, .hero-trust')
       els?.forEach(el => {
         ;(el as HTMLElement).style.opacity = '1'
@@ -22,29 +21,26 @@ export function Hero() {
       return
     }
 
-    // Wait for preloader to finish
     const timer = setTimeout(() => {
       const ctx = gsap.context(() => {
         const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
 
-        // Eyebrow fade + slide
         tl.fromTo('.hero-eyebrow',
           { y: 30, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.8 },
           0
         )
 
-        // Hero lines — clip-path reveal from below
         const lines = containerRef.current?.querySelectorAll('.hero-line-inner')
         if (lines) {
           lines.forEach((line, i) => {
             tl.fromTo(line,
               {
-                clipPath: 'inset(100% 0 0 0)',
-                y: 60,
+                clipPath: 'inset(0 0 100% 0)',
+                y: 100,
               },
               {
-                clipPath: 'inset(0% 0 0 0)',
+                clipPath: 'inset(0 0 0% 0)',
                 y: 0,
                 duration: 1.4,
                 ease: 'power4.out',
@@ -54,28 +50,24 @@ export function Hero() {
           })
         }
 
-        // Subheadline
         tl.fromTo('.hero-sub',
           { y: 40, opacity: 0 },
           { y: 0, opacity: 1, duration: 1 },
           0.7
         )
 
-        // CTAs
         tl.fromTo('.hero-ctas',
           { y: 30, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.8 },
           0.9
         )
 
-        // Trust bar
         tl.fromTo('.hero-trust',
           { y: 20, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.7 },
           1.1
         )
 
-        // Scroll indicator
         tl.fromTo('.hero-scroll-indicator',
           { opacity: 0 },
           { opacity: 1, duration: 0.8 },
@@ -94,14 +86,11 @@ export function Hero() {
       ref={containerRef}
       className="relative min-h-[100svh] flex items-center overflow-hidden"
     >
-      {/* Radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] rounded-full bg-[radial-gradient(circle,rgba(255,77,0,0.06)_0%,transparent_65%)] pointer-events-none" />
 
-      {/* Grain overlay */}
       <div className="grain" />
 
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 pt-36 pb-20 md:pt-40 md:pb-24">
-        {/* Eyebrow */}
         <div className="hero-eyebrow mb-8 md:mb-10" style={{ opacity: 0 }}>
           <span
             className="inline-flex items-center gap-2 text-[0.7rem] md:text-[0.75rem] tracking-[0.2em] uppercase font-medium text-[#FF4D00]"
@@ -112,7 +101,6 @@ export function Hero() {
           </span>
         </div>
 
-        {/* Headline — each line wrapped for clip-path reveal */}
         <div className="space-y-0">
           {heroLines.map((line, i) => (
             <div key={i} className="hero-line-wrapper overflow-hidden">
@@ -120,12 +108,12 @@ export function Hero() {
                 className="hero-line-inner"
                 style={{
                   fontFamily: 'var(--font-syne), sans-serif',
-                  fontSize: 'clamp(3.5rem, 8vw, 8rem)',
-                  fontWeight: 800,
-                  lineHeight: 0.95,
-                  letterSpacing: '-0.04em',
-                  color: line === 'MONEY.' ? '#FF4D00' : '#F5F5F0',
-                  clipPath: 'inset(100% 0 0 0)',
+                  fontSize: 'clamp(4rem, 10vw, 10rem)',
+                  fontWeight: 700,
+                  lineHeight: 0.9,
+                  letterSpacing: '-0.05em',
+                  color: line === 'MONEY.' ? '#FF4D00' : '#F0EDE6',
+                  clipPath: 'inset(0 0 100% 0)',
                 }}
               >
                 {line}
@@ -134,9 +122,8 @@ export function Hero() {
           ))}
         </div>
 
-        {/* Subheadline */}
         <p
-          className="hero-sub mt-10 md:mt-14 max-w-[520px] text-[#888] text-base md:text-lg leading-[1.7]"
+          className="hero-sub mt-10 md:mt-14 max-w-[540px] text-[#666] text-base md:text-lg leading-[1.7]"
           style={{
             fontFamily: 'var(--font-jakarta), sans-serif',
             opacity: 0,
@@ -146,7 +133,6 @@ export function Hero() {
           Blazing fast. Real results.
         </p>
 
-        {/* CTAs */}
         <div className="hero-ctas mt-8 md:mt-10 flex flex-wrap gap-4" style={{ opacity: 0 }}>
           <MagneticButton
             as="a"
@@ -158,13 +144,12 @@ export function Hero() {
           <MagneticButton
             as="a"
             href="#work"
-            className="inline-flex items-center px-9 py-4.5 bg-transparent text-[#F5F5F0] rounded-full text-sm font-medium tracking-[0.05em] uppercase border border-white/15 hover:border-white/40 transition-all duration-300"
+            className="inline-flex items-center px-9 py-4.5 bg-transparent text-[#F0EDE6] rounded-full text-sm font-medium tracking-[0.05em] uppercase border border-white/15 hover:border-white/40 transition-all duration-300"
           >
             View Work
           </MagneticButton>
         </div>
 
-        {/* Trust bar */}
         <div
           className="hero-trust mt-12 flex flex-wrap items-center gap-6 text-sm text-[#555]"
           style={{
@@ -186,13 +171,12 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <div
         className="hero-scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         style={{ opacity: 0 }}
       >
         <span
-          className="text-[10px] tracking-[0.3em] uppercase text-[#555] rotate-0"
+          className="text-[10px] tracking-[0.3em] uppercase text-[#555]"
           style={{ fontFamily: 'var(--font-jetbrains), monospace' }}
         >
           Scroll

@@ -68,7 +68,6 @@ export function Navbar() {
     }
   }, [menuOpen])
 
-  // Animate nav in after preloader
   useEffect(() => {
     const timer = setTimeout(() => {
       if (navRef.current) {
@@ -87,7 +86,7 @@ export function Navbar() {
         ref={navRef}
         className={`fixed top-0 left-0 w-full z-[999] transition-all duration-500 ${
           scrolled
-            ? 'bg-[#0A0A0A]/80 backdrop-blur-[20px] backdrop-saturate-[1.8] border-b border-white/[0.06] py-4'
+            ? 'bg-[rgba(10,10,10,0.9)] backdrop-blur-[16px] backdrop-saturate-[1.8] border-b border-white/[0.06] py-4'
             : 'bg-transparent py-6 md:py-8'
         }`}
         style={{ opacity: 0 }}
@@ -95,23 +94,21 @@ export function Navbar() {
         aria-label="Main navigation"
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between">
-          {/* Logo */}
           <a
             href="#"
             className="text-xl font-bold tracking-[-0.03em] relative z-[1001]"
             style={{ fontFamily: 'var(--font-syne), sans-serif' }}
           >
-            <span className="text-[#F5F5F0]">NOVA</span>
+            <span className="text-[#F0EDE6]">NOVA</span>
             <span className="text-[#FF4D00]">.</span>
           </a>
 
-          {/* Desktop nav links */}
           <div className="hidden lg:flex items-center gap-10">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="nav-link text-[13px] font-medium tracking-[0.15em] uppercase text-[#888]"
+                className="nav-link text-[13px] font-medium tracking-[0.15em] uppercase text-[#666]"
                 style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
               >
                 {link.label}
@@ -119,7 +116,6 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Desktop CTA */}
           <div className="hidden lg:block">
             <MagneticButton
               as="a"
@@ -130,7 +126,6 @@ export function Navbar() {
             </MagneticButton>
           </div>
 
-          {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="lg:hidden relative z-[1001] w-10 h-10 flex flex-col items-center justify-center gap-[7px]"
@@ -138,12 +133,12 @@ export function Navbar() {
             aria-expanded={menuOpen}
           >
             <span
-              className={`block w-7 h-[1.5px] bg-[#F5F5F0] transition-all duration-500 origin-center ${
+              className={`block w-7 h-[1.5px] bg-[#F0EDE6] transition-all duration-500 origin-center ${
                 menuOpen ? 'rotate-45 translate-y-[4.25px]' : ''
               }`}
             />
             <span
-              className={`block w-7 h-[1.5px] bg-[#F5F5F0] transition-all duration-500 origin-center ${
+              className={`block w-7 h-[1.5px] bg-[#F0EDE6] transition-all duration-500 origin-center ${
                 menuOpen ? '-rotate-45 -translate-y-[4.25px]' : ''
               }`}
             />
@@ -151,7 +146,6 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile fullscreen overlay */}
       <div
         ref={overlayRef}
         className="fixed inset-0 z-[998] bg-[#0A0A0A] lg:hidden flex flex-col items-start justify-center px-8 md:px-16"
@@ -167,7 +161,7 @@ export function Navbar() {
                 ref={(el) => { linkRefs.current[i] = el }}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="block text-[clamp(3rem,12vw,6rem)] font-bold text-[#F5F5F0] tracking-[-0.04em] leading-[1.1] hover:text-[#FF4D00] transition-colors duration-300"
+                className="block text-[clamp(3rem,12vw,6rem)] font-bold text-[#F0EDE6] tracking-[-0.04em] leading-[1.1] hover:text-[#FF4D00] transition-colors duration-300"
                 style={{
                   fontFamily: 'var(--font-syne), sans-serif',
                   opacity: 0,
@@ -181,21 +175,21 @@ export function Navbar() {
 
         <div ref={overlayCtaRef} className="mt-12 opacity-0">
           <div
-            className="text-sm text-[#888] mb-4"
+            className="text-sm text-[#666] mb-4"
             style={{ fontFamily: 'var(--font-jetbrains), monospace' }}
           >
             Get in touch
           </div>
           <a
             href="mailto:jigpatel01234@gmail.com"
-            className="block text-[#F5F5F0] text-lg hover:text-[#FF4D00] transition-colors duration-300 mb-2"
+            className="block text-[#F0EDE6] text-lg hover:text-[#FF4D00] transition-colors duration-300 mb-2"
             style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
           >
             jigpatel01234@gmail.com
           </a>
           <a
             href="tel:978-606-3386"
-            className="block text-[#888] text-lg hover:text-[#F5F5F0] transition-colors duration-300"
+            className="block text-[#666] text-lg hover:text-[#F0EDE6] transition-colors duration-300"
             style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
           >
             (978) 606-3386

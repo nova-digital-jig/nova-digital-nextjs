@@ -7,9 +7,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const stats = [
-  { value: '50+', label: 'Sites Built' },
-  { value: '48hr', label: 'Avg. Delivery' },
-  { value: '5.0★', label: 'Client Rating' },
+  { value: '50+', label: 'Sites Built', numericEnd: 50, suffix: '+' },
+  { value: '48hr', label: 'Avg. Delivery', numericEnd: 48, suffix: 'hr' },
+  { value: '5.0★', label: 'Client Rating', numericEnd: 5.0, suffix: '★', isDecimal: true },
 ]
 
 export function Stats() {
@@ -18,7 +18,6 @@ export function Stats() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Each stat item
       const items = sectionRef.current?.querySelectorAll('.stat-item')
       items?.forEach((item, i) => {
         gsap.fromTo(item,
@@ -31,7 +30,6 @@ export function Stats() {
         )
       })
 
-      // Count-up animations via GSAP
       valueRefs.current.forEach((el, i) => {
         if (!el) return
 
@@ -42,45 +40,23 @@ export function Stats() {
           start: 'top 88%',
           once: true,
           onEnter: () => {
-            if (st.label === 'Sites Built') {
-              // Count from 0 to 50
-              const obj = { val: 0 }
-              gsap.to(obj, {
-                val: 50,
-                duration: 1.5,
-                ease: 'power2.out',
-                onUpdate: () => {
-                  el.textContent = Math.floor(obj.val) + '+'
-                },
-              })
-            } else if (st.label === 'Avg. Delivery') {
-              // Count from 0 to 48
-              const obj = { val: 0 }
-              gsap.to(obj, {
-                val: 48,
-                duration: 1.5,
-                ease: 'power2.out',
-                onUpdate: () => {
-                  el.textContent = Math.floor(obj.val) + 'hr'
-                },
-              })
-            } else if (st.label === 'Client Rating') {
-              // Count from 0 to 5.0
-              const obj = { val: 0 }
-              gsap.to(obj, {
-                val: 5.0,
-                duration: 1.5,
-                ease: 'power2.out',
-                onUpdate: () => {
-                  el.textContent = obj.val.toFixed(1) + '★'
-                },
-              })
-            }
+            const obj = { val: 0 }
+            gsap.to(obj, {
+              val: st.numericEnd,
+              duration: 1.5,
+              ease: 'power2.out',
+              onUpdate: () => {
+                if (st.isDecimal) {
+                  el.textContent = obj.val.toFixed(1) + st.suffix
+                } else {
+                  el.textContent = Math.floor(obj.val) + st.suffix
+                }
+              },
+            })
           },
         })
       })
 
-      // Divider lines
       const dividers = sectionRef.current?.querySelectorAll('.stat-divider')
       dividers?.forEach((div, i) => {
         gsap.fromTo(div,
@@ -103,7 +79,6 @@ export function Stats() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-0">
           {stats.map((stat, i) => (
             <div key={stat.label} className="flex items-center">
-              {/* Divider line (between items on desktop) */}
               {i > 0 && (
                 <div className="stat-divider hidden md:block w-[1px] h-24 bg-white/[0.06] mr-auto" style={{ transform: 'scaleY(0)' }} />
               )}
@@ -111,7 +86,7 @@ export function Stats() {
               <div className="stat-item text-center flex-1" style={{ opacity: 0 }}>
                 <span
                   ref={(el) => { valueRefs.current[i] = el }}
-                  className="block text-[clamp(3.5rem,7vw,5.5rem)] font-bold tracking-[-0.03em] leading-none text-[#FF4D00]"
+                  className="block text-[clamp(3.5rem,7vw,5rem)] font-bold tracking-[-0.03em] leading-none text-[#FF4D00]"
                   style={{ fontFamily: 'var(--font-syne), sans-serif' }}
                 >
                   {stat.value}

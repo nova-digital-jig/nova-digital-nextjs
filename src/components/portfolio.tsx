@@ -12,19 +12,16 @@ const projects = [
     name: 'Lucas Hair Salon',
     url: 'https://lucas-hair-salon.vercel.app',
     image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&q=80',
-    category: 'Web Design & Development',
   },
   {
     name: 'Edison Barbershop',
     url: 'https://edison-barbershop.vercel.app',
     image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80',
-    category: 'Branding & UI/UX',
   },
   {
     name: "Ram's Garage",
     url: 'https://rams-garage.vercel.app',
     image: 'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=1200&q=80',
-    category: 'Full-Stack Solution',
   },
 ]
 
@@ -33,7 +30,6 @@ export function Portfolio() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Eyebrow
       gsap.fromTo('.portfolio-eyebrow',
         { y: 30, opacity: 0 },
         {
@@ -42,7 +38,6 @@ export function Portfolio() {
         }
       )
 
-      // Heading clip-path
       gsap.fromTo('.portfolio-heading',
         { clipPath: 'inset(100% 0 0 0)', y: 40 },
         {
@@ -51,14 +46,11 @@ export function Portfolio() {
         }
       )
 
-      // Each project card
       const cards = sectionRef.current?.querySelectorAll('.portfolio-card')
       cards?.forEach((card) => {
         const img = card.querySelector('.portfolio-img')
-        const overlay = card.querySelector('.portfolio-overlay')
         const info = card.querySelector('.portfolio-info')
 
-        // Card clip-path reveal
         gsap.fromTo(card,
           { clipPath: 'inset(100% 0 0 0)' },
           {
@@ -69,7 +61,6 @@ export function Portfolio() {
           }
         )
 
-        // Info text slide up
         if (info) {
           gsap.fromTo(info,
             { y: 40, opacity: 0 },
@@ -81,7 +72,6 @@ export function Portfolio() {
           )
         }
 
-        // Parallax on image
         if (img) {
           gsap.fromTo(img,
             { yPercent: -8 },
@@ -99,7 +89,6 @@ export function Portfolio() {
         }
       })
 
-      // "Want to see more" link
       gsap.fromTo('.portfolio-more',
         { y: 20, opacity: 0 },
         {
@@ -115,7 +104,6 @@ export function Portfolio() {
   return (
     <section ref={sectionRef} id="work" className="py-32 md:py-44">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        {/* Section header */}
         <div className="mb-16 md:mb-24">
           <p
             className="portfolio-eyebrow text-[0.7rem] md:text-[0.75rem] tracking-[0.2em] uppercase font-medium text-[#FF4D00] mb-6 flex items-center gap-3"
@@ -141,7 +129,6 @@ export function Portfolio() {
           </div>
         </div>
 
-        {/* Projects */}
         <div className="space-y-16 md:space-y-24">
           {projects.map((project, i) => (
             <a
@@ -156,7 +143,6 @@ export function Portfolio() {
                 clipPath: 'inset(100% 0 0 0)',
               }}
             >
-              {/* Image container with parallax */}
               <div className="portfolio-img absolute inset-[-12%] will-change-transform">
                 <Image
                   src={project.image}
@@ -167,25 +153,18 @@ export function Portfolio() {
                 />
               </div>
 
-              {/* Gradient overlay */}
               <div className="portfolio-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10 transition-opacity duration-500 group-hover:from-black/70" />
 
-              {/* Project info */}
               <div className="portfolio-info absolute bottom-0 left-0 right-0 p-6 md:p-10 z-20 flex items-end justify-between" style={{ opacity: 0 }}>
-                <div>
-                  <span
-                    className="text-[10px] md:text-xs tracking-[0.2em] uppercase text-[#FF4D00] mb-2 block"
-                    style={{ fontFamily: 'var(--font-jetbrains), monospace' }}
-                  >
-                    {project.category}
-                  </span>
-                  <h3
-                    className="text-[clamp(1.8rem,4vw,3.5rem)] font-bold text-white tracking-[-0.03em] leading-none"
-                    style={{ fontFamily: 'var(--font-syne), sans-serif' }}
-                  >
-                    {project.name}
-                  </h3>
-                </div>
+                <h3
+                  className="text-[clamp(1.8rem,4vw,3.5rem)] font-bold text-white tracking-[-0.03em] leading-none"
+                  style={{
+                    fontFamily: 'var(--font-syne), sans-serif',
+                    textShadow: '0 2px 20px rgba(0,0,0,0.5)',
+                  }}
+                >
+                  {project.name}
+                </h3>
                 <span className="text-[#FF4D00] text-sm font-medium flex items-center gap-2 group-hover:gap-4 transition-all duration-500 shrink-0">
                   View Site
                   <span className="text-lg">&rarr;</span>
@@ -195,11 +174,10 @@ export function Portfolio() {
           ))}
         </div>
 
-        {/* "Want to see more" */}
         <div className="portfolio-more mt-20 text-center" style={{ opacity: 0 }}>
           <a
             href="#contact"
-            className="inline-flex items-center gap-3 text-[#888] text-sm font-medium hover:text-[#FF4D00] transition-colors duration-300 group"
+            className="inline-flex items-center gap-3 text-[#666] text-sm font-medium hover:text-[#FF4D00] transition-colors duration-300 group"
             style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
           >
             Want to see more? Let&apos;s talk

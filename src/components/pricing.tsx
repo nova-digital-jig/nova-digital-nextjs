@@ -65,7 +65,6 @@ export function Pricing() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Eyebrow
       gsap.fromTo('.pricing-eyebrow',
         { y: 30, opacity: 0 },
         {
@@ -74,7 +73,6 @@ export function Pricing() {
         }
       )
 
-      // Heading clip-path
       gsap.fromTo('.pricing-heading',
         { clipPath: 'inset(100% 0 0 0)', y: 40 },
         {
@@ -83,7 +81,6 @@ export function Pricing() {
         }
       )
 
-      // Subtitle
       gsap.fromTo('.pricing-subtitle',
         { y: 20, opacity: 0 },
         {
@@ -92,7 +89,6 @@ export function Pricing() {
         }
       )
 
-      // Cards
       const cards = sectionRef.current?.querySelectorAll('.pricing-card')
       cards?.forEach((card, i) => {
         gsap.fromTo(card,
@@ -112,7 +108,6 @@ export function Pricing() {
   return (
     <section ref={sectionRef} id="pricing" className="py-32 md:py-44">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        {/* Section header */}
         <div className="text-center mb-16 md:mb-24">
           <p
             className="pricing-eyebrow text-[0.7rem] md:text-[0.75rem] tracking-[0.2em] uppercase font-medium text-[#FF4D00] mb-6"
@@ -136,29 +131,27 @@ export function Pricing() {
             </h2>
           </div>
           <p
-            className="pricing-subtitle text-[#888] text-base md:text-lg mt-6 max-w-lg mx-auto leading-relaxed"
+            className="pricing-subtitle text-[#666] text-base md:text-lg mt-6 max-w-lg mx-auto leading-relaxed"
             style={{
               fontFamily: 'var(--font-jakarta), sans-serif',
               opacity: 0,
             }}
           >
-            No hidden fees. No monthly subscriptions. One-time investment in your business.
+            No hidden fees. One-time investment.
           </p>
         </div>
 
-        {/* Pricing cards */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 items-start">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`pricing-card relative rounded-2xl p-8 md:p-10 lg:p-12 ${
+              className={`pricing-card relative rounded-2xl p-10 md:p-12 lg:p-14 ${
                 plan.featured
                   ? 'border-[1.5px] border-[#FF4D00] bg-[rgba(255,77,0,0.03)]'
-                  : 'bg-white/[0.02] border border-white/[0.06]'
+                  : 'bg-white/[0.03] border border-white/[0.08]'
               }`}
               style={{ opacity: 0 }}
             >
-              {/* Popular badge */}
               {plan.featured && (
                 <span
                   className="absolute -top-3 left-8 text-[10px] font-bold bg-[#FF4D00] text-[#0A0A0A] px-4 py-1.5 rounded-full tracking-[0.15em] uppercase"
@@ -168,33 +161,29 @@ export function Pricing() {
                 </span>
               )}
 
-              {/* Plan name */}
               <p
-                className="text-[0.7rem] tracking-[0.2em] uppercase font-medium text-[#888] mb-8"
+                className="text-[0.7rem] tracking-[0.2em] uppercase font-medium text-[#666] mb-8"
                 style={{ fontFamily: 'var(--font-jetbrains), monospace' }}
               >
                 {plan.name}
               </p>
 
-              {/* Price */}
               <div className="mb-3">
                 <span
-                  className="text-[clamp(3rem,5vw,4rem)] font-bold tracking-[-0.03em] leading-none text-[#F5F5F0]"
+                  className="text-[clamp(3rem,5vw,4rem)] font-bold tracking-[-0.03em] leading-none text-[#F0EDE6]"
                   style={{ fontFamily: 'var(--font-syne), sans-serif' }}
                 >
                   {plan.price}
                 </span>
               </div>
 
-              {/* Description */}
               <p
-                className="text-sm text-[#888] mb-10 leading-relaxed"
+                className="text-sm text-[#666] mb-10 leading-relaxed"
                 style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
               >
                 {plan.description}
               </p>
 
-              {/* CTA button */}
               <MagneticButton
                 as="a"
                 href={plan.href}
@@ -203,13 +192,12 @@ export function Pricing() {
                 className={`w-full flex items-center justify-center py-4 rounded-full text-sm font-semibold tracking-[0.05em] uppercase transition-all duration-300 mb-10 ${
                   plan.featured
                     ? 'bg-[#FF4D00] text-[#0A0A0A] hover:bg-[#FF6B2C]'
-                    : 'bg-white/[0.03] text-[#F5F5F0] border border-white/[0.08] hover:border-[#FF4D00]/40 hover:bg-white/[0.05]'
+                    : 'bg-white/[0.03] text-[#F0EDE6] border border-white/[0.08] hover:border-[#FF4D00]/40 hover:bg-white/[0.05]'
                 }`}
               >
                 {plan.cta}
               </MagneticButton>
 
-              {/* Features list */}
               <div className="space-y-0">
                 {plan.features.map((feature, i) => (
                   <div

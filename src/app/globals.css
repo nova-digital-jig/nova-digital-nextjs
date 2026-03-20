@@ -3,13 +3,13 @@
 
 @theme inline {
   --color-background: #0A0A0A;
-  --color-background-alt: #111111;
+  --color-background-alt: #0D0D0D;
   --color-background-dark: #050505;
-  --color-foreground: #F5F5F0;
-  --color-muted: #888888;
+  --color-foreground: #F0EDE6;
+  --color-muted: #666666;
   --color-accent: #FF4D00;
   --color-accent-hover: #FF6B2C;
-  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border: rgba(255, 255, 255, 0.06);
 
   --font-display: var(--font-syne);
   --font-body: var(--font-jakarta);
@@ -24,7 +24,7 @@
 
 html {
   background-color: #0A0A0A;
-  color: #F5F5F0;
+  color: #F0EDE6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -40,7 +40,7 @@ html.lenis, html.lenis body {
 body {
   font-family: var(--font-body), system-ui, sans-serif;
   background-color: #0A0A0A;
-  color: #F5F5F0;
+  color: #F0EDE6;
   overflow-x: hidden;
 }
 
@@ -109,7 +109,7 @@ body.loading {
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #F5F5F0;
+  color: #F0EDE6;
 }
 
 .cursor-follower.hovering {
@@ -130,7 +130,7 @@ body.loading {
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.035;
+  opacity: 0.04;
   mix-blend-mode: overlay;
 }
 
@@ -160,7 +160,7 @@ body.loading {
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 20s linear infinite;
+  animation: marquee-scroll 25s linear infinite;
   will-change: transform;
 }
 
@@ -221,7 +221,7 @@ body.loading {
 }
 
 .nav-link:hover {
-  color: #F5F5F0;
+  color: #F0EDE6;
 }
 
 /* ── Hero line clip-path reveal ── */
@@ -272,7 +272,8 @@ body.loading {
 /* ── Pricing card hover ── */
 .pricing-card {
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.6s ease;
+              box-shadow 0.6s ease,
+              border-color 0.4s ease;
 }
 
 .pricing-card:hover {

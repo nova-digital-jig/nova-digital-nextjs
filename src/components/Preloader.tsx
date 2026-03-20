@@ -29,7 +29,6 @@ export function Preloader() {
       },
     })
 
-    // Counter animation
     const counter = { val: 0 }
     tl.to(counter, {
       val: 100,
@@ -42,7 +41,6 @@ export function Preloader() {
       },
     }, 0)
 
-    // Logo clip-path reveal from left to right
     tl.fromTo(
       logoRef.current,
       { clipPath: 'inset(0 100% 0 0)' },
@@ -50,24 +48,20 @@ export function Preloader() {
       0
     )
 
-    // Progress bar fill
     tl.to(
       barFillRef.current,
       { width: '100%', duration: 1.8, ease: 'power2.inOut' },
       0
     )
 
-    // Hold for a beat
     tl.to({}, { duration: 0.4 })
 
-    // Logo scale up slightly
     tl.to(logoRef.current, {
       scale: 1.1,
       duration: 0.3,
       ease: 'power2.in',
     })
 
-    // Slide entire preloader up with clip-path
     tl.to(preloaderRef.current, {
       clipPath: 'inset(0 0 100% 0)',
       duration: 0.8,
@@ -91,7 +85,7 @@ export function Preloader() {
           clipPath: 'inset(0 100% 0 0)',
         }}
       >
-        <span className="text-[#F5F5F0]">NOVA</span>
+        <span className="text-[#F0EDE6]">NOVA</span>
         <span className="text-[#FF4D00]">.</span>
       </div>
 
@@ -101,7 +95,7 @@ export function Preloader() {
         </div>
         <span
           ref={counterRef}
-          className="text-xs text-[#888] tracking-[0.2em] tabular-nums w-8 text-right"
+          className="text-xs text-[#666] tracking-[0.2em] tabular-nums w-8 text-right"
           style={{ fontFamily: 'var(--font-jetbrains), monospace' }}
         >
           0

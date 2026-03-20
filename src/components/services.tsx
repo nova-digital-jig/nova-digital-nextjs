@@ -15,12 +15,12 @@ const services = [
   {
     num: '02',
     title: 'Development',
-    desc: 'Lightning-fast Next.js sites, SEO-optimized.',
+    desc: 'Lightning-fast Next.js sites, optimized for SEO.',
   },
   {
     num: '03',
     title: 'UI/UX Strategy',
-    desc: 'Data-driven design that turns visitors into customers.',
+    desc: 'User experience design that turns visitors into customers.',
   },
   {
     num: '04',
@@ -34,7 +34,6 @@ export function Services() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Eyebrow
       gsap.fromTo('.services-eyebrow',
         { y: 30, opacity: 0 },
         {
@@ -43,7 +42,6 @@ export function Services() {
         }
       )
 
-      // Section heading — clip-path reveal
       gsap.fromTo('.services-heading',
         { clipPath: 'inset(100% 0 0 0)', y: 40 },
         {
@@ -52,7 +50,6 @@ export function Services() {
         }
       )
 
-      // Each service row
       const rows = sectionRef.current?.querySelectorAll('.service-row-item')
       rows?.forEach((row, i) => {
         gsap.fromTo(row,
@@ -64,7 +61,6 @@ export function Services() {
           }
         )
 
-        // Also animate the line/border width
         const border = row.querySelector('.service-border')
         if (border) {
           gsap.fromTo(border,
@@ -85,7 +81,6 @@ export function Services() {
   return (
     <section ref={sectionRef} id="services" className="py-32 md:py-44">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        {/* Section header */}
         <div className="mb-16 md:mb-24">
           <p
             className="services-eyebrow text-[0.7rem] md:text-[0.75rem] tracking-[0.2em] uppercase font-medium text-[#FF4D00] mb-6 flex items-center gap-3"
@@ -111,7 +106,6 @@ export function Services() {
           </div>
         </div>
 
-        {/* Service rows — editorial list */}
         <div className="border-t border-white/[0.06]">
           {services.map((s) => (
             <div
@@ -123,7 +117,6 @@ export function Services() {
                 href="#contact"
                 className="flex items-start md:items-center justify-between py-8 md:py-12 gap-4 md:gap-8 flex-col md:flex-row"
               >
-                {/* Left: number + title */}
                 <div className="flex items-baseline gap-6 md:gap-10 flex-1">
                   <span
                     className="text-sm font-medium text-[#FF4D00] opacity-60 shrink-0"
@@ -132,28 +125,25 @@ export function Services() {
                     {s.num}
                   </span>
                   <h3
-                    className="text-[clamp(1.5rem,3vw,2.2rem)] font-semibold tracking-[-0.02em] leading-none group-hover:text-[#FF4D00] transition-colors duration-500"
+                    className="text-[clamp(1.5rem,3vw,2rem)] font-semibold tracking-[-0.02em] leading-none group-hover:text-[#FF4D00] transition-colors duration-500"
                     style={{ fontFamily: 'var(--font-syne), sans-serif' }}
                   >
                     {s.title}
                   </h3>
                 </div>
 
-                {/* Center: description */}
                 <p
-                  className="text-[#888] text-sm md:text-[15px] max-w-sm leading-relaxed flex-1 md:text-right"
+                  className="text-[#666] text-sm md:text-[15px] max-w-sm leading-relaxed flex-1 md:text-right"
                   style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
                 >
                   {s.desc}
                 </p>
 
-                {/* Right: arrow */}
                 <span className="text-[#555] text-xl group-hover:text-[#FF4D00] group-hover:translate-x-3 transition-all duration-500 hidden md:block">
                   &rarr;
                 </span>
               </a>
 
-              {/* Animated border */}
               <div className="service-border h-[1px] bg-white/[0.06]" />
             </div>
           ))}

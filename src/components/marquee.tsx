@@ -22,19 +22,16 @@ export function Marquee() {
     return () => ctx.revert()
   }, [])
 
-  const items = ['DESIGN', 'DEVELOP', 'DEPLOY', 'AUTOMATE']
-  const repeated = [...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items]
-  const track = repeated.map((item, i) => (
-    <span key={i} className="flex items-center gap-6 md:gap-10">
-      <span
-        className="text-[1.2rem] md:text-[1.4rem] font-semibold uppercase tracking-[0.12em] text-white/[0.15] whitespace-nowrap"
-        style={{ fontFamily: 'var(--font-syne), sans-serif' }}
-      >
-        {item}
-      </span>
-      <span className="text-[#FF4D00]/30 text-xs">&#9670;</span>
+  const text = 'DESIGN \u00B7 DEVELOP \u00B7 DEPLOY \u00B7 '
+  const repeated = Array(8).fill(text).join('')
+  const trackContent = (
+    <span
+      className="text-[1.1rem] font-medium uppercase tracking-[0.12em] text-white/[0.15] whitespace-nowrap"
+      style={{ fontFamily: 'var(--font-syne), sans-serif' }}
+    >
+      {repeated}
     </span>
-  ))
+  )
 
   return (
     <section
@@ -42,9 +39,9 @@ export function Marquee() {
       className="py-5 md:py-6 border-t border-b border-white/[0.06] overflow-hidden"
       style={{ opacity: 0 }}
     >
-      <div className="marquee-track gap-6 md:gap-10">
-        {track}
-        {track}
+      <div className="marquee-track">
+        {trackContent}
+        {trackContent}
       </div>
     </section>
   )
