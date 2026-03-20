@@ -36,6 +36,7 @@ export default function Home() {
 
     return () => {
       lenis.destroy()
+      gsap.ticker.remove(lenis.raf)
     }
   }, [])
 

@@ -11,13 +11,17 @@ export function Footer() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(footerRef.current,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: footerRef.current, start: 'top 95%' }
-        }
-      )
+      const items = footerRef.current?.querySelectorAll('.footer-animate')
+      items?.forEach((el, i) => {
+        gsap.fromTo(el,
+          { y: 20, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 0.6, ease: 'power3.out',
+            scrollTrigger: { trigger: footerRef.current, start: 'top 95%' },
+            delay: i * 0.08,
+          }
+        )
+      })
     }, footerRef)
     return () => ctx.revert()
   }, [])
@@ -25,47 +29,67 @@ export function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="border-t border-white/[0.06] bg-[#050505] opacity-0"
+      className="border-t border-white/[0.04] bg-[#050505]"
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-20">
-        {/* Logo */}
-        <div className="mb-12">
-          <a
-            href="#"
-            className="text-2xl font-bold tracking-tight"
-            style={{ fontFamily: 'var(--font-syne), sans-serif' }}
-          >
-            <span className="text-[#F5F5F0]">NOVA</span>
-            <span className="text-[#FF4D00]">.</span>
-          </a>
+        {/* Top row: logo + nav */}
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 mb-16">
+          {/* Logo */}
+          <div className="footer-animate" style={{ opacity: 0 }}>
+            <a
+              href="#"
+              className="text-2xl font-bold tracking-[-0.03em]"
+              style={{ fontFamily: 'var(--font-syne), sans-serif' }}
+            >
+              <span className="text-[#F5F5F0]">NOVA</span>
+              <span className="text-[#FF4D00]">.</span>
+            </a>
+            <p
+              className="text-[#555] text-sm mt-3 max-w-xs leading-relaxed"
+              style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
+            >
+              AI-powered web agency delivering premium websites that drive real results.
+            </p>
+          </div>
+
+          {/* Contact info */}
+          <div className="footer-animate flex flex-col gap-3" style={{ opacity: 0 }}>
+            <span
+              className="text-[10px] tracking-[0.2em] uppercase text-[#555] mb-1"
+              style={{ fontFamily: 'var(--font-jetbrains), monospace' }}
+            >
+              Contact
+            </span>
+            <a
+              href="mailto:jigpatel01234@gmail.com"
+              className="text-sm text-[#888] hover:text-[#F5F5F0] transition-colors duration-300"
+              style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
+            >
+              jigpatel01234@gmail.com
+            </a>
+            <a
+              href="tel:978-606-3386"
+              className="text-sm text-[#888] hover:text-[#F5F5F0] transition-colors duration-300"
+              style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
+            >
+              (978) 606-3386
+            </a>
+          </div>
         </div>
 
-        {/* Contact row */}
-        <div
-          className="flex flex-wrap gap-8 text-sm text-[#888] mb-12"
-          style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
-        >
-          <a
-            href="mailto:jigpatel01234@gmail.com"
-            className="hover:text-[#F5F5F0] transition-colors duration-300"
-          >
-            jigpatel01234@gmail.com
-          </a>
-          <a
-            href="tel:978-606-3386"
-            className="hover:text-[#F5F5F0] transition-colors duration-300"
-          >
-            (978) 606-3386
-          </a>
-        </div>
-
-        {/* Bottom */}
-        <div className="border-t border-white/[0.06] pt-8">
+        {/* Bottom bar */}
+        <div className="footer-animate border-t border-white/[0.04] pt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4" style={{ opacity: 0 }}>
           <p
-            className="text-xs text-[#555]"
+            className="text-[11px] text-[#444] tracking-wide"
             style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
           >
             &copy; 2026 Nova Digital. All rights reserved.
+          </p>
+          <p
+            className="text-[11px] text-[#333]"
+            style={{ fontFamily: 'var(--font-jetbrains), monospace' }}
+          >
+            Designed & built with precision
           </p>
         </div>
       </div>

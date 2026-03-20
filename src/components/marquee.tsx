@@ -12,9 +12,9 @@ export function Marquee() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(sectionRef.current,
-        { opacity: 0 },
+        { opacity: 0, y: 20 },
         {
-          opacity: 1, duration: 0.8, ease: 'power2.out',
+          opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
           scrollTrigger: { trigger: sectionRef.current, start: 'top 90%' }
         }
       )
@@ -22,27 +22,29 @@ export function Marquee() {
     return () => ctx.revert()
   }, [])
 
-  const text = 'DESIGN \u00B7 DEVELOP \u00B7 DEPLOY \u00B7 '
-  const repeated = text.repeat(8)
+  const items = ['DESIGN', 'DEVELOP', 'DEPLOY', 'AUTOMATE']
+  const repeated = [...items, ...items, ...items, ...items, ...items, ...items, ...items, ...items]
+  const track = repeated.map((item, i) => (
+    <span key={i} className="flex items-center gap-6 md:gap-10">
+      <span
+        className="text-[1.2rem] md:text-[1.4rem] font-semibold uppercase tracking-[0.12em] text-white/[0.15] whitespace-nowrap"
+        style={{ fontFamily: 'var(--font-syne), sans-serif' }}
+      >
+        {item}
+      </span>
+      <span className="text-[#FF4D00]/30 text-xs">&#9670;</span>
+    </span>
+  ))
 
   return (
     <section
       ref={sectionRef}
-      className="py-6 border-t border-b border-white/[0.08] overflow-hidden opacity-0"
+      className="py-5 md:py-6 border-t border-b border-white/[0.06] overflow-hidden"
+      style={{ opacity: 0 }}
     >
-      <div className="marquee-track">
-        <span
-          className="text-[1.1rem] font-medium uppercase tracking-[0.1em] text-white/[0.2] whitespace-nowrap"
-          style={{ fontFamily: 'var(--font-syne), sans-serif' }}
-        >
-          {repeated}
-        </span>
-        <span
-          className="text-[1.1rem] font-medium uppercase tracking-[0.1em] text-white/[0.2] whitespace-nowrap"
-          style={{ fontFamily: 'var(--font-syne), sans-serif' }}
-        >
-          {repeated}
-        </span>
+      <div className="marquee-track gap-6 md:gap-10">
+        {track}
+        {track}
       </div>
     </section>
   )

@@ -31,25 +31,49 @@ export function MagneticButton({
     const isCoarse = window.matchMedia('(pointer: coarse)').matches
     if (isCoarse) return
 
+    const strength = 0.35
+    const innerStrength = 0.15
+
     const handleMove = (e: MouseEvent) => {
       const rect = el.getBoundingClientRect()
       const x = e.clientX - rect.left - rect.width / 2
       const y = e.clientY - rect.top - rect.height / 2
+
       gsap.to(el, {
-        x: x * 0.3,
-        y: y * 0.3,
+        x: x * strength,
+        y: y * strength,
         duration: 0.4,
         ease: 'power2.out',
       })
+
+      const inner = el.querySelector('.magnetic-inner')
+      if (inner) {
+        gsap.to(inner, {
+          x: x * innerStrength,
+          y: y * innerStrength,
+          duration: 0.4,
+          ease: 'power2.out',
+        })
+      }
     }
 
     const handleLeave = () => {
       gsap.to(el, {
         x: 0,
         y: 0,
-        duration: 0.6,
-        ease: 'elastic.out(1, 0.3)',
+        duration: 0.7,
+        ease: 'elastic.out(1.2, 0.4)',
       })
+
+      const inner = el.querySelector('.magnetic-inner')
+      if (inner) {
+        gsap.to(inner, {
+          x: 0,
+          y: 0,
+          duration: 0.7,
+          ease: 'elastic.out(1.2, 0.4)',
+        })
+      }
     }
 
     el.addEventListener('mousemove', handleMove)
@@ -65,11 +89,16 @@ export function MagneticButton({
   const props = {
     ref,
     className: `magnetic-btn ${className}`,
+    'data-magnetic': true,
     ...(href && { href }),
     ...(target && { target }),
     ...(rel && { rel }),
     ...(onClick && { onClick }),
   }
 
-  return <Tag {...props}>{children}</Tag>
+  return (
+    <Tag {...props}>
+      <span className="magnetic-inner">{children}</span>
+    </Tag>
+  )
 }
