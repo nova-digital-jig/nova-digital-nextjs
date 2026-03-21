@@ -21,7 +21,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI-Powered Web Design Agency | Nova Digital",
+  title: "AI-Powered Web Design Agency | Vektor",
   description:
     "Premium AI-powered websites delivered in 48 hours. Stunning design. Blazing fast. Real results for local businesses. Starting at $500.",
   keywords: [
@@ -34,16 +34,16 @@ export const metadata: Metadata = {
     "Next.js agency",
   ],
   openGraph: {
-    title: "AI-Powered Web Design Agency | Nova Digital",
+    title: "AI-Powered Web Design Agency | Vektor",
     description:
       "Premium AI-powered websites delivered in 48 hours. Starting at $500. Stunning design. Blazing performance. Real results.",
     type: "website",
-    siteName: "Nova Digital",
+    siteName: "Vektor",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI-Powered Web Design Agency | Nova Digital",
+    title: "AI-Powered Web Design Agency | Vektor",
     description:
       "Premium AI-powered websites in 48 hours. Starting at $500.",
   },
@@ -58,7 +58,7 @@ export default function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "Nova Digital",
+    name: "Vektor",
     description:
       "AI-powered web design agency delivering premium websites in 48 hours.",
     telephone: "+19786063386",

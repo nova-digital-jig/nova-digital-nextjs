@@ -79,7 +79,7 @@ export function Footer() {
             className="text-[11px] text-[#444] tracking-wide"
             style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
           >
-            &copy; 2026 Nova Digital. All rights reserved.
+            &copy; 2026 Vektor. All rights reserved.
           </p>
           <p
             className="text-[11px] text-[#333]"
