@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://novadigital.agency/sitemap.xml
+Sitemap: https://vektor.ai/sitemap.xml

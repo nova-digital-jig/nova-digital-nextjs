@@ -99,8 +99,8 @@ export function Navbar() {
             className="text-xl font-bold tracking-[-0.03em] relative z-[1001]"
             style={{ fontFamily: 'var(--font-syne), sans-serif' }}
           >
-            <span className="text-[#F0EDE6]">NOVA</span>
-            <span className="text-[#FF4D00]">.</span>
+            <span className="text-[#F0EDE6]">VEKT</span>
+            <span className="text-[#FF4D00]">OR</span>
           </a>
 
           <div className="hidden lg:flex items-center gap-10">

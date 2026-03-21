@@ -39,7 +39,7 @@ export function Footer() {
               className="text-2xl font-bold tracking-[-0.03em]"
               style={{ fontFamily: 'var(--font-syne), sans-serif' }}
             >
-              <span className="text-[#F0EDE6]">NOVA</span>
+              <span className="text-[#F0EDE6]">VEKTOR</span>
               <span className="text-[#FF4D00]">.</span>
             </a>
             <p

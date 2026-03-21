@@ -85,7 +85,7 @@ export function Preloader() {
           clipPath: 'inset(0 100% 0 0)',
         }}
       >
-        <span className="text-[#F0EDE6]">NOVA</span>
+        <span className="text-[#F0EDE6]">VEKTOR</span>
         <span className="text-[#FF4D00]">.</span>
       </div>
 
