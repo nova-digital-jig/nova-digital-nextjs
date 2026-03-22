@@ -59,7 +59,7 @@ export default function Investment() {
           ease: 'power3.out',
           scrollTrigger: {
             trigger: headingRef.current,
-            start: 'top 80%',
+            start: 'top 85%',
             end: 'top 60%',
             scrub: 0.5,
           },
@@ -79,7 +79,7 @@ export default function Investment() {
             ease: 'power3.out',
             scrollTrigger: {
               trigger: plan,
-              start: 'top 82%',
+              start: 'top 85%',
               end: 'top 60%',
               scrub: 0.5,
             },
@@ -151,7 +151,7 @@ export default function Investment() {
               href="https://calendly.com/jigpatel01234"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block font-[family-name:var(--font-inter)] text-accent text-sm tracking-wide hover:text-accent-hover transition-colors duration-300 group"
+              className="inline-flex items-center min-h-[44px] font-[family-name:var(--font-inter)] text-accent text-sm tracking-wide hover:text-accent-hover transition-colors duration-300 group"
             >
               Get Started{' '}
               <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">

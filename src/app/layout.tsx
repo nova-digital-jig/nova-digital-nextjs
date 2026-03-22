@@ -55,14 +55,13 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": "Organization",
   name: "Vektor",
   description:
     "AI agent setup service for local businesses. Automate calls, bookings, follow-ups, and more.",
   url: "https://vektor.agency",
   telephone: "+19786063386",
   email: "jigpatel01234@gmail.com",
-  priceRange: "$$",
   sameAs: [],
 };
 

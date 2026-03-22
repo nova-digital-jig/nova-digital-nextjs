@@ -10,38 +10,38 @@ export default function Footer() {
         </span>
 
         {/* Links */}
-        <div className="flex items-center gap-8">
+        <nav aria-label="Footer navigation" className="flex items-center gap-8">
           <a
             href="#process"
-            className="font-[family-name:var(--font-inter)] text-xs tracking-[0.1em] uppercase text-muted hover:text-foreground transition-colors duration-300"
+            className="font-[family-name:var(--font-inter)] text-xs tracking-[0.1em] uppercase text-muted hover:text-foreground transition-colors duration-300 min-h-[44px] flex items-center"
           >
             Process
           </a>
           <a
             href="#pricing"
-            className="font-[family-name:var(--font-inter)] text-xs tracking-[0.1em] uppercase text-muted hover:text-foreground transition-colors duration-300"
+            className="font-[family-name:var(--font-inter)] text-xs tracking-[0.1em] uppercase text-muted hover:text-foreground transition-colors duration-300 min-h-[44px] flex items-center"
           >
             Pricing
           </a>
           <a
             href="#contact"
-            className="font-[family-name:var(--font-inter)] text-xs tracking-[0.1em] uppercase text-muted hover:text-foreground transition-colors duration-300"
+            className="font-[family-name:var(--font-inter)] text-xs tracking-[0.1em] uppercase text-muted hover:text-foreground transition-colors duration-300 min-h-[44px] flex items-center"
           >
             Contact
           </a>
-        </div>
+        </nav>
 
         {/* Contact */}
         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
           <a
             href="mailto:jigpatel01234@gmail.com"
-            className="font-[family-name:var(--font-inter)] text-xs text-muted hover:text-foreground transition-colors duration-300"
+            className="font-[family-name:var(--font-inter)] text-xs text-muted hover:text-foreground transition-colors duration-300 min-h-[44px] flex items-center"
           >
             jigpatel01234@gmail.com
           </a>
           <a
             href="tel:+19786063386"
-            className="font-[family-name:var(--font-inter)] text-xs text-muted hover:text-foreground transition-colors duration-300"
+            className="font-[family-name:var(--font-inter)] text-xs text-muted hover:text-foreground transition-colors duration-300 min-h-[44px] flex items-center"
           >
             (978) 606-3386
           </a>

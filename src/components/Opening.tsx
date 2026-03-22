@@ -98,6 +98,7 @@ export default function Opening() {
               key={i}
               ref={(el) => { lettersRef.current[i] = el }}
               className="font-[family-name:var(--font-syne)] font-bold text-foreground opacity-0 select-none"
+              data-animate
               style={{
                 fontSize: 'clamp(3rem, 15vw, 12rem)',
                 lineHeight: 1,

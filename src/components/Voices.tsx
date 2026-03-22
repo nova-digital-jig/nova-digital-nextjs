@@ -55,7 +55,7 @@ export default function Voices() {
           ease: 'power3.out',
           scrollTrigger: {
             trigger: headingRef.current,
-            start: 'top 80%',
+            start: 'top 85%',
             end: 'top 60%',
             scrub: 0.5,
           },
@@ -75,8 +75,8 @@ export default function Voices() {
             ease: 'power3.out',
             scrollTrigger: {
               trigger: card,
-              start: 'top 82%',
-              end: 'top 58%',
+              start: 'top 85%',
+              end: 'top 60%',
               scrub: 0.5,
             },
           }
@@ -106,6 +106,7 @@ export default function Voices() {
             key={i}
             ref={(el) => { cardsRef.current[i] = el }}
             className="relative opacity-0"
+            data-animate
           >
             {/* Large quote mark */}
             <span

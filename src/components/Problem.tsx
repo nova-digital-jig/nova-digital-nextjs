@@ -68,10 +68,10 @@ export default function Problem() {
             opacity: 1,
             x: 0,
             duration: 0.8,
-            ease: 'power2.out',
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: stat,
-              start: 'top 80%',
+              start: 'top 85%',
               end: 'top 65%',
               scrub: 0.5,
             },
@@ -86,6 +86,7 @@ export default function Problem() {
   return (
     <section
       ref={sectionRef}
+      aria-label="The problem: missed calls cost your business"
       className="relative min-h-screen px-6 md:px-16 lg:px-24 py-32 md:py-48 flex flex-col justify-center"
     >
       {/* Heading */}
@@ -99,6 +100,7 @@ export default function Problem() {
             key={i}
             ref={(el) => { headingLinesRef.current[i] = el }}
             className="opacity-0"
+            data-animate
           >
             <span
               className={`font-[family-name:var(--font-syne)] font-bold block leading-[1.15] ${
@@ -119,6 +121,7 @@ export default function Problem() {
             key={i}
             ref={(el) => { statsRef.current[i] = el }}
             className="opacity-0"
+            data-animate
           >
             <div className="w-16 h-px bg-foreground/10 mb-4" />
             <p className="font-[family-name:var(--font-inter)] text-muted text-sm md:text-base tracking-wide leading-relaxed">

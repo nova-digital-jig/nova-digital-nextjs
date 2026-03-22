@@ -127,6 +127,11 @@ body {
   top: 0;
 }
 
+/* === WILL-CHANGE FOR ANIMATED ELEMENTS === */
+[data-animate] {
+  will-change: transform, opacity;
+}
+
 /* === REDUCED MOTION === */
 @media (prefers-reduced-motion: reduce) {
   .grain-overlay {
@@ -137,10 +142,15 @@ body {
     animation: none;
   }
 
+  [data-animate] {
+    will-change: auto;
+  }
+
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

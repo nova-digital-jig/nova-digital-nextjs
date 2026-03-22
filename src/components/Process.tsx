@@ -54,7 +54,7 @@ export default function Process() {
           ease: 'power3.out',
           scrollTrigger: {
             trigger: headingRef.current,
-            start: 'top 80%',
+            start: 'top 85%',
             end: 'top 60%',
             scrub: 0.5,
           },
@@ -87,11 +87,11 @@ export default function Process() {
             opacity: 1,
             x: 0,
             duration: 0.8,
-            ease: 'power2.out',
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: step,
-              start: 'top 75%',
-              end: 'top 55%',
+              start: 'top 85%',
+              end: 'top 60%',
               scrub: 0.5,
             },
           }
@@ -132,6 +132,7 @@ export default function Process() {
               key={step.number}
               ref={(el) => { stepsRef.current[i] = el }}
               className="relative pl-10 md:pl-16 opacity-0"
+              data-animate
             >
               {/* Dot on the line */}
               <div className="absolute left-0 top-1 w-2 h-2 -translate-x-[3.5px] rounded-full bg-foreground/40" />

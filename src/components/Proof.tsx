@@ -38,8 +38,8 @@ export default function Proof() {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: stat,
-            start: 'top 78%',
-            end: 'top 50%',
+            start: 'top 85%',
+            end: 'top 55%',
             scrub: 0.5,
           },
         })
@@ -47,7 +47,7 @@ export default function Proof() {
         tl.fromTo(
           lineEl,
           { scaleX: 0 },
-          { scaleX: 1, duration: 0.4, ease: 'power2.out' }
+          { scaleX: 1, duration: 0.4, ease: 'power3.out' }
         )
           .fromTo(
             valueEl,
@@ -58,13 +58,13 @@ export default function Proof() {
           .fromTo(
             labelEl,
             { opacity: 0, y: 15 },
-            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+            { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
             '-=0.3'
           )
 
         // Stagger delay based on index
         if (i > 0) {
-          tl.delay(i * 0.15)
+          tl.delay(i * 0.1)
         }
       })
     }, section)
@@ -75,6 +75,7 @@ export default function Proof() {
   return (
     <section
       ref={sectionRef}
+      aria-label="Proof: key performance metrics"
       className="relative min-h-screen px-6 md:px-16 lg:px-24 py-32 md:py-48 flex items-center"
     >
       <div className="w-full max-w-3xl">
@@ -84,6 +85,7 @@ export default function Proof() {
               key={i}
               ref={(el) => { statsRef.current[i] = el }}
               className="opacity-0"
+              data-animate
             >
               {/* Horizontal line */}
               <div

@@ -54,7 +54,7 @@ export default function Closing() {
           ease: 'power3.out',
           scrollTrigger: {
             trigger: descRef.current,
-            start: 'top 80%',
+            start: 'top 85%',
             end: 'top 60%',
             scrub: 0.5,
           },
@@ -69,10 +69,10 @@ export default function Closing() {
           opacity: 1,
           y: 0,
           duration: 0.6,
-          ease: 'power2.out',
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: linksRef.current,
-            start: 'top 82%',
+            start: 'top 85%',
             end: 'top 65%',
             scrub: 0.5,
           },
@@ -86,7 +86,7 @@ export default function Closing() {
         {
           opacity: 1,
           duration: 0.5,
-          ease: 'power2.out',
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: noteRef.current,
             start: 'top 85%',
@@ -110,6 +110,7 @@ export default function Closing() {
       <h2
         ref={readyRef}
         className="font-[family-name:var(--font-syne)] font-bold text-foreground opacity-0"
+        data-animate
         style={{ fontSize: 'clamp(4rem, 10vw, 10rem)', lineHeight: 1 }}
       >
         Ready?
@@ -133,14 +134,14 @@ export default function Closing() {
           href="https://calendly.com/jigpatel01234"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-[family-name:var(--font-inter)] text-accent text-base md:text-lg hover:underline underline-offset-4 transition-all duration-300 hover:text-accent-hover"
+          className="font-[family-name:var(--font-inter)] text-accent text-base md:text-lg hover:underline underline-offset-4 transition-all duration-300 hover:text-accent-hover min-h-[44px] flex items-center"
         >
           book a call
         </a>
         <span className="hidden sm:block text-muted">/</span>
         <a
           href="tel:+19786063386"
-          className="font-[family-name:var(--font-inter)] text-foreground text-base md:text-lg hover:text-foreground/70 transition-colors duration-300"
+          className="font-[family-name:var(--font-inter)] text-foreground text-base md:text-lg hover:text-foreground/70 transition-colors duration-300 min-h-[44px] flex items-center"
         >
           (978) 606-3386
         </a>

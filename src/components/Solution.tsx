@@ -110,7 +110,7 @@ export default function Solution() {
     >
       {/* Text block */}
       <div className="text-center px-6">
-        <div ref={line1Ref} className="opacity-0">
+        <div ref={line1Ref} className="opacity-0" data-animate>
           <span
             className="font-[family-name:var(--font-syne)] font-light text-foreground block"
             style={{ fontSize: 'clamp(1.5rem, 3.5vw, 3rem)' }}
@@ -119,7 +119,7 @@ export default function Solution() {
           </span>
         </div>
 
-        <div ref={line2Ref} className="opacity-0 my-2 md:my-4">
+        <div ref={line2Ref} className="opacity-0 my-2 md:my-4" data-animate>
           <span
             className="font-[family-name:var(--font-syne)] font-bold text-foreground block"
             style={{ fontSize: 'clamp(2.5rem, 7vw, 6rem)', lineHeight: 1.1 }}
@@ -128,7 +128,7 @@ export default function Solution() {
           </span>
         </div>
 
-        <div ref={line3Ref} className="opacity-0">
+        <div ref={line3Ref} className="opacity-0" data-animate>
           <span
             className="font-[family-name:var(--font-syne)] font-light text-foreground block"
             style={{ fontSize: 'clamp(1.5rem, 3.5vw, 3rem)' }}

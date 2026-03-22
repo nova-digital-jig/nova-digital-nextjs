@@ -54,17 +54,20 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-5 flex items-center justify-between opacity-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+      role="navigation"
+      aria-label="Main navigation"
+      className="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-3 flex items-center justify-between opacity-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
       style={{
         transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
         backgroundColor: 'rgba(5, 5, 5, 0.8)',
       }}
+      data-animate
     >
       <a
         href="#main-content"
-        className="font-[family-name:var(--font-syne)] text-sm font-bold tracking-[0.2em] uppercase text-foreground"
+        className="font-[family-name:var(--font-syne)] text-sm font-bold tracking-[0.2em] uppercase text-foreground min-h-[44px] flex items-center"
       >
         vektor
       </a>
@@ -72,19 +75,19 @@ export default function Navbar() {
       <div className="hidden md:flex items-center gap-10">
         <a
           href="#process"
-          className="text-xs tracking-[0.15em] uppercase text-muted hover:text-foreground transition-colors duration-300"
+          className="text-xs tracking-[0.15em] uppercase text-muted hover:text-foreground transition-colors duration-300 min-h-[44px] flex items-center"
         >
           Process
         </a>
         <a
           href="#pricing"
-          className="text-xs tracking-[0.15em] uppercase text-muted hover:text-foreground transition-colors duration-300"
+          className="text-xs tracking-[0.15em] uppercase text-muted hover:text-foreground transition-colors duration-300 min-h-[44px] flex items-center"
         >
           Pricing
         </a>
         <a
           href="#contact"
-          className="text-xs tracking-[0.15em] uppercase text-accent hover:text-accent-hover transition-colors duration-300"
+          className="text-xs tracking-[0.15em] uppercase text-accent hover:text-accent-hover transition-colors duration-300 min-h-[44px] flex items-center"
         >
           Book a Call
         </a>
@@ -92,7 +95,7 @@ export default function Navbar() {
 
       <a
         href="#contact"
-        className="md:hidden text-xs tracking-[0.15em] uppercase text-accent"
+        className="md:hidden text-xs tracking-[0.15em] uppercase text-accent min-h-[44px] flex items-center"
       >
         Contact
       </a>
