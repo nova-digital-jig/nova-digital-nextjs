@@ -5,15 +5,16 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const STATS = [
-  '62% of calls go unanswered',
-  '80% of leads never get a follow-up',
-  '$200–500 lost per missed call',
+  { number: '62%', text: 'of calls go unanswered' },
+  { number: '80%', text: 'of leads never get a follow-up' },
+  { number: '$200–500', text: 'lost per missed call' },
 ]
 
 export default function Problem() {
   const sectionRef = useRef<HTMLElement>(null)
   const headingLinesRef = useRef<(HTMLDivElement | null)[]>([])
   const statsRef = useRef<(HTMLDivElement | null)[]>([])
+  const orbRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -59,7 +60,7 @@ export default function Problem() {
       })
 
       // Stats fade in one at a time
-      statsRef.current.forEach((stat, i) => {
+      statsRef.current.forEach((stat) => {
         if (!stat) return
         gsap.fromTo(
           stat,
@@ -78,6 +79,17 @@ export default function Problem() {
           }
         )
       })
+
+      // Floating orb
+      if (orbRef.current) {
+        gsap.to(orbRef.current, {
+          y: '+=20',
+          duration: 7,
+          ease: 'sine.inOut',
+          repeat: -1,
+          yoyo: true,
+        })
+      }
     }, section)
 
     return () => ctx.revert()
@@ -87,8 +99,24 @@ export default function Problem() {
     <section
       ref={sectionRef}
       aria-label="The problem: missed calls cost your business"
-      className="relative min-h-screen px-6 md:px-16 lg:px-24 py-32 md:py-48 flex flex-col justify-center"
+      className="relative min-h-screen px-6 md:px-16 lg:px-24 py-24 md:py-36 flex flex-col justify-center"
+      style={{
+        background: 'linear-gradient(180deg, rgba(20, 10, 5, 1) 0%, #0A0A0A 100%)',
+      }}
     >
+      {/* Ambient orb */}
+      <div
+        ref={orbRef}
+        className="gradient-orb"
+        style={{
+          width: '450px',
+          height: '450px',
+          top: '20%',
+          right: '15%',
+          background: 'radial-gradient(circle, rgba(255, 77, 0, 0.04) 0%, transparent 70%)',
+        }}
+      />
+
       {/* Heading */}
       <div className="max-w-4xl">
         {[
@@ -104,7 +132,7 @@ export default function Problem() {
           >
             <span
               className={`font-[family-name:var(--font-syne)] font-bold block leading-[1.15] ${
-                line.accent ? 'text-accent' : 'text-foreground'
+                line.accent ? 'gradient-text-warm' : 'text-foreground'
               }`}
               style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}
             >
@@ -115,7 +143,7 @@ export default function Problem() {
       </div>
 
       {/* Stats */}
-      <div className="mt-20 md:mt-32 max-w-xl flex flex-col gap-8">
+      <div className="mt-16 md:mt-24 max-w-xl flex flex-col gap-8">
         {STATS.map((stat, i) => (
           <div
             key={i}
@@ -123,9 +151,13 @@ export default function Problem() {
             className="opacity-0"
             data-animate
           >
-            <div className="w-16 h-px bg-foreground/10 mb-4" />
-            <p className="font-[family-name:var(--font-inter)] text-muted text-sm md:text-base tracking-wide leading-relaxed">
-              {stat}
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block flex-shrink-0" />
+              <div className="w-12 h-px bg-foreground/10" />
+            </div>
+            <p className="font-[family-name:var(--font-inter)] text-sm md:text-base tracking-wide leading-relaxed">
+              <span className="text-accent font-medium">{stat.number}</span>{' '}
+              <span className="text-muted">{stat.text}</span>
             </p>
           </div>
         ))}

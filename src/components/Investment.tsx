@@ -11,6 +11,7 @@ const PLANS = [
     features:
       'Email management, calendar, lead follow-up, daily reports',
     highlighted: false,
+    bg: '#0A0A0A',
   },
   {
     name: 'Business',
@@ -19,6 +20,7 @@ const PLANS = [
       'Everything in Starter, plus CRM, lead scoring, social monitoring, weekly reports, 3 custom skills',
     highlighted: true,
     badge: 'Popular',
+    bg: '#0F0F14',
   },
   {
     name: 'Full Stack',
@@ -26,6 +28,7 @@ const PLANS = [
     features:
       'Everything in Business, plus website chatbot, multi-channel, voice agent, custom dashboard, priority support',
     highlighted: false,
+    bg: '#0A0A0A',
   },
 ]
 
@@ -95,29 +98,31 @@ export default function Investment() {
     <section
       ref={sectionRef}
       id="pricing"
-      className="relative min-h-screen px-6 md:px-16 lg:px-24 py-32 md:py-48"
+      className="relative min-h-screen px-6 md:px-16 lg:px-24 py-24 md:py-36"
     >
       <h2
         ref={headingRef}
-        className="font-[family-name:var(--font-syne)] font-bold text-foreground opacity-0 mb-20 md:mb-32"
+        className="font-[family-name:var(--font-syne)] font-bold text-foreground opacity-0 mb-16 md:mb-24"
         style={{ fontSize: 'clamp(2rem, 4vw, 4rem)' }}
       >
-        Simple pricing.
+        Simple <span className="text-accent">pricing.</span>
       </h2>
 
-      <div className="flex flex-col gap-16 md:gap-20 max-w-3xl">
+      <div className="flex flex-col gap-0 max-w-3xl">
         {PLANS.map((plan, i) => (
           <div
             key={plan.name}
             ref={(el) => { plansRef.current[i] = el }}
-            className={`relative opacity-0 py-10 ${
+            className={`relative opacity-0 py-10 px-6 md:px-12 rounded-lg pricing-block ${
               plan.highlighted
-                ? 'border-l-2 border-accent pl-8 md:pl-12'
-                : 'pl-0 md:pl-12'
+                ? 'border-l-2 border-accent'
+                : ''
             }`}
+            style={{ backgroundColor: plan.bg }}
           >
             {/* Plan name + badge */}
             <div className="flex items-center gap-3 mb-4">
+              <span className="text-accent mr-1">&bull;</span>
               <span
                 className={`font-[family-name:var(--font-syne)] text-foreground/70 ${
                   plan.highlighted ? 'font-medium' : 'font-light'
@@ -151,10 +156,10 @@ export default function Investment() {
               href="https://calendly.com/jigpatel01234"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center min-h-[44px] font-[family-name:var(--font-inter)] text-accent text-sm tracking-wide hover:text-accent-hover transition-colors duration-300 group"
+              className="shimmer-btn inline-flex items-center min-h-[44px] px-6 py-2.5 border border-accent/30 rounded-full font-[family-name:var(--font-inter)] text-accent text-sm tracking-wide hover:text-accent-hover hover:border-accent/50 transition-colors duration-300 group"
             >
               Get Started{' '}
-              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1 ml-2">
                 &rarr;
               </span>
             </a>

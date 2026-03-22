@@ -90,17 +90,18 @@ export default function Voices() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen px-6 md:px-16 lg:px-24 py-32 md:py-48"
+      className="relative min-h-screen px-6 md:px-16 lg:px-24 py-24 md:py-36"
     >
       <h2
         ref={headingRef}
-        className="font-[family-name:var(--font-syne)] font-bold text-foreground opacity-0 mb-20 md:mb-32"
+        className="font-[family-name:var(--font-syne)] font-bold text-foreground opacity-0 mb-16 md:mb-24"
         style={{ fontSize: 'clamp(1.5rem, 3.5vw, 3rem)' }}
       >
+        <span className="text-accent mr-2">&mdash;</span>
         What they say.
       </h2>
 
-      <div className="flex flex-col gap-16 md:gap-24 max-w-3xl">
+      <div className="flex flex-col gap-14 md:gap-20 max-w-3xl">
         {TESTIMONIALS.map((testimonial, i) => (
           <div
             key={i}
@@ -108,10 +109,14 @@ export default function Voices() {
             className="relative opacity-0"
             data-animate
           >
-            {/* Large quote mark */}
+            {/* Large decorative quote mark */}
             <span
-              className="absolute -top-8 -left-2 font-[family-name:var(--font-syne)] font-bold text-foreground/[0.06] select-none pointer-events-none"
-              style={{ fontSize: 'clamp(5rem, 10vw, 10rem)', lineHeight: 1 }}
+              className="absolute -top-10 -left-4 font-[family-name:var(--font-syne)] font-bold select-none pointer-events-none"
+              style={{
+                fontSize: 'clamp(8rem, 15vw, 15rem)',
+                lineHeight: 1,
+                color: 'rgba(255, 77, 0, 0.1)',
+              }}
               aria-hidden="true"
             >
               &ldquo;
@@ -126,7 +131,7 @@ export default function Voices() {
                 &ldquo;{testimonial.quote}&rdquo;
               </p>
               <footer className="mt-6 flex items-center gap-2">
-                <span className="font-[family-name:var(--font-inter)] text-foreground text-sm font-medium">
+                <span className="font-[family-name:var(--font-inter)] text-accent text-sm font-medium">
                   {testimonial.name}
                 </span>
                 <span className="text-muted text-sm">/</span>
@@ -138,7 +143,7 @@ export default function Voices() {
 
             {/* Separator */}
             {i < TESTIMONIALS.length - 1 && (
-              <div className="mt-16 md:mt-24 w-full h-px bg-foreground/[0.06]" />
+              <div className="mt-14 md:mt-20 w-full h-px bg-foreground/[0.06]" />
             )}
           </div>
         ))}

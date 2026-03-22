@@ -11,6 +11,8 @@ export default function Opening() {
   const lettersRef = useRef<(HTMLSpanElement | null)[]>([])
   const taglineRef = useRef<HTMLParagraphElement>(null)
   const grainRef = useRef<HTMLDivElement>(null)
+  const orb1Ref = useRef<HTMLDivElement>(null)
+  const orb2Ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -75,6 +77,26 @@ export default function Opening() {
           scrub: true,
         },
       })
+
+      // Floating orbs
+      if (orb1Ref.current) {
+        gsap.to(orb1Ref.current, {
+          y: '+=20',
+          duration: 6,
+          ease: 'sine.inOut',
+          repeat: -1,
+          yoyo: true,
+        })
+      }
+      if (orb2Ref.current) {
+        gsap.to(orb2Ref.current, {
+          y: '-=20',
+          duration: 8,
+          ease: 'sine.inOut',
+          repeat: -1,
+          yoyo: true,
+        })
+      }
     }, section)
 
     return () => ctx.revert()
@@ -83,14 +105,46 @@ export default function Opening() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[200vh]"
+      className="relative h-[180vh]"
       aria-label="Vektor — AI that moves your business forward"
     >
+      {/* Deep indigo-to-black gradient background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'linear-gradient(180deg, #0D0F2A 0%, #080A1A 30%, #050505 70%)',
+        }}
+      />
+
+      {/* Gradient orbs for ambient depth */}
+      <div
+        ref={orb1Ref}
+        className="gradient-orb"
+        style={{
+          width: '500px',
+          height: '500px',
+          top: '15%',
+          right: '10%',
+          background: 'radial-gradient(circle, rgba(255, 77, 0, 0.05) 0%, transparent 70%)',
+        }}
+      />
+      <div
+        ref={orb2Ref}
+        className="gradient-orb"
+        style={{
+          width: '400px',
+          height: '400px',
+          bottom: '25%',
+          left: '5%',
+          background: 'radial-gradient(circle, rgba(79, 70, 229, 0.04) 0%, transparent 70%)',
+        }}
+      />
+
       {/* Grain overlay - opening only */}
       <div ref={grainRef} className="grain-overlay" />
 
       {/* Sticky container */}
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center px-6">
+      <div className="sticky top-0 h-[80vh] flex flex-col items-center justify-center px-6">
         {/* Logo letters */}
         <div className="flex items-center justify-center" aria-hidden="true">
           {LETTERS.map((letter, i) => (
@@ -113,7 +167,8 @@ export default function Opening() {
         {/* Tagline */}
         <p
           ref={taglineRef}
-          className="mt-8 font-[family-name:var(--font-inter)] text-muted text-sm md:text-base tracking-[0.2em] uppercase opacity-0"
+          className="mt-8 font-[family-name:var(--font-inter)] text-sm md:text-base tracking-[0.2em] uppercase opacity-0"
+          style={{ color: 'rgba(255, 77, 0, 0.7)' }}
         >
           AI that moves your business forward.
         </p>

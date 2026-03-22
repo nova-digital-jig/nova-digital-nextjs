@@ -76,10 +76,23 @@ export default function Proof() {
     <section
       ref={sectionRef}
       aria-label="Proof: key performance metrics"
-      className="relative min-h-screen px-6 md:px-16 lg:px-24 py-32 md:py-48 flex items-center"
+      className="relative min-h-screen px-6 md:px-16 lg:px-24 py-24 md:py-36 flex items-center"
+      style={{ backgroundColor: '#0D0F1A' }}
     >
-      <div className="w-full max-w-3xl">
-        <div className="flex flex-col gap-16 md:gap-24">
+      {/* Subtle orb */}
+      <div
+        className="gradient-orb"
+        style={{
+          width: '500px',
+          height: '500px',
+          top: '10%',
+          right: '5%',
+          background: 'radial-gradient(circle, rgba(255, 77, 0, 0.04) 0%, transparent 70%)',
+        }}
+      />
+
+      <div className="w-full max-w-3xl relative z-10">
+        <div className="flex flex-col gap-14 md:gap-20">
           {STATS.map((stat, i) => (
             <div
               key={i}
@@ -89,13 +102,13 @@ export default function Proof() {
             >
               {/* Horizontal line */}
               <div
-                className="stat-line w-full h-px bg-foreground/10 mb-8 origin-left"
+                className="stat-line w-full h-px bg-accent/20 mb-8 origin-left"
                 style={{ transform: 'scaleX(0)' }}
               />
 
               <div className="flex flex-col md:flex-row md:items-end md:gap-8">
                 <span
-                  className="stat-value font-[family-name:var(--font-syne)] font-bold text-accent block"
+                  className="stat-value font-[family-name:var(--font-syne)] font-bold gradient-text-stat block"
                   style={{
                     fontSize: 'clamp(3rem, 8vw, 6rem)',
                     lineHeight: 1,

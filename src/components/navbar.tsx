@@ -62,6 +62,7 @@ export default function Navbar() {
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
         backgroundColor: 'rgba(5, 5, 5, 0.8)',
+        borderBottom: '1px solid rgba(232, 228, 221, 0.04)',
       }}
       data-animate
     >
@@ -87,7 +88,7 @@ export default function Navbar() {
         </a>
         <a
           href="#contact"
-          className="text-xs tracking-[0.15em] uppercase text-accent hover:text-accent-hover transition-colors duration-300 min-h-[44px] flex items-center"
+          className="shimmer-btn text-xs tracking-[0.15em] uppercase text-accent hover:text-accent-hover transition-colors duration-300 min-h-[44px] flex items-center px-4 py-1.5 border border-accent/30 rounded-full"
         >
           Book a Call
         </a>

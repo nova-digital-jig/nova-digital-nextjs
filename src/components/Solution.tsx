@@ -13,6 +13,7 @@ export default function Solution() {
   const line2Ref = useRef<HTMLDivElement>(null)
   const line3Ref = useRef<HTMLDivElement>(null)
   const marqueeRef = useRef<HTMLDivElement>(null)
+  const orbRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -98,6 +99,17 @@ export default function Solution() {
           },
         }
       )
+
+      // Floating orb
+      if (orbRef.current) {
+        gsap.to(orbRef.current, {
+          y: '-=20',
+          duration: 6,
+          ease: 'sine.inOut',
+          repeat: -1,
+          yoyo: true,
+        })
+      }
     }, section)
 
     return () => ctx.revert()
@@ -106,10 +118,31 @@ export default function Solution() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col items-center justify-center py-32 md:py-48"
+      className="relative min-h-screen flex flex-col items-center justify-center py-24 md:py-36"
     >
+      {/* Subtle radial gradient behind headline */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center 40%, rgba(255, 77, 0, 0.04) 0%, transparent 60%)',
+        }}
+      />
+
+      {/* Floating orb */}
+      <div
+        ref={orbRef}
+        className="gradient-orb"
+        style={{
+          width: '350px',
+          height: '350px',
+          top: '30%',
+          left: '10%',
+          background: 'radial-gradient(circle, rgba(255, 77, 0, 0.05) 0%, transparent 70%)',
+        }}
+      />
+
       {/* Text block */}
-      <div className="text-center px-6">
+      <div className="text-center px-6 relative z-10">
         <div ref={line1Ref} className="opacity-0" data-animate>
           <span
             className="font-[family-name:var(--font-syne)] font-light text-foreground block"
@@ -121,7 +154,7 @@ export default function Solution() {
 
         <div ref={line2Ref} className="opacity-0 my-2 md:my-4" data-animate>
           <span
-            className="font-[family-name:var(--font-syne)] font-bold text-foreground block"
+            className="font-[family-name:var(--font-syne)] font-bold gradient-text-warm block"
             style={{ fontSize: 'clamp(2.5rem, 7vw, 6rem)', lineHeight: 1.1 }}
           >
             an employee
@@ -133,7 +166,7 @@ export default function Solution() {
             className="font-[family-name:var(--font-syne)] font-light text-foreground block"
             style={{ fontSize: 'clamp(1.5rem, 3.5vw, 3rem)' }}
           >
-            who never sleeps?
+            who <span className="text-accent">never</span> sleeps?
           </span>
         </div>
       </div>
@@ -141,7 +174,7 @@ export default function Solution() {
       {/* Marquee */}
       <div
         ref={marqueeRef}
-        className="w-full mt-20 md:mt-32 overflow-hidden opacity-0"
+        className="w-full mt-16 md:mt-24 overflow-hidden opacity-0"
         aria-label="AI agent capabilities"
       >
         <div className="marquee-track">

@@ -104,12 +104,20 @@ export default function Closing() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 py-32 md:py-48"
+      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 py-24 md:py-36"
     >
+      {/* Radial gradient glow behind Ready? */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(255, 77, 0, 0.08) 0%, transparent 55%)',
+        }}
+      />
+
       {/* Ready? */}
       <h2
         ref={readyRef}
-        className="font-[family-name:var(--font-syne)] font-bold text-foreground opacity-0"
+        className="font-[family-name:var(--font-syne)] font-bold gradient-text-warm opacity-0 relative z-10"
         data-animate
         style={{ fontSize: 'clamp(4rem, 10vw, 10rem)', lineHeight: 1 }}
       >
@@ -119,7 +127,7 @@ export default function Closing() {
       {/* Description */}
       <p
         ref={descRef}
-        className="mt-8 md:mt-12 font-[family-name:var(--font-inter)] text-foreground/70 max-w-md leading-relaxed opacity-0"
+        className="mt-8 md:mt-12 font-[family-name:var(--font-inter)] text-foreground/70 max-w-md leading-relaxed opacity-0 relative z-10"
         style={{ fontSize: 'clamp(0.9rem, 1.2vw, 1.1rem)' }}
       >
         Book a free demo. We&apos;ll show you exactly how it works.
@@ -128,13 +136,13 @@ export default function Closing() {
       {/* Links */}
       <div
         ref={linksRef}
-        className="mt-8 flex flex-col sm:flex-row items-center gap-4 sm:gap-8 opacity-0"
+        className="mt-8 flex flex-col sm:flex-row items-center gap-4 sm:gap-8 opacity-0 relative z-10"
       >
         <a
           href="https://calendly.com/jigpatel01234"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-[family-name:var(--font-inter)] text-accent text-base md:text-lg hover:underline underline-offset-4 transition-all duration-300 hover:text-accent-hover min-h-[44px] flex items-center"
+          className="shimmer-btn inline-flex items-center px-8 py-3 border border-accent/40 rounded-full font-[family-name:var(--font-inter)] text-accent text-base md:text-lg hover:border-accent/60 transition-all duration-300 hover:text-accent-hover min-h-[44px]"
         >
           book a call
         </a>
@@ -150,7 +158,7 @@ export default function Closing() {
       {/* Note */}
       <p
         ref={noteRef}
-        className="mt-10 font-[family-name:var(--font-inter)] text-muted text-xs tracking-[0.15em] uppercase opacity-0"
+        className="mt-10 font-[family-name:var(--font-inter)] text-muted text-xs tracking-[0.15em] uppercase opacity-0 relative z-10"
       >
         No contracts. Cancel anytime.
       </p>

@@ -78,7 +78,7 @@ export default function Process() {
       )
 
       // Steps reveal as line reaches them
-      stepsRef.current.forEach((step, i) => {
+      stepsRef.current.forEach((step) => {
         if (!step) return
         gsap.fromTo(
           step,
@@ -106,27 +106,31 @@ export default function Process() {
     <section
       ref={sectionRef}
       id="process"
-      className="relative min-h-screen px-6 md:px-16 lg:px-24 py-32 md:py-48"
+      className="relative min-h-screen px-6 md:px-16 lg:px-24 py-24 md:py-36"
     >
+      {/* Grid pattern overlay */}
+      <div className="grid-pattern" />
+
       <h2
         ref={headingRef}
-        className="font-[family-name:var(--font-syne)] font-bold text-foreground opacity-0 mb-20 md:mb-32"
+        className="font-[family-name:var(--font-syne)] font-bold text-foreground opacity-0 mb-16 md:mb-24 relative z-10"
         style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}
       >
+        <span className="text-accent mr-2">&mdash;</span>
         How it works.
       </h2>
 
       {/* Timeline */}
-      <div className="relative max-w-2xl ml-0 md:ml-16">
+      <div className="relative max-w-2xl ml-0 md:ml-16 z-10">
         {/* Vertical line */}
         <div
           ref={lineRef}
-          className="absolute left-0 top-0 bottom-0 w-px bg-foreground/20"
+          className="absolute left-0 top-0 bottom-0 w-px bg-accent/30"
           style={{ clipPath: 'inset(0 0 100% 0)' }}
         />
 
         {/* Steps */}
-        <div className="flex flex-col gap-20 md:gap-28">
+        <div className="flex flex-col gap-16 md:gap-24">
           {STEPS.map((step, i) => (
             <div
               key={step.number}
@@ -135,9 +139,9 @@ export default function Process() {
               data-animate
             >
               {/* Dot on the line */}
-              <div className="absolute left-0 top-1 w-2 h-2 -translate-x-[3.5px] rounded-full bg-foreground/40" />
+              <div className="absolute left-0 top-1 w-2.5 h-2.5 -translate-x-[4.5px] rounded-full bg-accent/60" />
 
-              <span className="font-[family-name:var(--font-inter)] text-muted text-xs tracking-[0.2em] uppercase">
+              <span className="font-[family-name:var(--font-inter)] text-accent/70 text-xs tracking-[0.2em] uppercase">
                 {step.number} — {step.title}
               </span>
               <p

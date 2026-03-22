@@ -18,6 +18,10 @@ import Footer from '@/components/Footer'
 
 gsap.registerPlugin(ScrollTrigger)
 
+function SectionDivider() {
+  return <div className="section-divider mx-6 md:mx-16 lg:mx-24" />
+}
+
 export default function Home() {
   const lenisRef = useRef<Lenis | null>(null)
 
@@ -57,12 +61,19 @@ export default function Home() {
       <Navbar />
       <main id="main-content">
         <Opening />
+        <SectionDivider />
         <Problem />
+        <SectionDivider />
         <Solution />
+        <SectionDivider />
         <Process />
+        <SectionDivider />
         <Proof />
+        <SectionDivider />
         <Voices />
+        <SectionDivider />
         <Investment />
+        <SectionDivider />
         <Closing />
       </main>
       <Footer />

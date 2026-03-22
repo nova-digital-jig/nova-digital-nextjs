@@ -4,8 +4,8 @@
   --color-background: #050505;
   --color-foreground: #E8E4DD;
   --color-muted: #5B5B5B;
-  --color-accent: #4F46E5;
-  --color-accent-hover: #6366F1;
+  --color-accent: #FF4D00;
+  --color-accent-hover: #FF6B2B;
   --color-border: rgba(232, 228, 221, 0.08);
 
   --font-display: var(--font-syne);
@@ -54,7 +54,7 @@ body {
 }
 
 ::selection {
-  background-color: #4F46E5;
+  background-color: #FF4D00;
   color: #E8E4DD;
 }
 
@@ -111,12 +111,130 @@ body {
   100% { transform: translateX(-50%); }
 }
 
+/* === GRADIENT ORB === */
+.gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* === GRID PATTERN OVERLAY === */
+.grid-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(232, 228, 221, 0.05) 0px,
+      rgba(232, 228, 221, 0.05) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(232, 228, 221, 0.05) 0px,
+      rgba(232, 228, 221, 0.05) 1px,
+      transparent 1px,
+      transparent 60px
+    );
+}
+
+/* === SECTION DIVIDER === */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(232, 228, 221, 0.06);
+}
+
+/* === GRADIENT TEXT === */
+.gradient-text-warm {
+  background: linear-gradient(135deg, #FF4D00, #FF8C00, #FFB347);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-stat {
+  background: linear-gradient(135deg, #E8E4DD, #FF4D00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* === SHIMMER BUTTON EFFECT === */
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 77, 0, 0.12) 50%,
+    transparent 100%
+  );
+  transition: left 0.6s ease;
+}
+
+.shimmer-btn:hover::after {
+  left: 100%;
+}
+
+/* === PRICING HOVER GLOW === */
+.pricing-block {
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.pricing-block:hover {
+  box-shadow: 0 0 30px rgba(255, 77, 0, 0.12);
+}
+
+/* === SERVICE HOVER BAR === */
+.service-item {
+  position: relative;
+}
+
+.service-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 0;
+  background: #FF4D00;
+  transition: height 0.3s ease;
+}
+
+.service-item:hover::before {
+  height: 100%;
+}
+
+/* === PULSE ANIMATION FOR STATS === */
+@keyframes stat-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.stat-pulse {
+  animation: stat-pulse 1.5s ease-in-out 1;
+}
+
 /* === SKIP LINK === */
 .skip-link {
   position: absolute;
   top: -100%;
   left: 0;
-  background: #4F46E5;
+  background: #FF4D00;
   color: #E8E4DD;
   padding: 0.5rem 1rem;
   z-index: 10000;
@@ -144,6 +262,10 @@ body {
 
   [data-animate] {
     will-change: auto;
+  }
+
+  .gradient-orb {
+    display: none;
   }
 
   * {
