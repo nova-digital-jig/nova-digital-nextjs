@@ -1,93 +1,61 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
-
-export function Footer() {
-  const footerRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const items = footerRef.current?.querySelectorAll('.footer-animate')
-      items?.forEach((el, i) => {
-        gsap.fromTo(el,
-          { y: 20, opacity: 0 },
-          {
-            y: 0, opacity: 1, duration: 0.6, ease: 'power3.out',
-            scrollTrigger: { trigger: footerRef.current, start: 'top 95%' },
-            delay: i * 0.08,
-          }
-        )
-      })
-    }, footerRef)
-    return () => ctx.revert()
-  }, [])
-
+export default function Footer() {
   return (
-    <footer
-      ref={footerRef}
-      className="border-t border-white/[0.06] bg-[#050505]"
-    >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-20">
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 mb-16">
-          <div className="footer-animate" style={{ opacity: 0 }}>
-            <a
-              href="#"
-              className="text-2xl font-bold tracking-[-0.03em]"
-              style={{ fontFamily: 'var(--font-syne), sans-serif' }}
-            >
-              <span className="text-[#F0EDE6]">VEKTOR</span>
-              <span className="text-[#FF4D00]">.</span>
-            </a>
-            <p
-              className="text-[#555] text-sm mt-3 max-w-xs leading-relaxed"
-              style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
-            >
-              AI-powered web agency delivering premium websites that drive real results.
-            </p>
-          </div>
+    <footer className="relative border-t border-foreground/[0.06] px-6 md:px-16 lg:px-24 py-12 md:py-16">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-0">
+        {/* Logo */}
+        <span className="font-[family-name:var(--font-syne)] text-sm font-bold tracking-[0.2em] uppercase text-foreground">
+          vektor
+        </span>
 
-          <div className="footer-animate flex flex-col gap-3" style={{ opacity: 0 }}>
-            <span
-              className="text-[10px] tracking-[0.2em] uppercase text-[#555] mb-1"
-              style={{ fontFamily: 'var(--font-jetbrains), monospace' }}
-            >
-              Contact
-            </span>
-            <a
-              href="mailto:jigpatel01234@gmail.com"
-              className="text-sm text-[#666] hover:text-[#F0EDE6] transition-colors duration-300"
-              style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
-            >
-              jigpatel01234@gmail.com
-            </a>
-            <a
-              href="tel:978-606-3386"
-              className="text-sm text-[#666] hover:text-[#F0EDE6] transition-colors duration-300"
-              style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
-            >
-              (978) 606-3386
-            </a>
-          </div>
+        {/* Links */}
+        <div className="flex items-center gap-8">
+          <a
+            href="#process"
+            className="font-[family-name:var(--font-inter)] text-xs tracking-[0.1em] uppercase text-muted hover:text-foreground transition-colors duration-300"
+          >
+            Process
+          </a>
+          <a
+            href="#pricing"
+            className="font-[family-name:var(--font-inter)] text-xs tracking-[0.1em] uppercase text-muted hover:text-foreground transition-colors duration-300"
+          >
+            Pricing
+          </a>
+          <a
+            href="#contact"
+            className="font-[family-name:var(--font-inter)] text-xs tracking-[0.1em] uppercase text-muted hover:text-foreground transition-colors duration-300"
+          >
+            Contact
+          </a>
         </div>
 
-        <div className="footer-animate border-t border-white/[0.04] pt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4" style={{ opacity: 0 }}>
-          <p
-            className="text-[11px] text-[#444] tracking-wide"
-            style={{ fontFamily: 'var(--font-jakarta), sans-serif' }}
+        {/* Contact */}
+        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
+          <a
+            href="mailto:jigpatel01234@gmail.com"
+            className="font-[family-name:var(--font-inter)] text-xs text-muted hover:text-foreground transition-colors duration-300"
           >
-            &copy; 2026 Vektor. All rights reserved.
-          </p>
-          <p
-            className="text-[11px] text-[#333]"
-            style={{ fontFamily: 'var(--font-jetbrains), monospace' }}
+            jigpatel01234@gmail.com
+          </a>
+          <a
+            href="tel:+19786063386"
+            className="font-[family-name:var(--font-inter)] text-xs text-muted hover:text-foreground transition-colors duration-300"
           >
-            Designed & built with precision
-          </p>
+            (978) 606-3386
+          </a>
         </div>
+      </div>
+
+      {/* Bottom */}
+      <div className="mt-10 pt-6 border-t border-foreground/[0.04] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <span className="font-[family-name:var(--font-inter)] text-[11px] text-muted/60">
+          &copy; 2026 Vektor
+        </span>
+        <span className="font-[family-name:var(--font-inter)] text-[11px] text-muted/40">
+          Built by Vektor
+        </span>
       </div>
     </footer>
   )
